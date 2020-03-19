@@ -1,0 +1,49 @@
+.scroll-list {
+    overflow-y: auto;
+    max-height: 300px;
+    position: relative;
+}
+
+.list-wrapper{
+    position: relative;
+    padding-top: 30px;
+}
+
+.point-form-check{
+    position: absolute;
+    top: -15px;
+    left: 0;
+}
+
+.lst-content .part-right{
+    position: absolute;
+    top: 40px;
+    right: 42px;
+}
+
+.lst-content .viw-all{
+    margin-left: 30px;
+    display: inline-block;
+}
+
+.lst-content .filter{
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.lst-content a{
+    color:#343a40;
+}
+
+.lst-content h6{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+
+.lst-content .col-2{
+    padding-top: 10px;
+}
+
+
