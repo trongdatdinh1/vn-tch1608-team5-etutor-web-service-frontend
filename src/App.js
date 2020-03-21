@@ -3,29 +3,31 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
+  Link,
   Route,
 } from "react-router-dom";
 import { connect } from 'react-redux'
 import { alertActions } from './actions/alert.actions'
 import Login from './components/Login';
 import TutorDashboard from './components/tutor/TutorDashboard';
+import StaffDashboard from './components/staff/StaffDashboard';
 
 class App extends React.Component {
   
   render() {
     return (
       <Router>
-        {/* <div>
+        <div>
           <ul>
             <li>
-              <Link to="/">Login</Link>
+              <Link to="/login">Login</Link>
             </li>
             <li>
               <Link to="/dashboard">Dashboard</Link>
             </li>
           </ul>
 
-          <hr /> */}
+          <hr />
 
           {/*
             A <Switch> looks through all its children <Route>
@@ -35,14 +37,14 @@ class App extends React.Component {
             of them to render at a time
           */}
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/login">
               <Login />
             </Route>
             <Route path="/dashboard">
-              <TutorDashboard />
+              <StaffDashboard />
             </Route>
           </Switch>
-        {/* </div> */}
+        </div>
       </Router>
     );
   }

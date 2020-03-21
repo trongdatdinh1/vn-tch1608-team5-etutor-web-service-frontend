@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import './assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
-import './assets/vendor/animate/animate.css';
-import './assets/css/util.css';
-import './assets/css/main.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import './assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
+// import './assets/vendor/animate/animate.css';
+// import './assets/css/util.css';
+// import './assets/css/main.css';
 // import './assets/css/style.css';
 // import './assets/css/style.css.map';
 
