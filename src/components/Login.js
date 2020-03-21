@@ -2,6 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
 import img01 from '../assets/images/img-01.png';
+import 'bootstrap/dist/css/bootstrap.css';
+import '../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
+import '../assets/vendor/animate/animate.css';
+import '../assets/css/util.css';
+import '../assets/css/main.css';
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
