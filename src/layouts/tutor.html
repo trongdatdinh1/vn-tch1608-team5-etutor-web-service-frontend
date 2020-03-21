@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eTutor System</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/etutor.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="../assets/images/favicon.png" />
+</head>
+
+<body>
+    <!-- content-wrapper ends -->
+
+
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" href="index.html"><img src="../assets/images/logo.svg"
+                        alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../assets/images/logo-mini.svg"
+                        alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+                <div class="search-field d-none d-md-block">
+                    <form class="d-flex align-items-center h-100" action="#">
+                        <div class="input-group">
+                            <div class="input-group-prepend bg-transparent">
+                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            </div>
+                            <input type="text" class="form-control bg-transparent border-0"
+                                placeholder="Search students">
+                        </div>
+                    </form>
+                </div>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <div class="nav-profile-img">
+                                <img src="../assets/images/faces/face1.jpg" alt="image">
+                                <span class="availability-status online"></span>
+                            </div>
+                            <div class="nav-profile-text">
+                                <p class="mb-1 text-black">David Greymaax</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
+                        </div>
+                    </li>
+                    <!-- <li class="nav-item d-none d-lg-block full-screen-link">
+            <a class="nav-link">
+              <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+            </a>
+          </li> -->
+                    <!-- <li class="nav-item dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown"
+              aria-expanded="false">
+              <i class="mdi mdi-email-outline"></i>
+              <span class="count-symbol bg-warning"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+              aria-labelledby="messageDropdown">
+              <h6 class="p-3 mb-0">Messages</h6>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="../assets/images/faces/face4.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                  <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
+                  <p class="text-gray mb-0"> 1 Minutes ago </p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="../assets/images/faces/face2.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                  <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
+                  <p class="text-gray mb-0"> 15 Minutes ago </p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="../assets/images/faces/face3.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                  <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
+                  <p class="text-gray mb-0"> 18 Minutes ago </p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <h6 class="p-3 mb-0 text-center">4 new messages</h6>
+            </div>
+          </li> -->
+                    <!-- <li class="nav-item dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+              data-toggle="dropdown">
+              <i class="mdi mdi-bell-outline"></i>
+              <span class="count-symbol bg-danger"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+              aria-labelledby="notificationDropdown">
+              <h6 class="p-3 mb-0">Notifications</h6>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-success">
+                    <i class="mdi mdi-calendar"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                  <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
+                  <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-warning">
+                    <i class="mdi mdi-settings"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                  <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
+                  <p class="text-gray ellipsis mb-0"> Update dashboard </p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-info">
+                    <i class="mdi mdi-link-variant"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                  <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
+                  <p class="text-gray ellipsis mb-0"> New admin wow! </p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+            </div>
+          </li> -->
+                    <li class="nav-item nav-logout d-none d-lg-block">
+                        <a class="nav-link" href="#">
+                            <i class="mdi mdi-power"></i>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item nav-settings d-none d-lg-block">
+            <a class="nav-link" href="#">
+              <i class="mdi mdi-format-line-spacing"></i>
+            </a>
+          </li> -->
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <a href="#" class="nav-link">
+                            <div class="nav-profile-image">
+                                <img src="../assets/images/faces/face1.jpg" alt="profile">
+                                <span class="login-status online"></span>
+                                <!--change to offline or busy as needed-->
+                            </div>
+                            <div class="nav-profile-text d-flex flex-column">
+                                <span class="font-weight-bold mb-2">David Grey. H</span>
+                                <span class="text-secondary text-small">Staff member</span>
+                            </div>
+                            <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <span class="menu-title">Home page</span>
+                            <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+            <a class="nav-link" href="register.html">
+              <span class="menu-title">Create account</span>
+              <i class="mdi mdi-contacts menu-icon"></i>
+            </a>
+          </li> -->
+                    <!-- <li class="nav-item">
+            <a class="nav-link" href="pages/icons/mdi.html">
+              <span class="menu-title">Icons</span>
+              <i class="mdi mdi-contacts menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/forms/basic_elements.html">
+              <span class="menu-title">Forms</span>
+              <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/charts/chartjs.html">
+              <span class="menu-title">Charts</span>
+              <i class="mdi mdi-chart-bar menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/tables/basic-table.html">
+              <span class="menu-title">Tables</span>
+              <i class="mdi mdi-table-large menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false"
+              aria-controls="general-pages">
+              <span class="menu-title">Sample Pages</span>
+              <i class="menu-arrow"></i>
+              <i class="mdi mdi-medical-bag menu-icon"></i>
+            </a>
+            <div class="collapse" id="general-pages">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item sidebar-actions">
+            <span class="nav-link">
+              <div class="border-bottom">
+                <h6 class="font-weight-normal mb-3">Projects</h6>
+              </div>
+              <button class="btn btn-block btn-lg btn-gradient-primary mt-4">+ Add a project</button>
+              <div class="mt-4">
+                <div class="border-bottom">
+                  <p class="text-secondary">Categories</p>
+                </div>
+                <ul class="gradient-bullet-list mt-4">
+                  <li>Free</li>
+                  <li>Pro</li>
+                </ul>
+              </div>
+            </span>
+          </li> -->
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h3 class="page-title">
+                            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                                <i class="mdi mdi-home"></i>
+                            </span> Tutor dashboard </h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 stretch-card grid-margin">
+                            <div class="card bg-gradient-danger card-img-holder text-white">
+                                <div class="card-body">
+                                    <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute"
+                                        alt="circle-image" />
+                                    <h4 class="font-weight-normal mb-3">Number of messages in last 7 days<i
+                                            class="mdi mdi-chart-line mdi-24px float-right"></i>
+                                    </h4>
+                                    <h2 class="mb-5">15,0000</h2>
+                                    <!-- <h6 class="card-text">Increased by 60%</h6> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 stretch-card grid-margin">
+                            <div class="card bg-gradient-info card-img-holder text-white">
+                                <div class="card-body">
+                                    <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute"
+                                        alt="circle-image" />
+                                    <h4 class="font-weight-normal mb-3">Average number of messages <i
+                                            class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                                    </h4>
+                                    <h2 class="mb-5">45,6334</h2>
+                                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-header">
+                        <h3 class="page-title"> Allocate student </h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 col-lg-5">
+                                            <h4 class="card-title">Tutor list</h4>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Search tutor">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-sm btn-gradient-primary" type="button">
+                                                            <i class="mdi mdi-account-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-wrapper">
+                                                <div class="scroll-list">
+                                                    <ul class="d-flex flex-column-reverse todo-list-custom">
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input type="radio" class="form-check-input"
+                                                                        name="optionsRadios" value=""> Tutor <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input type="radio" class="form-check-input"
+                                                                        name="optionsRadios" value=""> Tutor <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input type="radio" class="form-check-input"
+                                                                        name="optionsRadios" value=""> Tutor <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input type="radio" class="form-check-input"
+                                                                        name="optionsRadios" value=""> Tutor <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input type="radio" class="form-check-input"
+                                                                        name="optionsRadios" value=""> Tutor <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-lg-5">
+                                            <h4 class="card-title">Student list</h4>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Search student">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-sm btn-gradient-primary" type="button">
+                                                            <i class="mdi mdi-account-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-wrapper">
+                                                <div class="form-check point-form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" class="form-check-input"> Select all <i
+                                                            class="input-helper"></i></label>
+                                                </div>
+                                                <div class="scroll-list">
+                                                    <ul class="d-flex flex-column-reverse todo-list-custom">
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                                        class="input-helper"></i></label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-lg-2">
+                                            <h4 class="card-title">&nbsp;</h4>
+                                            <div class="add-items d-flex">
+                                                <button
+                                                    class="add btn btn-gradient-primary font-weight-bold todo-list-add-btn btn-block"
+                                                    data-toggle="modal" data-target="#allocateModal">
+                                                    <i class="mdi mdi-account-check"></i>Allocate</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Chat</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Bloging</h4>
+                                    <div class="list-group scroll-blog">
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">Requirement course work</h5>
+                                               
+                                            </div>
+                                            <p class="mb-1">Short description Donec id elit non mi porta gravida at eget metus. Maecenas
+                                                sed diam eget risus varius blandit.</p>
+
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">List group item heading</h5>
+                                                
+                                            </div>
+                                            <p class="mb-1">Short description Donec id elit non mi porta gravida at eget metus. Maecenas
+                                                sed diam eget risus varius blandit.</p>
+
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">List group item heading</h5>
+                                                
+                                            </div>
+                                            <p class="mb-1">Short description Donec id elit non mi porta gravida at eget metus. Maecenas
+                                                sed diam eget risus varius blandit.</p>
+
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">Requirement course work</h5>
+                                                
+                                            </div>
+                                            <p class="mb-1">Short description Donec id elit non mi porta gravida at eget metus. Maecenas
+                                                sed diam eget risus varius blandit.</p>
+
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">List group item heading</h5>
+                                                
+                                            </div>
+                                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas
+                                                sed diam eget risus varius blandit.</p>
+
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">List group item heading</h5>
+                                                    
+                                                </div>
+                                                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas
+                                                    sed diam eget risus varius blandit.</p>
+    
+                                            </a>
+                                            <a href="#" class="list-group-item list-group-item-action">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1">List group item heading</h5>
+                                                        
+                                                    </div>
+                                                    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas
+                                                        sed diam eget risus varius blandit.</p>
+        
+                                                </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">List group item heading</h5>
+                                                
+                                            </div>
+                                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas
+                                                sed diam eget risus varius blandit.</p>
+
+                                        </a>
+
+                                    </div>
+                                    <button
+                                        class="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
+                                        data-toggle="modal" data-target="#blogingModal">
+                                        <i class="mdi mdi-file-document-edit-outline mr-2"></i>Create blog</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Calendar</h4>
+                                    <div class="calendar">
+                                        <div class="d-flex align-items-center"><i
+                                                class="mdi mdi-calendar-month mr-3"></i>
+                                            <h2 class="month font-weight-bold mb-0 text-uppercase">December 2019</h2>
+                                        </div>
+                                        <p class="font-italic text-muted mb-5">No events for this day.</p>
+                                        <ol class="day-names list-unstyled">
+                                            <li class="font-weight-bold text-uppercase">Sun</li>
+                                            <li class="font-weight-bold text-uppercase">Mon</li>
+                                            <li class="font-weight-bold text-uppercase">Tue</li>
+                                            <li class="font-weight-bold text-uppercase">Wed</li>
+                                            <li class="font-weight-bold text-uppercase">Thu</li>
+                                            <li class="font-weight-bold text-uppercase">Fri</li>
+                                            <li class="font-weight-bold text-uppercase">Sat</li>
+                                        </ol>
+
+                                        <ol class="days list-unstyled">
+                                            <li>
+                                                <div class="date">1</div>
+                                                <div class="event bg-success">Event with Long Name</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">2</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">3</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">4</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">5</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">6</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">7</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">8</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">9</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">10</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">11</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">12</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">13</div>
+                                                <div class="event all-day begin span-2 bg-warning">Event Name</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">14</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">15</div>
+                                                <div class="event all-day end bg-success">Event Name</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">16</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">17</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">18</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">19</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">20</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">21</div>
+                                                <div class="event bg-primary">Event Name</div>
+                                                <div class="event bg-success">Event Name</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">22</div>
+                                                <div class="event bg-info">Event with Longer Name</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">23</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">24</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">25</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">26</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">27</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">28</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">29</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">30</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">31</div>
+                                            </li>
+                                            <li class="outside">
+                                                <div class="date">1</div>
+                                            </li>
+                                            <li class="outside">
+                                                <div class="date">2</div>
+                                            </li>
+                                            <li class="outside">
+                                                <div class="date">3</div>
+                                            </li>
+                                            <li class="outside">
+                                                <div class="date">4</div>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <button
+                                        class="add btn btn-gradient-primary font-weight-bold todo-list-add-btn btn-block"
+                                        data-toggle="modal" data-target="#mettingModal">
+                                        <i class="mdi mdi-calendar-month mr-2"></i>Create metting</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 grid-margin stretch-card lst-content">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        List student allocated
+                                    </h4>
+                                    <div class="part-right">
+                                        <span class="filter"><i class="mdi mdi-filter"></i> Filter by name </span> |
+                                        <a href="" class="viw-all">View all >></a>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-2">
+                                            <a href="" class="item">
+                                                <div class="text-center">
+                                                    <img src="../assets/images/dashboard/img_1.jpg"
+                                                        class="mb-2 mw-100 w-100 rounded" alt="image">
+                                                    <h6>Donald Trump</h6>
+                                                    <p>trump@etutor.com.vn</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © Team 05
+                            <a href="#" target="_blank">TCH1608</a>. All rights reserved.</span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="allocateModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="alert-heading">Well done!</h4>
+                <p>The email notification has sent to tutor and students.</p>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="blogingModal">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create blog</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-8 col-lg-8">
+                            <form class="forms-sample">
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Title</label>
+                                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleTextarea1">Desription</label>
+                                    <textarea class="form-control" id="exampleTextarea1" rows="7"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>File upload</label>
+                                    <input type="file" name="img[]" class="file-upload-default">
+                                    <div class="input-group col-xs-12">
+                                        <input type="text" class="form-control file-upload-info" disabled
+                                            placeholder="Upload Image">
+                                        <span class="input-group-append">
+                                            <button class="file-upload-browse btn btn-gradient-primary"
+                                                type="button">Upload</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-12 col-sm-4 col-lg-4">
+                                <p class="small-ttl">Student list</p>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search student">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-gradient-primary" type="button">
+                                            <i class="mdi mdi-account-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-wrapper">
+                                <div class="form-check point-form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input"> Select all <i
+                                            class="input-helper"></i></label>
+                                </div>
+                                <div class="scroll-list">
+                                    <ul class="d-flex flex-column-reverse todo-list-custom">
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" aria-label="Close"
+                        class="btn btn-light mr-2">Cancel</button>
+                    <button type="submit" class="btn btn-gradient-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="mettingModal">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create meeting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-8 col-lg-8">
+                            <form class="forms-sample">
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Title</label>
+                                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Time</label>
+                                    
+
+                                    <div class="form-inline select-time">
+                                            <label class="sr-only" for="inlineFormInputName2">Name</label>
+                                            <div class="input-group mb-2 mr-sm-2">
+                                                    <input type="text" class="form-control" placeholder="Start time">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-sm btn-gradient-primary" type="button">
+                                                            <i class="mdi mdi-calendar"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="input-group mb-2 mr-sm-2">
+                                                        <input type="text" class="form-control" placeholder="End time">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-sm btn-gradient-primary" type="button">
+                                                                <i class="mdi mdi-calendar"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                        </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleTextarea1">Desription</label>
+                                    <textarea class="form-control" id="exampleTextarea1" rows="7"></textarea>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-12 col-sm-4 col-lg-4">
+                            <p class="small-ttl">Student list</p>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search student">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-gradient-primary" type="button">
+                                            <i class="mdi mdi-account-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-wrapper">
+                                <div class="form-check point-form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input"> Select all <i
+                                            class="input-helper"></i></label>
+                                </div>
+                                <div class="scroll-list">
+                                    <ul class="d-flex flex-column-reverse todo-list-custom">
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox"> Student <i
+                                                        class="input-helper"></i></label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" aria-label="Close"
+                        class="btn btn-light mr-2">Cancel</button>
+                    <button type="submit" class="btn btn-gradient-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../assets/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../assets/js/off-canvas.js"></script>
+    <script src="../assets/js/hoverable-collapse.js"></script>
+    <script src="../assets/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="../assets/js/dashboard.js"></script>
+    <script src="../assets/js/todolist.js"></script>
+    <!-- End custom js for this page -->
+</body>
+
+</html>
