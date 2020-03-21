@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/main.afecf00c.chunk.css",
+    "main.js": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.f0a3cc69.chunk.js",
+    "main.js.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.f0a3cc69.chunk.js.map",
+    "runtime-main.js": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/runtime-main.a770737b.js",
+    "runtime-main.js.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/runtime-main.a770737b.js.map",
+    "static/css/2.67123b20.chunk.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.67123b20.chunk.css",
+    "static/js/2.5ff4dd17.chunk.js": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.5ff4dd17.chunk.js",
+    "static/js/2.5ff4dd17.chunk.js.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.5ff4dd17.chunk.js.map",
+    "index.html": "/vn-tch1608-team5-etutor-web-service-frontend/index.html",
+    "precache-manifest.01efb735821fa0c62b3f5975962731f7.js": "/vn-tch1608-team5-etutor-web-service-frontend/precache-manifest.01efb735821fa0c62b3f5975962731f7.js",
+    "service-worker.js": "/vn-tch1608-team5-etutor-web-service-frontend/service-worker.js",
+    "static/css/2.67123b20.chunk.css.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.67123b20.chunk.css.map",
+    "static/css/main.afecf00c.chunk.css.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/main.afecf00c.chunk.css.map",
+    "static/js/2.5ff4dd17.chunk.js.LICENSE.txt": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.5ff4dd17.chunk.js.LICENSE.txt",
+    "static/media/main.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/Poppins-Regular.731a28a4.ttf",
+    "static/media/style.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/Ubuntu-Regular.e7da1b79.ttf",
+    "static/media/circle.svg": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/circle.1541da91.svg",
+    "static/media/font-awesome.min.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/fontawesome-webfont.fee66e71.woff",
+    "static/media/logo.svg": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/logo.fe291226.svg",
+    "static/media/materialdesignicons.min.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/materialdesignicons-webfont.f6e66652.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a770737b.js",
+    "static/css/2.67123b20.chunk.css",
+    "static/js/2.5ff4dd17.chunk.js",
+    "static/css/main.afecf00c.chunk.css",
+    "static/js/main.f0a3cc69.chunk.js"
+  ]
+}
