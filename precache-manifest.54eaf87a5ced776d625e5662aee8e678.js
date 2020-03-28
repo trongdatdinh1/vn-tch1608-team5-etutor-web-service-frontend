@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6b10c13109dbf5aa149c7f4ece421543",
+    "revision": "6322dfc3af543c50ce86f484391052a5",
     "url": "/vn-tch1608-team5-etutor-web-service-frontend/index.html"
   },
   {
-    "revision": "354b3bb88e1d1e54198b",
-    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.67123b20.chunk.css"
+    "revision": "99b4f66b049fde245f59",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.2e4c824e.chunk.css"
   },
   {
-    "revision": "25b8b0f8861e2dc54825",
-    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/main.afecf00c.chunk.css"
+    "revision": "6bf26d4f7a615dfe2452",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/main.68414c20.chunk.css"
   },
   {
-    "revision": "354b3bb88e1d1e54198b",
-    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.5ff4dd17.chunk.js"
+    "revision": "99b4f66b049fde245f59",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.1998dddf.chunk.js"
   },
   {
-    "revision": "f231859d6585c4cd5f80c344783ed269",
-    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.5ff4dd17.chunk.js.LICENSE.txt"
+    "revision": "c2e831dd746799b671bed3ceaaffa0d3",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.1998dddf.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "25b8b0f8861e2dc54825",
-    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.f0a3cc69.chunk.js"
+    "revision": "6bf26d4f7a615dfe2452",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.1dab28f9.chunk.js"
   },
   {
     "revision": "6e29bf01aceae4c8f0b0",
@@ -112,6 +112,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/circle.1541da91.svg"
   },
   {
+    "revision": "42d41e6133b1ff5a44c537ea957a7ab9",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/face1.42d41e61.jpg"
+  },
+  {
     "revision": "674f50d287a8c48dc19ba404d20fe713",
     "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/fontawesome-webfont.674f50d2.eot"
   },
@@ -130,6 +134,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "fee66e712a8a08eef5805a46892932ad",
     "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/fontawesome-webfont.fee66e71.woff"
+  },
+  {
+    "revision": "3a82198a8469b3bbb606868009368995",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/img_1.3a82198a.jpg"
+  },
+  {
+    "revision": "8aef5918ff485b9f9a546acf6215ee0c",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/logo-mini.8aef5918.svg"
   },
   {
     "revision": "fe29122644624ee4b27ef6fb90662396",
