@@ -33,14 +33,24 @@ class StaffDashboard extends React.Component {
         {id: 2, name: 'Aomine Daiki', email: 'aomine@fpt.edu.vn'},
         {id: 3, name: 'Eren Jeager', email: 'eren@fpt.edu.vn'},
         {id: 4, name: 'Tohsaka Rin', email: 'rin@fpt.edu.vn'},
-        {id: 5, name: 'Shiba Tatsuya', email: 'tatsuya@fpt.edu.vn'}
+        {id: 5, name: 'Shiba Tatsuya', email: 'tatsuya@fpt.edu.vn'},
+        {id: 6, name: 'Akimichi Choiji', email: 'akimichi@fpt.edu.vn'},
+        {id: 7, name: 'Edoggawa Conan', email: 'conan@fpt.edu.vn'},
+        {id: 8, name: 'Mikasa Akerman', email: 'mikasa@fpt.edu.vn'},
+        {id: 9, name: 'Himira Kenshin', email: 'kenshin@fpt.edu.vn'},
+        {id: 10, name: 'Hinata Shouyo', email: 'hinata@fpt.edu.vn'},
+        {id: 11, name: 'Kageyama Tobio', email: 'tobio@fpt.edu.vn'},
+        {id: 12, name: 'Natsu Dragneel', email: 'natsu@fpt.edu.vn'},
+        {id: 13, name: 'Saiki Kusuo', email: 'saiki@fpt.edu.vn'},
+        {id: 14, name: 'Nendou Riki', email: 'riki@fpt.edu.vn'},
+        {id: 15, name: 'Kaido Shuu', email: 'kaido@fpt.edu.vn'}
       ],
       assigners: [
-        {1: [1, 2]},
-        {2: [2, 3]},
-        {3: [3, 4]},
-        {4: [4, 5]},
-        {5: [1, 4]},
+        {1: [1, 6]},
+        {2: [2, 7]},
+        {3: [3, 8]},
+        {4: [4, 9]},
+        {5: [1, 10]},
       ],
       studentKeyName: '',
       tutorKeyName: '',
@@ -48,29 +58,31 @@ class StaffDashboard extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   const headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
-  //   }
+  componentDidMount() {
+    // const headers = {
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+    // }
 
-  //   axios.get(`${BASEURL}/api/users/students`, {headers: headers}).then(res => {
-  //     this.setState({students: res.data});
-  //   });
+    // axios.get(`${BASEURL}/api/users/students`, {headers: headers}).then(res => {
+    //   this.setState({students: res.data});
+    // });
 
-  //   axios.get(`${BASEURL}/api/users/tutors`, {headers: headers}).then(res => {
-  //     this.setState({tutors: res.data});
-  //   });
+    // axios.get(`${BASEURL}/api/users/tutors`, {headers: headers}).then(res => {
+    //   this.setState({tutors: res.data});
+    // });
 
-  //   axios.get(`${BASEURL}/api/allocations`, {headers: headers}).then(res => {
-  //     let arr = [];
-  //     for(const obj in res.data) {
-  //       arr.push({[obj]: res.data[obj]})
-  //     }
-  //     this.setState({assigners: arr});
-  //   });
+    // axios.get(`${BASEURL}/api/allocations`, {headers: headers}).then(res => {
+    //   let arr = [];
+    //   for(const obj in res.data) {
+    //     arr.push({[obj]: res.data[obj]})
+    //   }
+    //   this.setState({assigners: arr});
+    // });
     
-  // }
+
+
+  }
 
   toggleNavbar = () => {
     this.setState({navbarCollapsed: !this.state.navbarCollapsed})
@@ -114,6 +126,23 @@ class StaffDashboard extends React.Component {
     }
     console.log(this.state.assignedStudents);
     // console.log(this.state.assignedStudents.includes(studentId));
+  }
+
+  disableStudentCheckbox = (studentId) => {
+    let tutorId = this.state.selectedTutor;
+    
+
+    let studentAssigned = false;
+    this.state.assigners.forEach(obj => {
+      if(obj[Object.keys(obj)[0]].includes(studentId)) {
+        if(Object.keys(obj)[0] === tutorId) {
+          studentAssigned = false
+        } else {
+          studentAssigned = true;
+        }
+      }
+    });
+    return studentAssigned;
   }
 
   assignStudentsToTutor = () => {
@@ -285,7 +314,7 @@ class StaffDashboard extends React.Component {
                                 <ul className="d-flex flex-column-reverse todo-list-custom" onChange={this.chooseTutor}>
                                   {this.state.tutors.filter(tutor => tutor.name.toLowerCase().includes(this.state.tutorKeyName.toLowerCase())).map(tutor => {
                                     return (
-                                      <TutorCheckbox tutor={tutor} />    
+                                      <TutorCheckbox tutor={tutor} checked={this.state.selectedTutor == tutor.id} />    
                                     )
                                   })}
                                 </ul>
@@ -314,7 +343,7 @@ class StaffDashboard extends React.Component {
                                 <ul className="d-flex flex-column-reverse todo-list-custom">
                                   {this.state.students.filter(student => student.name.toLowerCase().includes(this.state.studentKeyName.toLowerCase())).map(student => {
                                     return (
-                                      <StudentCheckbox student={student} isChecked={this.state.assignedStudents.includes(student.id)} handleStudentCheck={this.handleStudentCheck} />
+                                      <StudentCheckbox student={student} isChecked={this.state.assignedStudents.includes(student.id)} handleStudentCheck={this.handleStudentCheck} disableCheckbox={this.disableStudentCheckbox(student.id)}/>
                                     )
                                   })}
                                 </ul>

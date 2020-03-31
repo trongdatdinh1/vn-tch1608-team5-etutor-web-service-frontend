@@ -22,12 +22,12 @@ class App extends React.Component {
             <li>
               <Link to="/login">Login</Link>
             </li>
-            {/* <li>
-              <Link to="/dashboard">Dashboard</Link>
+            <li>
+              <Link to="/staff_dashboard">Staff Dashboard</Link>
             </li>
             <li>
               <Link to="/tutor_dashboard">Tutor Dashboard</Link>
-            </li> */}
+            </li>
           </ul>
 
           <hr />

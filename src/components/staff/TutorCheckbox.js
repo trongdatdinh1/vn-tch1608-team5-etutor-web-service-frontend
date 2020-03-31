@@ -8,7 +8,7 @@ class TutorCheckbox extends React.Component {
       <li key={tutor.id}>
         <div className="form-check">
           <label className="form-check-label">
-            <input type="radio" className="form-check-input" name="tutorPick" value={tutor.id} onChange={this.props.handleStudentCheck}/>{tutor.name}<i
+            <input type="radio" className="form-check-input" name="tutorPick" value={tutor.id} onChange={this.props.handleStudentCheck} checked={this.props.checked}/>{tutor.name}<i
               className="input-helper" ></i></label>
         </div>
       </li>
