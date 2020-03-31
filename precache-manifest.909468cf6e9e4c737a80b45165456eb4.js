@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "002bda01c37e82d81c37e4406a1db04d",
+    "revision": "7fa7f3c8a68af2402440630c9b850d8a",
     "url": "/vn-tch1608-team5-etutor-web-service-frontend/index.html"
   },
   {
-    "revision": "5f25d4ecd6f1f2109168",
-    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.84fb76d5.chunk.css"
+    "revision": "266e14254039621c697c",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.a359a362.chunk.css"
   },
   {
-    "revision": "1090856c592006593169",
+    "revision": "835c1c58c5dbc3ff3e04",
     "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/main.68414c20.chunk.css"
   },
   {
-    "revision": "5f25d4ecd6f1f2109168",
-    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.0f793c96.chunk.js"
+    "revision": "266e14254039621c697c",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.dbc70155.chunk.js"
   },
   {
     "revision": "c2e831dd746799b671bed3ceaaffa0d3",
-    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.0f793c96.chunk.js.LICENSE.txt"
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.dbc70155.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1090856c592006593169",
-    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.206c143d.chunk.js"
+    "revision": "835c1c58c5dbc3ff3e04",
+    "url": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.a2da9b17.chunk.js"
   },
   {
     "revision": "6e29bf01aceae4c8f0b0",
