@@ -1,4 +1,5 @@
 import React from 'react';
+  import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
 import img01 from '../assets/images/img-01.png';
@@ -7,12 +8,14 @@ import '../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../assets/vendor/animate/animate.css';
 import '../assets/css/util.css';
 import '../assets/css/main.css';
+import {BASEURL} from '../constants/baseurl';
+import axios from 'axios';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+      username: '',
       password: '',
       email_errors: ''
     };
@@ -25,15 +28,42 @@ class Login extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    let noErrors = true;
     console.log('Submitted');
     console.log(this.state);
     console.log(this.props);
-    if(/\S+@\S+\.\S+/.test(this.state.email)){
-      this.setState({email_errors: ''})
-    } else {
-      this.setState({email_errors: 'The email is invalid.'})
+    // if(/\S+@\S+\.\S+/.test(this.state.email)){
+    //   this.setState({email_errors: ''})
+    // } else {
+    //   this.setState({email_errors: 'The email is invalid.'});
+    //   noErrors = false;
+    // }
+
+    // if(noErrors) {
+    //   // this.props.history.push("/dashboard");
+    //   const headers = {
+    //     'Content-Type': 'application/json',
+    //   }
+    //   const loginParams = {
+    //     usernameOrEmail: this.state.email,
+    //     password: this.state.password
+    //   }
+
+    //   axios.post(`${BASEURL}/api/auth/signin`, loginParams, headers)
+    //     .then(res => {
+    //       // const persons = res.data;
+    //       // this.setState({ persons });
+    //       console.log(res);
+    //       // this.props.history.push("/dashboard");
+    //     })
+    //     .catch(error => console.log(error));
+    // }
+
+    const { username, password } = this.state;
+    if (username && password) {
+      this.props.login(username, password);
     }
-    // this.props.login(this.state.email, this.state.password);
+    
   }
 
   render() {
@@ -51,7 +81,7 @@ class Login extends React.Component {
               </span>
                         
               <div className="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                <input className="input100" type="text" name="email" placeholder="Email" value={this.state.email} onChange={this.changeHandler} />
+                <input className="input100" type="text" name="username" placeholder="Email" value={this.state.username} onChange={this.changeHandler} />
                 <span className="focus-input100"></span>
                 <span className="symbol-input100">
                   <i className="fa fa-envelope" aria-hidden="true"></i>
@@ -106,4 +136,4 @@ const actionCreators = {
   login: userActions.login,
 };
 
-export default connect(mapState, actionCreators)(Login);
+export default connect(mapState, actionCreators)(withRouter(Login));

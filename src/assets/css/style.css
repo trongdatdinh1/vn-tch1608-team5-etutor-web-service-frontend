@@ -6518,7 +6518,9 @@ a.close.disabled {
     opacity: 0; }
   .modal-backdrop.show {
     opacity: 0.5; }
-
+  .modal-rgba {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 .modal-header {
   display: -webkit-box;
   display: -ms-flexbox;

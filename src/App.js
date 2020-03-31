@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {
-  BrowserRouter as Router,
+  Router,
   Switch,
   Link,
   Route,
@@ -11,20 +11,23 @@ import { alertActions } from './actions/alert.actions'
 import Login from './components/Login';
 import TutorDashboard from './components/tutor/TutorDashboard';
 import StaffDashboard from './components/staff/StaffDashboard';
-
+import { history } from './helpers/history';
 class App extends React.Component {
   
   render() {
     return (
-      <Router>
+      <Router history={history} basename={window.location.pathname || ''} >
         <div>
           <ul>
             <li>
               <Link to="/login">Login</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/dashboard">Dashboard</Link>
             </li>
+            <li>
+              <Link to="/tutor_dashboard">Tutor Dashboard</Link>
+            </li> */}
           </ul>
 
           <hr />
@@ -40,8 +43,11 @@ class App extends React.Component {
             <Route exact path="/login">
               <Login />
             </Route>
-            <Route path="/dashboard">
+            <Route path="/staff_dashboard">
               <StaffDashboard />
+            </Route>
+            <Route path="/tutor_dashboard">
+              <TutorDashboard />
             </Route>
           </Switch>
         </div>
