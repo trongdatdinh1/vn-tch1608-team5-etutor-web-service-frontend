@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/main.68414c20.chunk.css",
-    "main.js": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.a2da9b17.chunk.js",
-    "main.js.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.a2da9b17.chunk.js.map",
+    "main.js": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.b0f178e1.chunk.js",
+    "main.js.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/main.b0f178e1.chunk.js.map",
     "runtime-main.js": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/runtime-main.a770737b.js",
     "runtime-main.js.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/runtime-main.a770737b.js.map",
-    "static/css/2.a359a362.chunk.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.a359a362.chunk.css",
-    "static/js/2.dbc70155.chunk.js": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.dbc70155.chunk.js",
-    "static/js/2.dbc70155.chunk.js.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.dbc70155.chunk.js.map",
+    "static/css/2.45415894.chunk.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.45415894.chunk.css",
+    "static/js/2.c3439ef4.chunk.js": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.c3439ef4.chunk.js",
+    "static/js/2.c3439ef4.chunk.js.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.c3439ef4.chunk.js.map",
     "index.html": "/vn-tch1608-team5-etutor-web-service-frontend/index.html",
-    "precache-manifest.909468cf6e9e4c737a80b45165456eb4.js": "/vn-tch1608-team5-etutor-web-service-frontend/precache-manifest.909468cf6e9e4c737a80b45165456eb4.js",
+    "precache-manifest.6503595b2caacb4a5c70d3da2381ffc9.js": "/vn-tch1608-team5-etutor-web-service-frontend/precache-manifest.6503595b2caacb4a5c70d3da2381ffc9.js",
     "service-worker.js": "/vn-tch1608-team5-etutor-web-service-frontend/service-worker.js",
-    "static/css/2.a359a362.chunk.css.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.a359a362.chunk.css.map",
+    "static/css/2.45415894.chunk.css.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/2.45415894.chunk.css.map",
     "static/css/main.68414c20.chunk.css.map": "/vn-tch1608-team5-etutor-web-service-frontend/static/css/main.68414c20.chunk.css.map",
-    "static/js/2.dbc70155.chunk.js.LICENSE.txt": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.dbc70155.chunk.js.LICENSE.txt",
+    "static/js/2.c3439ef4.chunk.js.LICENSE.txt": "/vn-tch1608-team5-etutor-web-service-frontend/static/js/2.c3439ef4.chunk.js.LICENSE.txt",
     "static/media/main.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/Poppins-Regular.731a28a4.ttf",
     "static/media/style.css": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/Ubuntu-Regular.e7da1b79.ttf",
     "static/media/circle.svg": "/vn-tch1608-team5-etutor-web-service-frontend/static/media/circle.1541da91.svg",
@@ -26,9 +26,9 @@
   },
   "entrypoints": [
     "static/js/runtime-main.a770737b.js",
-    "static/css/2.a359a362.chunk.css",
-    "static/js/2.dbc70155.chunk.js",
+    "static/css/2.45415894.chunk.css",
+    "static/js/2.c3439ef4.chunk.js",
     "static/css/main.68414c20.chunk.css",
-    "static/js/main.a2da9b17.chunk.js"
+    "static/js/main.b0f178e1.chunk.js"
   ]
 }
