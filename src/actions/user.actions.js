@@ -1,6 +1,8 @@
 import { userConstants } from '../constants';
 import { alertActions } from './';
 import axios from 'axios';
+import {BASEURL} from '../constants/baseurl'; 
+import { history } from '../helpers/history';
 
 export const userActions = {
   login,
@@ -8,21 +10,35 @@ export const userActions = {
 
 
 
-function login(username, password) {
+function login(username, password){
   
-
+  console.log('Yea shit')
   return dispatch => {
     dispatch(request({ username }));
-    let apiUrl = '';
-    axios.post(apiUrl)
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    const loginParams = {
+      usernameOrEmail: username,
+      password: password
+    }
+    axios.post(`${BASEURL}/api/auth/signin`, loginParams, headers)
       .then(response => {
+        console.log('Come user action');
         let user = {
-          access_token: response.data.access_token,
-          username: response.data.username
+          accessToken: response.data.accessToken,
+          userRole: response.data.role
         }
-        dispatch(success(user))
+        console.log(user);
+        dispatch(success(user));
+        if(response.data.role == 'ROLE_TUTOR'){
+          history.push('/tutor_dashboard');
+        } else {
+          history.push('/staff_dashboard');
+        }
       })
       .catch(error => {
+        console.log('Catch in user action')
         dispatch(failure(error.toString()));
         dispatch(alertActions.error(error.toString()));
       });

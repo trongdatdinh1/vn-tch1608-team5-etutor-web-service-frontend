@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link, withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 import '../../assets/vendors/mdi/css/materialdesignicons.min.css';
 import '../../assets/vendors/css/vendor.bundle.base.css';
 import '../../assets/css/style.css';
@@ -10,10 +12,13 @@ import face_1 from '../../assets/images/faces/face1.jpg';
 import img_1 from '../../assets/images/dashboard/img_1.jpg';
 import TutorCheckbox from './TutorCheckbox';
 import StudentCheckbox from './StudentCheckbox';
+import axios from 'axios';
+import {BASEURL} from '../../constants/baseurl';
 class StaffDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      navbarCollapsed: true,
       selectedTutor: 1,
       assignedStudents: [],
       tutors: [
@@ -41,6 +46,34 @@ class StaffDashboard extends React.Component {
       tutorKeyName: '',
       isSelectAllChecked: false
     }
+  }
+
+  // componentDidMount() {
+  //   const headers = {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+  //   }
+
+  //   axios.get(`${BASEURL}/api/users/students`, {headers: headers}).then(res => {
+  //     this.setState({students: res.data});
+  //   });
+
+  //   axios.get(`${BASEURL}/api/users/tutors`, {headers: headers}).then(res => {
+  //     this.setState({tutors: res.data});
+  //   });
+
+  //   axios.get(`${BASEURL}/api/allocations`, {headers: headers}).then(res => {
+  //     let arr = [];
+  //     for(const obj in res.data) {
+  //       arr.push({[obj]: res.data[obj]})
+  //     }
+  //     this.setState({assigners: arr});
+  //   });
+    
+  // }
+
+  toggleNavbar = () => {
+    this.setState({navbarCollapsed: !this.state.navbarCollapsed})
   }
 
   changeHandler= (e) => {
@@ -96,8 +129,11 @@ class StaffDashboard extends React.Component {
   }
 
   render() {
+    const collapsed = this.state.navbarCollapsed;
+    const classOne = collapsed ? 'sidebar-icon-only' : '';
+    const classTwo = collapsed ? 'active' : '';
     return (
-      <div className="container-scroller">
+      <div className={`container-scroller ${classOne}`}>
         <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
           <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
             <a className="navbar-brand brand-logo" href="index.html"><img src={logo_svg} alt="logo" /></a>
@@ -105,7 +141,7 @@ class StaffDashboard extends React.Component {
                 alt="logo" /></a>
           </div>
           <div className="navbar-menu-wrapper d-flex align-items-stretch">
-            <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" onClick={this.toggleNavbar}>
               <span className="mdi mdi-menu"></span>
             </button>
             <div className="search-field d-none d-md-block">
@@ -145,13 +181,13 @@ class StaffDashboard extends React.Component {
               </li>
             </ul>
             <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-              data-toggle="offcanvas">
+              data-toggle="offcanvas" onClick={this.toggleNavbar}>
               <span className="mdi mdi-menu"></span>
             </button>
           </div>
         </nav>
         <div className="container-fluid page-body-wrapper">
-          <nav className="sidebar sidebar-offcanvas" id="sidebar">
+          <nav className={`sidebar sidebar-offcanvas ${classTwo}`} id="sidebar">
             <ul className="nav">
               <li className="nav-item nav-profile">
                 <a href="#" className="nav-link">
@@ -407,4 +443,16 @@ class StaffDashboard extends React.Component {
 }
 
 
-export default StaffDashboard;
+function mapState(state) {
+  const { authentication } = state;
+  console.log('Tutor dashboard state');
+  console.log(state);
+  return {authentication: authentication};
+}
+
+const actionCreators = {
+  // login: userActions.login,
+};
+
+// export default StaffDashboard;
+export default connect(mapState)(withRouter(StaffDashboard));

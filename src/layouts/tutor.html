@@ -1109,3 +1109,277 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="allocateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="alert-heading">Well done!</h4>
+            <p>The email notification has sent to tutor and students.</p>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="blogingModal">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create blog</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-sm-8 col-lg-8">
+                        <form class="forms-sample">
+                            <div class="form-group">
+                                <label for="exampleInputName1">Title</label>
+                                <input type="text" class="form-control" id="exampleInputName1" placeholder="Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleTextarea1">Desription</label>
+                                <textarea class="form-control" id="exampleTextarea1" rows="7"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>File upload</label>
+                                <input type="file" name="img[]" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" disabled
+                                        placeholder="Upload Image">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-gradient-primary"
+                                            type="button">Upload</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12 col-sm-4 col-lg-4">
+                            <p class="small-ttl">Student list</p>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search student">
+                                <div class="input-group-append">
+                                    <button class="btn btn-sm btn-gradient-primary" type="button">
+                                        <i class="mdi mdi-account-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-wrapper">
+                            <div class="form-check point-form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input"> Select all <i
+                                        class="input-helper"></i></label>
+                            </div>
+                            <div class="scroll-list">
+                                <ul class="d-flex flex-column-reverse todo-list-custom">
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" aria-label="Close"
+                    class="btn btn-light mr-2">Cancel</button>
+                <button type="submit" class="btn btn-gradient-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="mettingModal">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create meeting</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-sm-8 col-lg-8">
+                        <form class="forms-sample">
+                            <div class="form-group">
+                                <label for="exampleInputName1">Title</label>
+                                <input type="text" class="form-control" id="exampleInputName1" placeholder="Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName1">Time</label>
+                                
+
+                                <div class="form-inline select-time">
+                                        <label class="sr-only" for="inlineFormInputName2">Name</label>
+                                        <div class="input-group mb-2 mr-sm-2">
+                                                <input type="text" class="form-control" placeholder="Start time">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-sm btn-gradient-primary" type="button">
+                                                        <i class="mdi mdi-calendar"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="input-group mb-2 mr-sm-2">
+                                                    <input type="text" class="form-control" placeholder="End time">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-sm btn-gradient-primary" type="button">
+                                                            <i class="mdi mdi-calendar"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                    </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleTextarea1">Desription</label>
+                                <textarea class="form-control" id="exampleTextarea1" rows="7"></textarea>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-12 col-sm-4 col-lg-4">
+                        <p class="small-ttl">Student list</p>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search student">
+                                <div class="input-group-append">
+                                    <button class="btn btn-sm btn-gradient-primary" type="button">
+                                        <i class="mdi mdi-account-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-wrapper">
+                            <div class="form-check point-form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input"> Select all <i
+                                        class="input-helper"></i></label>
+                            </div>
+                            <div class="scroll-list">
+                                <ul class="d-flex flex-column-reverse todo-list-custom">
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox"> Student <i
+                                                    class="input-helper"></i></label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" aria-label="Close"
+                    class="btn btn-light mr-2">Cancel</button>
+                <button type="submit" class="btn btn-gradient-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
