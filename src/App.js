@@ -12,6 +12,7 @@ import Login from './components/Login';
 import TutorDashboard from './components/tutor/TutorDashboard';
 import StaffDashboard from './components/staff/StaffDashboard';
 import { history } from './helpers/history';
+import Chat from './components/chat/Chat';
 class App extends React.Component {
   
   render() {
@@ -27,6 +28,9 @@ class App extends React.Component {
             </li>
             <li>
               <Link to="/tutor_dashboard">Tutor Dashboard</Link>
+            </li>
+            <li>
+              <Link to="/chat">Chat</Link>
             </li>
           </ul>
 
@@ -48,6 +52,9 @@ class App extends React.Component {
             </Route>
             <Route path="/tutor_dashboard">
               <TutorDashboard />
+            </Route>
+            <Route path="/chat">
+              <Chat />
             </Route>
           </Switch>
         </div>
