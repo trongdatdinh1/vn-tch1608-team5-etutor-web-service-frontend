@@ -230,6 +230,13 @@ Calendar Styling */
   display: none;
 }
 
+.chat-page {
+  display: block;
+  background: linear-gradient(to right, #da8cff, #9a55ff);
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+
 .openchatbox{
   display: block;
 }
@@ -242,6 +249,11 @@ Calendar Styling */
   z-index: 9;
 }
 
+.chat-page .chat {
+  position:initial;
+  width: 100%;
+}
+
 .chat-container .chat {
   margin-top: auto;
   margin-bottom: auto;
@@ -249,6 +261,10 @@ Calendar Styling */
   -webkit-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
   border-radius: 15px !important;
+}
+
+.chat-page .chat {
+  background: none;
 }
 
 .chat-container .card {
@@ -277,6 +293,10 @@ Calendar Styling */
 
 .chat-container .card-header .input-group{
   padding-right: 30px;
+}
+
+.chat-page .card-header .input-group{
+  padding-right: 0;
 }
 
 .chat-container .close{
@@ -355,6 +375,10 @@ Calendar Styling */
   padding: 5px 10px;
   margin-bottom: 0px !important;
   border-radius: 15px;
+}
+
+.chat-page .contacts li {
+  border-radius: 0;
 }
 
 .chat-container .active {
