@@ -237,7 +237,7 @@ Calendar Styling */
   transition: opacity 0.3s ease;
 }
 
-.openchatbox{
+.openchatbox {
   display: block;
 }
 
@@ -250,7 +250,7 @@ Calendar Styling */
 }
 
 .chat-page .chat {
-  position:initial;
+  position: initial;
   width: 100%;
 }
 
@@ -291,15 +291,15 @@ Calendar Styling */
   border-bottom: 0 !important;
 }
 
-.chat-container .card-header .input-group{
+.chat-container .card-header .input-group {
   padding-right: 30px;
 }
 
-.chat-page .card-header .input-group{
+.chat-page .card-header .input-group {
   padding-right: 0;
 }
 
-.chat-container .close{
+.chat-container .close {
   position: absolute;
   top: 23px;
   right: 20px;
@@ -408,7 +408,7 @@ Calendar Styling */
   width: 40px;
 }
 
-.chat-container .bd-highlight{
+.chat-container .bd-highlight {
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -434,7 +434,7 @@ Calendar Styling */
   margin-left: 15px;
 }
 
-.chat-container .user_info p{
+.chat-container .user_info p {
   margin-bottom: 0;
 }
 
@@ -542,15 +542,75 @@ Calendar Styling */
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+.mdl-blog {}
+
+.mdl-blog .sidebar {
+  width: 100%;
+  min-height: 0;
+}
+
+.mdl-blog .sidebar .nav {
+  margin: 0;
+}
+
+.mdl-blog .sidebar .nav .nav-item {
+  padding: 0;
+}
+
+.mdl-blog .avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 100%;
+}
+
+.mdl-blog .card-description {
+  margin-bottom: .5em;
+}
+
+.mdl-blog .has-border {
+  border: 1px solid #ebedf2;
+  border-left: 0;
+  border-right: 0;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.mdl-blog .has-border .txt-1 {
+  margin-bottom: 10px;
+}
+
+.mdl-blog .has-border .content {
+  display: flex;
+}
+
+.mdl-blog .has-border .content .txt-2 {
+  color: #76838f;
+  font-size: .9375rem;
+  line-height: 1.5;
+  padding-top: 10px;
+}
+
+.mdl-blog .sidebar .nav .nav-item .nav-link:hover {
+  background-color: #fff;
+}
+
 @media(max-width: 576px) {
   .chat-container .contacts_card {
     margin-bottom: 15px !important;
   }
   .chat-container .chat {
-    
     bottom: 0;
     right: 0;
     width: 320px;
-    
+  }
+
+  .lst-content .part-right {
+    position: unset;
+    font-size:12px;
+  }
+
+  .lst-content .filter,.lst-content .viw-all{
+    margin-right: 10px;
+    margin-left: 10px;
   }
 }
