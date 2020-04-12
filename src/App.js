@@ -19,7 +19,7 @@ class App extends React.Component {
     return (
       <Router history={history} basename={window.location.pathname || ''} >
         <div>
-          <ul>
+          {/* <ul>
             <li>
               <Link to="/login">Login</Link>
             </li>
@@ -34,7 +34,7 @@ class App extends React.Component {
             </li>
           </ul>
 
-          <hr />
+          <hr /> */}
 
           {/*
             A <Switch> looks through all its children <Route>

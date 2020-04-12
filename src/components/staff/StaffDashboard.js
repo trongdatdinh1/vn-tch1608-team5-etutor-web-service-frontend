@@ -1,5 +1,11 @@
 import React from 'react';
-import { Link, withRouter } from "react-router-dom";
+import {
+  Router,
+  Switch,
+  Link,
+  Route,
+  withRouter
+} from "react-router-dom";
 import { connect } from 'react-redux';
 import '../../assets/vendors/mdi/css/materialdesignicons.min.css';
 import '../../assets/vendors/css/vendor.bundle.base.css';
@@ -14,6 +20,7 @@ import TutorCheckbox from './TutorCheckbox';
 import StudentCheckbox from './StudentCheckbox';
 import axios from 'axios';
 import {BASEURL} from '../../constants/baseurl';
+import {API_ON} from '../../constants/ApiOn';
 class StaffDashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -59,26 +66,42 @@ class StaffDashboard extends React.Component {
   }
 
   componentDidMount() {
-    // const headers = {
-    //   'Content-Type': 'application/json',
-    //   'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
-    // }
-
-    // axios.get(`${BASEURL}/api/users/students`, {headers: headers}).then(res => {
-    //   this.setState({students: res.data});
-    // });
-
-    // axios.get(`${BASEURL}/api/users/tutors`, {headers: headers}).then(res => {
-    //   this.setState({tutors: res.data});
-    // });
-
-    // axios.get(`${BASEURL}/api/allocations`, {headers: headers}).then(res => {
-    //   let arr = [];
-    //   for(const obj in res.data) {
-    //     arr.push({[obj]: res.data[obj]})
-    //   }
-    //   this.setState({assigners: arr});
-    // });
+    if(API_ON) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      }
+  
+      axios.get(`${BASEURL}/api/users/students`, {headers: headers}).then(res => {
+        this.setState({students: res.data.map(obj => {
+          return {
+            id: obj.id,
+            name: obj.basicProfile.name,
+            email: obj.basicProfile.email
+          }
+        })});
+      });
+  
+      axios.get(`${BASEURL}/api/list_allocation_tutor`, {headers: headers}).then(res => {
+        this.setState({tutors: res.data.map(obj => {
+          return {
+            id: obj.tutor.id,
+            name: obj.tutor.basicProfile.name,
+            email: obj.tutor.basicProfile.email,
+            studentCount: obj.student_count
+          }
+        })});
+      });
+  
+      axios.get(`${BASEURL}/api/list_allocation_tutor_students`, {headers: headers}).then(res => {
+        let arr = [];
+        for(const obj in res.data) {
+          arr.push({[obj]: res.data[obj]})
+        }
+        this.setState({assigners: arr});
+      });
+    }
+    
     
 
 
@@ -146,15 +169,42 @@ class StaffDashboard extends React.Component {
   }
 
   assignStudentsToTutor = () => {
-    let tutorId = this.state.selectedTutor;
-    let students = this.state.assignedStudents;
-    let items = [...this.state.assigners]
-    let index = items.findIndex(el => {
-      return el.hasOwnProperty(tutorId);
-    })
-    items[index][tutorId] = students;
+    if(API_ON) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      }
+      
+      let data = {
+        tutor_id: this.state.selectedTutor,
+        student_ids: this.state.assignedStudents
+      }
 
-    this.setState({assigners: items})
+      axios.post(`${BASEURL}/api/create_allocation`, data,{headers: headers}).then(res => {
+        let tutorId = data.tutor_id;
+        let students = data.student_ids;
+        let items = [...this.state.assigners]
+        let index = items.findIndex(el => {
+          return el.hasOwnProperty(tutorId);
+        })
+        items[index][tutorId] = students;
+
+        this.setState({assigners: items})
+      });
+    } else {
+      let tutorId = this.state.selectedTutor;
+      let students = this.state.assignedStudents;
+      let items = [...this.state.assigners]
+      let index = items.findIndex(el => {
+        return el.hasOwnProperty(tutorId);
+      })
+      items[index][tutorId] = students;
+
+      this.setState({assigners: items})
+    }
+
+
+    
   }
 
   render() {

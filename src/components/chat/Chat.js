@@ -1,41 +1,47 @@
 import React, { Component, useRef, useEffect } from 'react';
 import firebase from '../../config/FirebaseSDK';
-
+import uid from 'uid';
 import StudentBoxItem from './StudentBoxItem';
 import Message from './Message';
+import {
+  withRouter
+} from "react-router-dom";
+import { connect } from 'react-redux';
 
+const db = firebase.firestore();
 class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
+			tutorId: 1,
       text: '',
       selectedStudent: 2,
       conversations: [
         {
           tutorId: 1,
           studentId: 1,
-          role: 'tutor',
+          from: 'tutor',
           text: 'how are you?',
           createdAt: 'Apr 1. 2020 10:00'
         },
         {
           tutorId: 1,
           studentId: 1,
-          role: 'student',
+          from: 'student',
           text: 'Im fine?',
           createdAt: 'Apr 1. 2020 10:00'
         },
         {
           tutorId: 1,
           studentId: 1,
-          role: 'student',
+          from: 'student',
           text: 'and you?',
           createdAt: 'Apr 1. 2020 10:00'
         },
         {
           tutorId: 1,
           studentId: 1,
-          role: 'tutor',
+          from: 'tutor',
           text: 'Im good',
           createdAt: 'Apr 1. 2020 10:00'
         },
@@ -49,6 +55,7 @@ class Chat extends Component {
         {id: 4, name: 'Tohsaka Rin', email: 'rin@fpt.edu.vn'},
         {id: 5, name: 'Shiba Tatsuya', email: 'tatsuya@fpt.edu.vn'},
       ],
+      chatIds: []
     }
 
     this.messagesEndRef = React.createRef()
@@ -56,7 +63,6 @@ class Chat extends Component {
 
   componentDidMount() {
     console.log('Noooooooooooooooooo');
-    const db = firebase.firestore();
     this.scrollToBottom();
     // db.collection('places').onSnapshot(querySnapshot => {
     //   const data = querySnapshot.docs.map(doc=> {doc.data()});
@@ -79,7 +85,11 @@ class Chat extends Component {
     //   this.setState({messages: data});
     //   console.log(data);
     // });
-    
+		let chatIds = this.state.students.map(student => {
+			return `${this.state.tutorId}_${student.id}`;
+		});
+
+		this.setState({chatIds: chatIds})
   }
 
   componentDidUpdate () {
@@ -87,7 +97,14 @@ class Chat extends Component {
   }
 
   selectStudent = (id) => {
-    this.setState({selectedStudent: id})
+		this.setState({selectedStudent: id})
+		db.collection('conversations').doc(`${this.state.tutorId}__${id}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
+      const data = querySnapshot.docs.map(doc=> doc.data());
+      this.setState({conversations: data});
+			console.log(data);
+			// console.log(querySnapshot);
+    });
+
   }
 
   handleChange = e => {
@@ -100,13 +117,15 @@ class Chat extends Component {
 
   handleSend = () => {
     if(this.state.text == '') return;
-    let conv = {
-      studentId: 1,
-      role: 'tutor',
+    let msg = {
+      from: 'tutor',
       text: this.state.text,
       createdAt: (new Date()).toISOString()
-    }
-    this.setState({conversations: [...this.state.conversations, conv]})
+		}
+
+		console.log(`${this.state.tutorId}__${this.state.selectStudent}`);
+		db.collection('conversations').doc(`${this.state.tutorId}__${this.state.selectedStudent}`).collection('messages').doc(uid(19)).set(msg);
+    // this.setState({conversations: [...this.state.conversations, conv]})
     this.setState({text: ''});
   }
 
@@ -137,88 +156,7 @@ class Chat extends Component {
       //   </div>
       // </div>
 
-      <div class="container-scroller">
-        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" >
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href="index.html"><img src="../assets/images/logo.svg"
-                        alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../assets/images/logo-mini.svg"
-                        alt="logo" /></a>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-stretch">
-                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-                    <span class="mdi mdi-menu"></span>
-                </button>
-                <div class="search-field d-none d-md-block">
-                    <form class="d-flex align-items-center h-100" action="#">
-                        <div class="input-group">
-                            <div class="input-group-prepend bg-transparent">
-                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
-                            </div>
-                            <input type="text" class="form-control bg-transparent border-0"
-                                placeholder="Search students" />
-                        </div>
-                    </form>
-                </div>
-                <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item nav-profile dropdown">
-                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
-                            aria-expanded="false">
-                            <div class="nav-profile-img">
-                                <img src="../assets/images/faces/face1.jpg" alt="image" />
-                                <span class="availability-status online"></span>
-                            </div>
-                            <div class="nav-profile-text">
-                                <p class="mb-1 text-black">David Greymaax</p>
-                            </div>
-                        </a>
-                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
-                        </div>
-                    </li>
-            
-                    <li class="nav-item nav-logout d-none d-lg-block">
-                        <a class="nav-link" href="#">
-                            <i class="mdi mdi-power"></i>
-                        </a>
-                    </li>
-                  
-                </ul>
-                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-                    data-toggle="offcanvas">
-                    <span class="mdi mdi-menu"></span>
-                </button>
-            </div>
-        </nav>
-        <div class="container-fluid page-body-wrapper">
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                <ul class="nav">
-                    <li class="nav-item nav-profile">
-                        <a href="#" class="nav-link">
-                            <div class="nav-profile-image">
-                                <img src="../assets/images/faces/face1.jpg" alt="profile" />
-                                <span class="login-status online"></span>
-                            </div>
-                            <div class="nav-profile-text d-flex flex-column">
-                                <span class="font-weight-bold mb-2">David Grey. H</span>
-                                <span class="text-secondary text-small">Staff member</span>
-                            </div>
-                            <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">
-                            <span class="menu-title">Home page</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="main-panel">
+
                 <div class="content-wrapper chat-container chat-page">
                     <div class="row ">
                         <div class="col-md-4 chat">
@@ -279,21 +217,22 @@ class Chat extends Component {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-                <footer class="footer">
-                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © Team 05
-                            <a href="#" target="_blank">TCH1608</a>. All rights reserved.</span>
-                    </div>
-                </footer>
-            </div>
-        </div>
-    </div>
     );
   }
 }
 
 
-export default Chat;
+function mapState(state) {
+  const { authentication } = state;
+  console.log('Tutor chat');
+  console.log(state);
+  return {authentication: authentication};
+}
+
+const actionCreators = {
+  // login: userActions.login,
+};
+
+// export default TutorDashboard;
+export default connect(mapState)(withRouter(Chat));
