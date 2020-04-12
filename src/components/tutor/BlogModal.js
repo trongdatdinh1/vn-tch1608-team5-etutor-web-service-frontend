@@ -8,7 +8,7 @@ import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment';
 import axios from 'axios';
 import {BASEURL} from '../../constants/baseurl';
-
+import {API_ON} from '../../constants/ApiOn';
 class BlogModal extends React.Component {
   constructor(props) {
     super(props);
@@ -53,30 +53,35 @@ class BlogModal extends React.Component {
   handleSubmit = () => {
 
     console.log(this.state);
-    
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
-    };
 
     let blog = {
+      title: this.state.title,
       content: this.state.content,
       student_ids: this.state.selectedStudents
     }
 
-    
-    axios.post(`${BASEURL}/api/blogs`, blog, {headers: headers}).then(res => {
-        let blog = {
-          // title: this.state.title,
-          content: this.state.content,
-          student_ids: this.state.selectedStudents
-        }
-        this.props.createBlog(blog);
-    }).catch(error => {
-      console.log(error);
-    }).finally(() => {
+    if(API_ON) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      };
+      
+      axios.post(`${BASEURL}/api/blogs`, blog, {headers: headers}).then(res => {
+        this.props.createBlog({
+          id: res.data.id,
+          title: res.data.title,
+          content: res.data.content,
+        });
+      }).catch(error => {
+        console.log(error);
+      }).finally(() => {
+        this.closeModal();
+      });
+    } else {
+      this.props.createBlog(blog);
       this.closeModal();
-    });
+    }
+    
   }
 
   
@@ -140,7 +145,7 @@ class BlogModal extends React.Component {
                                           <li key={student.id}>
                                             <div className="form-check">
                                               <label className="form-check-label">
-                                                <input className="checkbox" type="checkbox" checked={this.state.selectedStudents.includes(student.id)} value={student.id} onChange={this.handleStudentCheck} /> {student.name} <i className="input-helper" ></i>
+                                                <input className="" name="studentCheck" type="radio" value={student.id} onChange={this.handleStudentCheck} /> {student.name} <i className="input-helper" ></i>
                                               </label>
                                             </div>
                                           </li>

@@ -8,7 +8,7 @@ import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment';
 import axios from 'axios';
 import {BASEURL} from '../../constants/baseurl';
-
+import {API_ON} from '../../constants/ApiOn';
 const CalendarIcon = props => {
   return (
     <div className="btn btn-sm btn-gradient-primary">
@@ -28,29 +28,32 @@ class MeetingModal extends React.Component {
       startDate: new Date(),
       endDate: new Date(),
       content: '',
-      selectedStudents: []
+      selectedStudent: null
     }
     this.baseState = this.state;
   }
 
-  onSelectAllChanged = () => {
-    if(!this.state.isSelectAllChecked) {
-      let studentIds = this.props.students.map(student => student.id);
-      this.setState({selectedStudents: studentIds});
-    } else {
-      this.setState({selectedStudents: []})
-    }
-    this.setState({isSelectAllChecked: !this.state.isSelectAllChecked});
-  }
+  // onSelectAllChanged = () => {
+  //   if(!this.state.isSelectAllChecked) {
+  //     let studentIds = this.props.students.map(student => student.id);
+  //     this.setState({selectedStudents: studentIds});
+  //   } else {
+  //     this.setState({selectedStudents: []})
+  //   }
+  //   this.setState({isSelectAllChecked: !this.state.isSelectAllChecked});
+  // }
 
   handleStudentCheck = e => {
-    let stringStudentId = e.target.value;
-    let studentId = parseInt(stringStudentId);
-    if(this.state.selectedStudents.includes(studentId)) {
-      this.setState({ selectedStudents: this.state.selectedStudents.filter(id => id != studentId )});
-    } else {
-      this.setState({selectedStudents: [...this.state.selectedStudents, studentId]})
-    }
+    // let stringStudentId = e.target.value;
+    // let studentId = parseInt(stringStudentId);
+    // if(this.state.selectedStudents.includes(studentId)) {
+    //   this.setState({ selectedStudents: this.state.selectedStudents.filter(id => id != studentId )});
+    // } else {
+    //   this.setState({selectedStudents: [...this.state.selectedStudents, studentId]})
+    // }
+    console.log('On select')
+    this.setState({selectedStudent: e.target.value})
+    console.log(this.state.selectedStudent);
   }
 
   changeHandler = e => {
@@ -70,30 +73,49 @@ class MeetingModal extends React.Component {
   }
 
   handleSubmit = () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
-    }
-    let meeting = {
-      title: this.state.title,
-      student_ids: this.state.selectedStudents,
-      start_date: this.state.startDate.toISOString(),
-      end_date: this.state.endDate.toISOString(),
-      content: this.state.content
+    
+
+    if(API_ON) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      }
+      let meeting = {
+        title: this.state.title,
+        student_id: this.state.selectedStudent,
+        start_date: this.state.startDate.toISOString(),
+        end_date: this.state.endDate.toISOString(),
+        content: this.state.content
+      }
+      
+      axios.post(`${BASEURL}/api/meetings`, meeting, {headers: headers}).then(res => {
+        console.log('You did it')
+        console.log(res);
+        let res_meeting = {
+          id: res.data.id,
+          title: res.data.title,
+          start: moment(res.data.startDate).toDate(),
+          end: moment(res.data.endDate).toDate()
+        }
+        this.props.createMeeting(res_meeting);
+      }).catch(error => {
+        console.log(error);
+      }).finally(() => {
+        this.closeModal();
+      });
+    } else {
+      let meeting = {
+        title: this.state.title,
+        student_id: this.state.selectedStudent,
+        start: moment(this.state.startDate).toDate() ,
+        end: moment(this.state.endDate).toDate() ,
+        content: this.state.content
+      }
+      console.log(meeting);
+      this.props.createMeeting(meeting);
+      this.closeModal();
     }
     
-    axios.post(`${BASEURL}/api/meetings`, meeting, {headers: headers}).then(res => {
-        let event = {
-          title: this.state.title,
-          start: this.state.startDate,
-          end: this.state.endDate
-        }
-        this.props.createEvent(event);
-    }).catch(error => {
-      console.log(error);
-    }).finally(() => {
-      this.closeModal();
-    });
   }
 
   closeModal = () => {
@@ -193,7 +215,7 @@ class MeetingModal extends React.Component {
                                 <li key={student.id}>
                                   <div className="form-check">
                                     <label className="form-check-label">
-                                      <input className="checkbox" type="checkbox" checked={this.state.selectedStudents.includes(student.id)} value={student.id} onChange={this.handleStudentCheck} /> {student.name} <i className="input-helper"></i></label>
+                                      <input className="checkbox" type="radio" value={student.id} onChange={this.handleStudentCheck} name="studentCheck" /> {student.name} <i className="input-helper"></i></label>
                                   </div>
                                 </li>
                               )

@@ -1,6 +1,14 @@
 import React from 'react';
-import { Link, withRouter } from "react-router-dom";
+import {
+  Router,
+  Switch,
+  Link,
+  Route,
+  withRouter
+} from "react-router-dom";
 import { connect } from 'react-redux';
+import { Dropdown } from 'react-bootstrap';
+
 import '../../assets/vendors/mdi/css/materialdesignicons.min.css';
 import '../../assets/vendors/css/vendor.bundle.base.css'
 import '../../assets/css/style.css';
@@ -16,6 +24,9 @@ import BlogModal from './BlogModal';
 import moment from 'moment';
 import axios from 'axios';
 import {BASEURL} from '../../constants/baseurl';
+import {API_ON} from '../../constants/ApiOn';
+import Chat from '../chat/Chat';
+
 class TutorDashboard extends React.Component {
   constructor(props){
     super(props);
@@ -30,22 +41,22 @@ class TutorDashboard extends React.Component {
         {id: 4, name: 'Tohsaka Rin', email: 'rin@fpt.edu.vn'},
         {id: 5, name: 'Shiba Tatsuya', email: 'tatsuya@fpt.edu.vn'}
       ],
-      events: [
+      meetings: [
         {
           id: 0,
           title: 'Shika',
           // allDay: true,
           // start: moment().hour(10).minute(30).toDate(),
-          start: moment('2020-03-26T08:30:00.000+0000').toDate(),
+          start: moment('2020-04-12T08:30:00.000+0000').toDate(),
           // end: moment().hour(11).minute(0).toDate(),
-          end: moment('2020-03-26T09:00:00.000+0000').toDate()
+          end: moment('2020-04-12T09:00:00.000+0000').toDate()
         },
         {
           id: 1,
           title: 'Long Event',
-          start: moment('2020-03-26T08:30:00.000+0000').toDate(),
+          start: moment('2020-04-14T08:30:00.000+0000').toDate(),
           // end: moment().hour(11).minute(0).toDate(),
-          end: moment('2020-03-26T09:00:00.000+0000').toDate()
+          end: moment('2020-04-14T09:00:00.000+0000').toDate()
         },
       ],
       blogs: [
@@ -54,46 +65,56 @@ class TutorDashboard extends React.Component {
           content: 'Blog content',
 
         }
-      ]
+      ],
+      notifications: []
     }
   }
 
-  // componentDidMount() {
-  //   console.log('Did mount');
-  //   console.log(this.props);
-  //   const headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
-  //   }
-  //   console.log(this.props.authentication.user.accessToken);
+  componentDidMount() {
+    console.log('Did mount');
+    console.log(this.props);
+    if(API_ON) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      }
+      console.log(this.props.authentication.user.accessToken);
+  
+      axios.get(`${BASEURL}/api/tutor_allocations`, {headers: headers}).then(res => {
+        this.setState({students: res.data});
+      });
+  
+      axios.get(`${BASEURL}/api/meetings`, {headers: headers}).then(res => {
+        let meetings = res.data.map(meeting => {
+          return {
+            id: meeting.id,
+            title: meeting.title,
+            start: moment(meeting.startDate).toDate(),
+            end: moment(meeting.endDate).toDate(),
+            content: meeting.content
+          }
+        });
+        this.setState({meetings: meetings});
+      });
+  
+      axios.get(`${BASEURL}/api/blogs`, {headers: headers}).then(res => {
+        this.setState({blogs: res.data})
+      });
 
-  //   axios.get(`${BASEURL}/api/tutor_allocations`, {headers: headers}).then(res => {
-  //     this.setState({students: res.data});
-  //   });
+      axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
+        this.setState({notifications: res.data});
+      });
+    }
+    
 
-  //   axios.get(`${BASEURL}/api/meetings`, {headers: headers}).then(res => {
-  //     let meetings = res.data.map(meeting => {
-  //       return {
-  //         title: meeting.title,
-  //         start: moment(meeting.startDate).toDate(),
-  //         end: moment(meeting.endDate).toDate()
-  //       }
-  //     });
-  //     this.setState({events: meetings});
-  //   });
-
-  //   axios.get(`${BASEURL}/api/blogs`, {headers: headers}).then(res => {
-  //     this.setState({blogs: res.data})
-  //   });
-
-  //   console.log('Did moung');
-  // }
+    console.log('Did moung');
+  }
 
   toggleNavbar = () => {
     this.setState({navbarCollapsed: !this.state.navbarCollapsed})
   }
 
-  onSelectEvent = (e) => {
+  onSelectMeeting = (e) => {
     console.log('event clicked');
     console.log(e);
   }
@@ -106,8 +127,8 @@ class TutorDashboard extends React.Component {
     this.setState({modalBlogOpen: !this.state.modalBlogOpen});
   }
 
-  createEvent = (event) => {
-    this.setState({events: [...this.state.events, event]})
+  createMeeting = (meeting) => {
+    this.setState({meetings: [...this.state.meetings, meeting]})
   }
 
   createBlog = blog => {
@@ -141,6 +162,55 @@ class TutorDashboard extends React.Component {
               </form>
             </div>
             <ul className="navbar-nav navbar-nav-right">
+              <li  className="nav-item dropdown">
+                <Dropdown className="nav-item dropdown">
+                  <Dropdown.Toggle className="nav-link count-indicator dropdown-toggle" style={{background: "white", borderColor: 'white'}}>
+                    <i className="mdi mdi-bell-outline"></i>
+                    <span className="count-symbol bg-danger"></span>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list">
+                    <h6 className="p-3 mb-0">Notifications</h6>
+                    <div className="dropdown-divider"></div>
+                    <Dropdown.Item href="#/action-1" className="dropdown-item preview-item">
+                      <div className="preview-thumbnail">
+                        <div className="preview-icon bg-success">
+                          <i className="mdi mdi-calendar"></i>
+                        </div>
+                      </div>
+                      <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                        <h6 className="preview-subject font-weight-normal mb-1">Event today</h6>
+                        <p className="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+                      </div>
+                      <div className="dropdown-divider"></div>
+                    </Dropdown.Item>
+                    {/* <Dropdown.Item href="#/action-2" className="dropdown-item preview-item">
+                      <div className="preview-thumbnail">
+                        <div className="preview-icon bg-warning">
+                          <i className="mdi mdi-settings"></i>
+                        </div>
+                      </div>
+                      <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                        <h6 className="preview-subject font-weight-normal mb-1">Settings</h6>
+                        <p className="text-gray ellipsis mb-0"> Update dashboard </p>
+                      </div>
+                      <div class="dropdown-divider"></div>
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#/action-3" className="dropdown-item preview-item">
+                      <div className="preview-thumbnail">
+                        <div className="preview-icon bg-info">
+                          <i className="mdi mdi-link-variant"></i>
+                        </div>
+                      </div>
+                      <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                        <h6 className="preview-subject font-weight-normal mb-1">Launch Admin</h6>
+                        <p className="text-gray ellipsis mb-0"> New admin wow! </p>
+                      </div>
+                      <div className="dropdown-divider"></div>
+                    </Dropdown.Item> */}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </li>
               <li className="nav-item nav-profile dropdown">
                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                   aria-expanded="false">
@@ -177,27 +247,40 @@ class TutorDashboard extends React.Component {
             <nav className={`sidebar sidebar-offcanvas ${classTwo}`} id="sidebar">
                 <ul className="nav">
                     <li className="nav-item nav-profile">
-                        <a href="#" className="nav-link">
-                            <div className="nav-profile-image">
-                                <img src={face_1} alt="profile" />
-                                <span className="login-status online"></span>
-                            </div>
-                            <div className="nav-profile-text d-flex flex-column">
-                                <span className="font-weight-bold mb-2">David Grey. H</span>
-                                <span className="text-secondary text-small">Staff member</span>
-                            </div>
-                            <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-                        </a>
+                      <a href="#" className="nav-link">
+                        <div className="nav-profile-image">
+                          <img src={face_1} alt="profile" />
+                          <span className="login-status online"></span>
+                        </div>
+                        <div className="nav-profile-text d-flex flex-column">
+                          <span className="font-weight-bold mb-2">David Grey. H</span>
+                          <span className="text-secondary text-small">Staff member</span>
+                        </div>
+                        <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                      </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="index.html">
-                            <span className="menu-title">Home page</span>
-                            <i className="mdi mdi-home menu-icon"></i>
-                        </a>
+                      <Link to="/tutor_dashboard" className="nav-link">
+                        <span class="menu-title">Home pages</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                      </Link>
+                    </li>
+                    <li class="nav-item">
+                      <Link to="/tutor_dashboard/chat" className="nav-link">
+                        <span class="menu-title">Chat</span>
+                        <i class="mdi mdi-chat-alert menu-icon"></i>
+                      </Link>
+                    </li>
+                    <li class="nav-item">
+                      <Link to="/tutor_dashboard/logs" className="nav-link">
+                        <span class="menu-title">Allocation logs</span>
+                        <i class="mdi mdi-chart-bar menu-icon"></i>
+                      </Link>
                     </li>
                 </ul>
             </nav>
             <div className="main-panel">
+              <Route exac path='/tutor_dashboard'>
                 <div className="content-wrapper">
                     <div className="page-header">
                         <h3 className="page-title">
@@ -231,93 +314,161 @@ class TutorDashboard extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="page-header">
-                      <h3 className="page-title"> Schedule </h3>
-                      <button
-                        className="add btn btn-gradient-primary font-weight-bold todo-list-add-btn btn-block col-3"
-                        data-toggle="modal" data-target="#mettingModal" onClick={this.toggleModalMeeting}>
-                        <i className="mdi mdi-calendar-month mr-2"></i>Create metting</button>
-                      
-                    </div>
-                    <div className="row">
-                        <div className="col-12 grid-margin">
-                            <div className="card">
-                                <div className="card-body">
-                                    <TutorCalendar onSelectEvent={this.onSelectEvent} events={this.state.events} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Route path='/tutor_dashboard/logs'>
+                      <div class="page-header">
+                          <h3 class="page-title"> Allocate logs </h3>
+                      </div>
 
-                    <div className="row">
-                        <div className="col-md-6 grid-margin stretch-card">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h4 className="card-title">Chat</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 grid-margin stretch-card">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h4 className="card-title">Bloging</h4>
-                                    <div className="list-group scroll-blog">
-                                      {this.state.blogs.map(blog => {
-                                        return (
-                                          <a href="#" className="list-group-item list-group-item-action" key={blog.id}>
-                                            <div className="d-flex w-100 justify-content-between">
-                                                <h5 className="mb-1">Requirement course work</h5>
-                                              
-                                            </div>
-                                            <p className="mb-1">{blog.content}</p>
+                      <div class="row">
+                          <div class="col-12 grid-margin">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <div class="mdl-log">
+                                          <h4 class="card-title">Staff A</h4>
+                                          <p class="card-description"> has assigned linh_student1, linh_student2,
+                                              linh_student3, to dat_tutor
+                                              <span class="txt-time">31 Mar 8:21PM</span>
+                                          </p>
+                                      </div>
+                                      <div class="mdl-log">
+                                          <h4 class="card-title">Staff A</h4>
+                                          <p class="card-description"> has assigned linh_student1, linh_student2,
+                                              linh_student3, to dat_tutor
+                                              <span class="txt-time">31 Mar 8:21PM</span>
+                                          </p>
+                                      </div>
+                                      <div class="mdl-log">
+                                          <h4 class="card-title">Staff A</h4>
+                                          <p class="card-description"> has assigned linh_student1, linh_student2,
+                                              linh_student3, to dat_tutor
+                                              <span class="txt-time">31 Mar 8:21PM</span>
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </Route>
+                    <Route exact path='/tutor_dashboard'>
+                      <div className="page-header">
+                        <h3 className="page-title"> Schedule </h3>
+                        <button
+                          className="add btn btn-gradient-primary font-weight-bold todo-list-add-btn btn-block col-3"
+                          data-toggle="modal" data-target="#mettingModal" onClick={this.toggleModalMeeting}>
+                          <i className="mdi mdi-calendar-month mr-2"></i>Create metting</button>
+                        
+                      </div>
+                      <div className="row">
+                          <div className="col-12 grid-margin">
+                              <div className="card">
+                                  <div className="card-body">
+                                      <TutorCalendar onSelectMeeting={this.onSelectMeeting} events={this.state.meetings} />
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
 
-                                          </a>
-                                        )
-                                      })}
-                                    </div>
-                                    <button
-                                        className="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
-                                        data-toggle="modal" data-target="#blogingModal" onClick={this.toggleModalBlog}>
-                                        <i className="mdi mdi-file-document-edit-outline mr-2"></i>Create blog</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12 grid-margin stretch-card lst-content">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h4 className="card-title">
-                                        List students
-                                    </h4>
-                                    <div className="part-right">
-                                        <span className="filter"><i className="mdi mdi-filter"></i> Filter by name </span> |
-                                        <a href="" className="viw-all">View all >></a>
-                                    </div>
-                                    <div className="row">
-                                        {this.state.students.map(student => {
-                                            return (
-                                                <div className="col-6 col-sm-4 col-lg-2" key={student.id}>
-                                                    <a href="" className="item">
-                                                        <div className="text-center">
-                                                            <img src="../assets/images/dashboard/img_1.jpg"
-                                                                className="mb-2 mw-100 w-100 rounded" alt="image" />
-                                                            <h6>{student.name}</h6>
-                                                            <p>{student.email}</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            )
+                      <div className="row">
+                          <div className="col-md-6 grid-margin stretch-card">
+                              <div className="card">
+                                  <div className="card-body">
+                                      <h4 className="card-title">Request</h4>
+                                      <div class="list-group scroll-blog">
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                          <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">Title requirement</h5>
+                                          </div>
+                                          <p class="mb-1">Cottage out enabled was entered greatly prevent message.</p>
+                                          <p class="mb-1 text-muted"><i class="mdi mdi-account"></i> To: Tutor 01</p>
+                                          <p class="mb-1 text-muted">
+                                            <i class="mdi mdi-clock-outline icon-sm"></i>
+                                              8:58 PM 07/04/2020
+                                          </p>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                          <div class="d-flex w-100 justify-content-between">
+                                              <h5 class="mb-1">Title requirement</h5>
+                                          </div>
+                                          <p class="mb-1">Cottage out enabled was entered greatly prevent message.</p>
+                                          <p class="mb-1 text-muted"><i class="mdi mdi-account"></i> To: Tutor 01</p>
+                                          <p class="mb-1 text-muted">
+                                              <i class="mdi mdi-clock-outline icon-sm"></i>
+                                              8:58 PM 07/04/2020
+                                          </p>
+                                        </a>
+                                      </div>
+                                      <button
+                                          class="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
+                                          data-toggle="modal" data-target="#requestModal">
+                                          <i class="mdi mdi-note-plus-outline mr-2"></i>Create request</button>
+                                  </div>
+                              </div>
+                          </div>
+                          <div className="col-md-6 grid-margin stretch-card">
+                              <div className="card">
+                                  <div className="card-body">
+                                      <h4 className="card-title">Bloging</h4>
+                                      <div className="list-group scroll-blog">
+                                        {this.state.blogs.map(blog => {
+                                          return (
+                                            <a href="#" className="list-group-item list-group-item-action" key={blog.id}>
+                                              <div className="d-flex w-100 justify-content-between">
+                                                  <h5 className="mb-1">Requirement course work</h5>
+                                                
+                                              </div>
+                                              <p className="mb-1">{blog.content}</p>
+
+                                            </a>
+                                          )
                                         })}
-                                    </div>
+                                      </div>
+                                      <button
+                                          className="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
+                                          data-toggle="modal" data-target="#blogingModal" onClick={this.toggleModalBlog}>
+                                          <i className="mdi mdi-file-document-edit-outline mr-2"></i>Create blog</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div className="row">
+                          <div className="col-12 grid-margin stretch-card lst-content">
+                              <div className="card">
+                                  <div className="card-body">
+                                      <h4 className="card-title">
+                                          List students
+                                      </h4>
+                                      <div className="part-right">
+                                          <span className="filter"><i className="mdi mdi-filter"></i> Filter by name </span> |
+                                          <a href="" className="viw-all">View all >></a>
+                                      </div>
+                                      <div className="row">
+                                          {this.state.students.map(student => {
+                                              return (
+                                                  <div className="col-6 col-sm-4 col-lg-2" key={student.id}>
+                                                      <a href="" className="item">
+                                                          <div className="text-center">
+                                                              <img src="../assets/images/dashboard/img_1.jpg"
+                                                                  className="mb-2 mw-100 w-100 rounded" alt="image" />
+                                                              <h6>{student.name}</h6>
+                                                              <p>{student.email}</p>
+                                                          </div>
+                                                      </a>
+                                                  </div>
+                                              )
+                                          })}
+                                      </div>
 
-                                </div>
-                            </div>
-                        </div>
+                                  </div>
+                              </div>
+                          </div>
                     </div>
-
+                  </Route>
                 </div>
-                <footer className="footer">
+              </Route>
+              <Route exac path='/tutor_dashboard/chat'>
+                <Chat />
+              </Route>
+              <footer className="footer">
                     <div className="d-sm-flex justify-content-center justify-content-sm-between">
                         <span className="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © Team 05
                             <a href="#" target="_blank">TCH1608</a>. All rights reserved.</span>
@@ -325,7 +476,7 @@ class TutorDashboard extends React.Component {
                 </footer>
             </div>
         </div>
-        <MeetingModal isModalOpen={this.state.modalMeetingOpen} toggleModal={this.toggleModalMeeting} students={this.state.students} createEvent={this.createEvent}/>
+        <MeetingModal isModalOpen={this.state.modalMeetingOpen} toggleModal={this.toggleModalMeeting} students={this.state.students} createMeeting={this.createMeeting}/>
         <BlogModal isModalOpen={this.state.modalBlogOpen} toggleModal={this.toggleModalBlog} students={this.state.students} createBlog={this.createBlog} />
     </div>
     )

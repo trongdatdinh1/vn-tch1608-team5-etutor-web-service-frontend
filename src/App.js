@@ -12,13 +12,14 @@ import Login from './components/Login';
 import TutorDashboard from './components/tutor/TutorDashboard';
 import StaffDashboard from './components/staff/StaffDashboard';
 import { history } from './helpers/history';
+import Chat from './components/chat/Chat';
 class App extends React.Component {
   
   render() {
     return (
       <Router history={history} basename={window.location.pathname || ''} >
         <div>
-          <ul>
+          {/* <ul>
             <li>
               <Link to="/login">Login</Link>
             </li>
@@ -28,9 +29,12 @@ class App extends React.Component {
             <li>
               <Link to="/tutor_dashboard">Tutor Dashboard</Link>
             </li>
+            <li>
+              <Link to="/chat">Chat</Link>
+            </li>
           </ul>
 
-          <hr />
+          <hr /> */}
 
           {/*
             A <Switch> looks through all its children <Route>
@@ -48,6 +52,9 @@ class App extends React.Component {
             </Route>
             <Route path="/tutor_dashboard">
               <TutorDashboard />
+            </Route>
+            <Route path="/chat">
+              <Chat />
             </Route>
           </Switch>
         </div>
