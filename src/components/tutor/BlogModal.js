@@ -110,10 +110,10 @@ class BlogModal extends React.Component {
                     <div className="row">
                         <div className="col-12 col-sm-8 col-lg-8">
                             <form className="forms-sample">
-                                {/* <div className="form-group">
+                                <div className="form-group">
                                     <label for="exampleInputName1">Title</label>
-                                    <input type="text" className="form-control" id="exampleInputName1" placeholder="Title" />
-                                </div> */}
+                                    <input type="text" className="form-control" id="exampleInputName1" name='title' value={this.state.title} onChange={this.changeHandler} placeholder="Title" />
+                                </div>
                                 <div className="form-group">
                                     <label>Content</label>
                                     <textarea className="form-control" id="exampleTextarea1" rows="7" name='content' value={this.state.content} onChange={this.changeHandler}></textarea>
