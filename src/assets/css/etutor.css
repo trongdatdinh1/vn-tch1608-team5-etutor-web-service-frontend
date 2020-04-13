@@ -237,6 +237,10 @@ Calendar Styling */
   transition: opacity 0.3s ease;
 }
 
+.p-0 .chat-page,.p-0 .chat-container .card {
+  border-radius: 0.3125rem !important;
+}
+
 .openchatbox {
   display: block;
 }
