@@ -8,7 +8,6 @@ class Comment extends React.Component {
   
 
   render() {
-    console.log(this.props);
     return (
       <div className="content">
         <img src={face_1} className="mr-2 avatar" alt="image" />

@@ -114,7 +114,7 @@ class BlogDetails extends React.Component {
                   <div className="txt-1">1 blog comment</div>
                   {this.state.comments.map(comment => {
                     return (
-                      <Comment comment={comment} />
+                      <Comment comment={comment} key={comment.id} />
                     )
                   } )}
                 </div>

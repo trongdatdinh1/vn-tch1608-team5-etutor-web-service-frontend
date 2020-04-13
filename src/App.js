@@ -11,6 +11,7 @@ import { alertActions } from './actions/alert.actions'
 import Login from './components/Login';
 import TutorDashboard from './components/tutor/TutorDashboard';
 import StaffDashboard from './components/staff/StaffDashboard';
+import StudentDashboard from './components/student/StudentDashboard';
 import { history } from './helpers/history';
 import Chat from './components/chat/Chat';
 class App extends React.Component {
@@ -52,6 +53,9 @@ class App extends React.Component {
             </Route>
             <Route path="/tutor_dashboard">
               <TutorDashboard />
+            </Route>
+            <Route path="/student_dashboard">
+              <StudentDashboard />
             </Route>
             <Route path="/chat">
               <Chat />
