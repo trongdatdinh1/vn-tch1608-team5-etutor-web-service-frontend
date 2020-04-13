@@ -53,7 +53,7 @@ const TutorCalendar = props => {
         views={['month', 'week']}
         style={{ height: 700 }}
         selectable={true}
-        onSelectEvent={props.onSelectEvent}
+        onSelectEvent={props.onSelectMeeting}
       />
     </div>
   )

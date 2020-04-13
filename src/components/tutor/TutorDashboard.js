@@ -23,15 +23,19 @@ import MeetingModal from './MeetingModal';
 import BlogModal from './BlogModal';
 import moment from 'moment';
 import axios from 'axios';
+import BlogDetails from '../blog/BlogDetails';
 import {BASEURL} from '../../constants/baseurl';
 import {API_ON} from '../../constants/ApiOn';
 import Chat from '../chat/Chat';
+import MeetingModalDetails from './MeetingModalDetails';
 
 class TutorDashboard extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       navbarCollapsed: false,
+      selectedMeeting: null,
+      modalMeetingDetailsOpen: false,
       modalMeetingOpen: false,
       modalBlogOpen: false,
       students: [
@@ -80,8 +84,14 @@ class TutorDashboard extends React.Component {
       }
       console.log(this.props.authentication.user.accessToken);
   
-      axios.get(`${BASEURL}/api/tutor_allocations`, {headers: headers}).then(res => {
-        this.setState({students: res.data});
+      axios.get(`${BASEURL}/api/get_list_assigned_students`, {headers: headers}).then(res => {
+        this.setState({students: res.data.map(student => {
+          return {
+            id: student.id,
+            name: student.basicProfile.name,
+            email: student.basicProfile.email
+          }
+        })});
       });
   
       axios.get(`${BASEURL}/api/meetings`, {headers: headers}).then(res => {
@@ -102,6 +112,7 @@ class TutorDashboard extends React.Component {
       });
 
       axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
+        console.log(res.data);
         this.setState({notifications: res.data});
       });
     }
@@ -117,6 +128,15 @@ class TutorDashboard extends React.Component {
   onSelectMeeting = (e) => {
     console.log('event clicked');
     console.log(e);
+    let meeting  = {
+      title: e.title,
+      content: e.content,
+      start: e.start,
+      end: e.end
+    }
+    this.setState({selectedMeeting: meeting})
+
+    this.setState({modalMeetingDetailsOpen: true});
   }
 
   toggleModalMeeting = () => {
@@ -125,6 +145,11 @@ class TutorDashboard extends React.Component {
 
   toggleModalBlog = () => {
     this.setState({modalBlogOpen: !this.state.modalBlogOpen});
+    this.setState({modalMeetingDetailsOpen: true})
+  }
+
+  toggleModalMeetingDetails = () => {
+    this.setState({modalMeetingDetailsOpen: !this.state.modalMeetingDetailsOpen});
   }
 
   createMeeting = (meeting) => {
@@ -134,6 +159,11 @@ class TutorDashboard extends React.Component {
   createBlog = blog => {
     this.setState({blogs: [...this.state.blogs, blog]})
   }
+
+  // renderBlog = (routerProps) => {
+  //   let blogId = parseInt(routerProps.match.params.id);
+  //   let 
+  // }
 
   render() {
     const collapsed = this.state.navbarCollapsed;
@@ -172,7 +202,25 @@ class TutorDashboard extends React.Component {
                   <Dropdown.Menu className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list">
                     <h6 className="p-3 mb-0">Notifications</h6>
                     <div className="dropdown-divider"></div>
-                    <Dropdown.Item href="#/action-1" className="dropdown-item preview-item">
+                    {this.state.notifications.map(notification => {
+                      return (
+                        <Dropdown.Item className="dropdown-item preview-item">
+                          <Link to={`tutor_dashboard/blogs/${notification.relatedId}`} className="nav-link">
+                            <div className="preview-thumbnail">
+                              <div className="preview-icon bg-success">
+                                <i className="mdi mdi-calendar"></i>
+                              </div>
+                            </div>
+                            <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                              {/* <h6 className="preview-subject font-weight-normal mb-1">{notification.content}</h6> */}
+                              <p className="text-gray ellipsis mb-0"> {notification.content}</p>
+                            </div>
+                            <div className="dropdown-divider"></div>
+                          </Link>
+                        </Dropdown.Item>
+                      )
+                    })}
+                    {/* <Dropdown.Item href="#/action-1" className="dropdown-item preview-item">
                       <div className="preview-thumbnail">
                         <div className="preview-icon bg-success">
                           <i className="mdi mdi-calendar"></i>
@@ -184,7 +232,7 @@ class TutorDashboard extends React.Component {
                       </div>
                       <div className="dropdown-divider"></div>
                     </Dropdown.Item>
-                    {/* <Dropdown.Item href="#/action-2" className="dropdown-item preview-item">
+                    <Dropdown.Item href="#/action-2" className="dropdown-item preview-item">
                       <div className="preview-thumbnail">
                         <div className="preview-icon bg-warning">
                           <i className="mdi mdi-settings"></i>
@@ -194,7 +242,7 @@ class TutorDashboard extends React.Component {
                         <h6 className="preview-subject font-weight-normal mb-1">Settings</h6>
                         <p className="text-gray ellipsis mb-0"> Update dashboard </p>
                       </div>
-                      <div class="dropdown-divider"></div>
+                      <div className="dropdown-divider"></div>
                     </Dropdown.Item>
                     <Dropdown.Item href="#/action-3" className="dropdown-item preview-item">
                       <div className="preview-thumbnail">
@@ -261,25 +309,26 @@ class TutorDashboard extends React.Component {
                     </li>
                     <li className="nav-item">
                       <Link to="/tutor_dashboard" className="nav-link">
-                        <span class="menu-title">Home pages</span>
-                        <i class="mdi mdi-home menu-icon"></i>
+                        <span className="menu-title">Home pages</span>
+                        <i className="mdi mdi-home menu-icon"></i>
                       </Link>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <Link to="/tutor_dashboard/chat" className="nav-link">
-                        <span class="menu-title">Chat</span>
-                        <i class="mdi mdi-chat-alert menu-icon"></i>
+                        <span className="menu-title">Chat</span>
+                        <i className="mdi mdi-chat-alert menu-icon"></i>
                       </Link>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <Link to="/tutor_dashboard/logs" className="nav-link">
-                        <span class="menu-title">Allocation logs</span>
-                        <i class="mdi mdi-chart-bar menu-icon"></i>
+                        <span className="menu-title">Allocation logs</span>
+                        <i className="mdi mdi-chart-bar menu-icon"></i>
                       </Link>
                     </li>
                 </ul>
             </nav>
             <div className="main-panel">
+              <Route path='/tutor_dashboard/blogs/:id' component={BlogDetails}  />
               <Route exac path='/tutor_dashboard'>
                 <div className="content-wrapper">
                     <div className="page-header">
@@ -315,33 +364,33 @@ class TutorDashboard extends React.Component {
                         </div>
                     </div>
                     <Route path='/tutor_dashboard/logs'>
-                      <div class="page-header">
-                          <h3 class="page-title"> Allocate logs </h3>
+                      <div className="page-header">
+                          <h3 className="page-title"> Allocate logs </h3>
                       </div>
 
-                      <div class="row">
-                          <div class="col-12 grid-margin">
-                              <div class="card">
-                                  <div class="card-body">
-                                      <div class="mdl-log">
-                                          <h4 class="card-title">Staff A</h4>
-                                          <p class="card-description"> has assigned linh_student1, linh_student2,
+                      <div className="row">
+                          <div className="col-12 grid-margin">
+                              <div className="card">
+                                  <div className="card-body">
+                                      <div className="mdl-log">
+                                          <h4 className="card-title">Staff A</h4>
+                                          <p className="card-description"> has assigned linh_student1, linh_student2,
                                               linh_student3, to dat_tutor
-                                              <span class="txt-time">31 Mar 8:21PM</span>
+                                              <span className="txt-time">31 Mar 8:21PM</span>
                                           </p>
                                       </div>
-                                      <div class="mdl-log">
-                                          <h4 class="card-title">Staff A</h4>
-                                          <p class="card-description"> has assigned linh_student1, linh_student2,
+                                      <div className="mdl-log">
+                                          <h4 className="card-title">Staff A</h4>
+                                          <p className="card-description"> has assigned linh_student1, linh_student2,
                                               linh_student3, to dat_tutor
-                                              <span class="txt-time">31 Mar 8:21PM</span>
+                                              <span className="txt-time">31 Mar 8:21PM</span>
                                           </p>
                                       </div>
-                                      <div class="mdl-log">
-                                          <h4 class="card-title">Staff A</h4>
-                                          <p class="card-description"> has assigned linh_student1, linh_student2,
+                                      <div className="mdl-log">
+                                          <h4 className="card-title">Staff A</h4>
+                                          <p className="card-description"> has assigned linh_student1, linh_student2,
                                               linh_student3, to dat_tutor
-                                              <span class="txt-time">31 Mar 8:21PM</span>
+                                              <span className="txt-time">31 Mar 8:21PM</span>
                                           </p>
                                       </div>
                                   </div>
@@ -373,34 +422,34 @@ class TutorDashboard extends React.Component {
                               <div className="card">
                                   <div className="card-body">
                                       <h4 className="card-title">Request</h4>
-                                      <div class="list-group scroll-blog">
-                                        <a href="#" class="list-group-item list-group-item-action">
-                                          <div class="d-flex w-100 justify-content-between">
-                                            <h5 class="mb-1">Title requirement</h5>
+                                      <div className="list-group scroll-blog">
+                                        <a href="#" className="list-group-item list-group-item-action">
+                                          <div className="d-flex w-100 justify-content-between">
+                                            <h5 className="mb-1">Title requirement</h5>
                                           </div>
-                                          <p class="mb-1">Cottage out enabled was entered greatly prevent message.</p>
-                                          <p class="mb-1 text-muted"><i class="mdi mdi-account"></i> To: Tutor 01</p>
-                                          <p class="mb-1 text-muted">
-                                            <i class="mdi mdi-clock-outline icon-sm"></i>
+                                          <p className="mb-1">Cottage out enabled was entered greatly prevent message.</p>
+                                          <p className="mb-1 text-muted"><i className="mdi mdi-account"></i> To: Tutor 01</p>
+                                          <p className="mb-1 text-muted">
+                                            <i className="mdi mdi-clock-outline icon-sm"></i>
                                               8:58 PM 07/04/2020
                                           </p>
                                         </a>
-                                        <a href="#" class="list-group-item list-group-item-action">
-                                          <div class="d-flex w-100 justify-content-between">
-                                              <h5 class="mb-1">Title requirement</h5>
+                                        <a href="#" className="list-group-item list-group-item-action">
+                                          <div className="d-flex w-100 justify-content-between">
+                                              <h5 className="mb-1">Title requirement</h5>
                                           </div>
-                                          <p class="mb-1">Cottage out enabled was entered greatly prevent message.</p>
-                                          <p class="mb-1 text-muted"><i class="mdi mdi-account"></i> To: Tutor 01</p>
-                                          <p class="mb-1 text-muted">
-                                              <i class="mdi mdi-clock-outline icon-sm"></i>
+                                          <p className="mb-1">Cottage out enabled was entered greatly prevent message.</p>
+                                          <p className="mb-1 text-muted"><i className="mdi mdi-account"></i> To: Tutor 01</p>
+                                          <p className="mb-1 text-muted">
+                                              <i className="mdi mdi-clock-outline icon-sm"></i>
                                               8:58 PM 07/04/2020
                                           </p>
                                         </a>
                                       </div>
                                       <button
-                                          class="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
+                                          className="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
                                           data-toggle="modal" data-target="#requestModal">
-                                          <i class="mdi mdi-note-plus-outline mr-2"></i>Create request</button>
+                                          <i className="mdi mdi-note-plus-outline mr-2"></i>Create request</button>
                                   </div>
                               </div>
                           </div>
@@ -411,14 +460,12 @@ class TutorDashboard extends React.Component {
                                       <div className="list-group scroll-blog">
                                         {this.state.blogs.map(blog => {
                                           return (
-                                            <a href="#" className="list-group-item list-group-item-action" key={blog.id}>
+                                            <Link to={`/tutor_dashboard/blogs/${blog.id}`} className="list-group-item list-group-item-action" key={blog.id}>
                                               <div className="d-flex w-100 justify-content-between">
-                                                  <h5 className="mb-1">Requirement course work</h5>
-                                                
+                                                <h5 className="mb-1">{blog.title}</h5>
                                               </div>
                                               <p className="mb-1">{blog.content}</p>
-
-                                            </a>
+                                            </Link>
                                           )
                                         })}
                                       </div>
@@ -478,6 +525,7 @@ class TutorDashboard extends React.Component {
         </div>
         <MeetingModal isModalOpen={this.state.modalMeetingOpen} toggleModal={this.toggleModalMeeting} students={this.state.students} createMeeting={this.createMeeting}/>
         <BlogModal isModalOpen={this.state.modalBlogOpen} toggleModal={this.toggleModalBlog} students={this.state.students} createBlog={this.createBlog} />
+        <MeetingModalDetails isModalOpen={this.state.modalMeetingDetailsOpen} toggleModal={this.toggleModalMeetingDetails} meeting={this.state.selectedMeeting}/>}
     </div>
     )
   }

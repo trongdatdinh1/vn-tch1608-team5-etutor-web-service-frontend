@@ -29,11 +29,11 @@ class StaffDashboard extends React.Component {
       selectedTutor: 1,
       assignedStudents: [],
       tutors: [
-        {id: 1, name: 'Dinh Trong Dat', email: 'datdt@fpt.edu.vn'},
-        {id: 2, name: 'Nguyen Tien Viet', email: 'vietnt@fpt.edu.vn'},
-        {id: 3, name: 'Nong Hoang Thai', email: 'thainh@fpt.edu.vn'},
-        {id: 4, name: 'Tran Hoang Linh', email: 'linhth@fpt.edu.vn'},
-        {id: 5, name: 'Nguyen Van A', email: 'anv@fpt.edu.vn'}
+        {id: 1, name: 'Dinh Trong Dat', email: 'datdt@fpt.edu.vn', studentCount: 3},
+        {id: 2, name: 'Nguyen Tien Viet', email: 'vietnt@fpt.edu.vn', studentCount: 3},
+        {id: 3, name: 'Nong Hoang Thai', email: 'thainh@fpt.edu.vn', studentCount: 3},
+        {id: 4, name: 'Tran Hoang Linh', email: 'linhth@fpt.edu.vn', studentCount: 3},
+        {id: 5, name: 'Nguyen Van A', email: 'anv@fpt.edu.vn', studentCount: 3}
       ],
       students: [
         {id: 1, name: 'Nara Shikamaru', email: 'shika@fpt.edu.vn'},
