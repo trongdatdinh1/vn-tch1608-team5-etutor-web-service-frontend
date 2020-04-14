@@ -27,6 +27,7 @@ import RequestModal from './RequestModal';
 import MeetingModalDetails from './MeetingModalDetails';
 import TutorCalendar from '../tutor/TutorCalendar';
 import Message from '../chat/Message';
+import BlogModal from './BlogModal';
 import uid from 'uid'
 const db = firebase.firestore();
 
@@ -34,6 +35,7 @@ class StudentDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userName: 'Hero',
       navbarCollapsed: false,
       selectedMeeting: null,
       modalMeetingDetailsOpen: false,
@@ -130,6 +132,8 @@ class StudentDashboard extends React.Component {
         this.setState({conversations: data});
         console.log(data);
       });
+
+      this.setState({userName: this.props.authentication.user.name})
     } else {
       let tutorId = 1;
       let studentId = 1;
@@ -238,7 +242,7 @@ class StudentDashboard extends React.Component {
             <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" onClick={this.toggleNavbar}>
               <span className="mdi mdi-menu"></span>
             </button>
-            <div className="search-field d-none d-md-block">
+            {/* <div className="search-field d-none d-md-block">
               <form className="d-flex align-items-center h-100" action="#">
                 <div className="input-group">
                   <div className="input-group-prepend bg-transparent">
@@ -247,7 +251,7 @@ class StudentDashboard extends React.Component {
                   <input type="text" className="form-control bg-transparent border-0" placeholder="Search students" />
                 </div>
               </form>
-            </div>
+            </div> */}
             <ul className="navbar-nav navbar-nav-right">
               <li className="nav-item nav-profile dropdown">
                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
@@ -257,7 +261,7 @@ class StudentDashboard extends React.Component {
                     <span className="availability-status online"></span>
                   </div>
                   <div className="nav-profile-text">
-                    <p className="mb-1 text-black">David Greymaax</p>
+                    <p className="mb-1 text-black">{this.state.userName}</p>
                   </div>
                 </a>
                 <div className="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -291,8 +295,8 @@ class StudentDashboard extends React.Component {
                           <span className="login-status online"></span>
                         </div>
                         <div className="nav-profile-text d-flex flex-column">
-                          <span className="font-weight-bold mb-2">David Grey. H</span>
-                          <span className="text-secondary text-small">Staff member</span>
+                          <span className="font-weight-bold mb-2">{this.state.userName}</span>
+                          <span className="text-secondary text-small">Student</span>
                         </div>
                         <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                       </a>
@@ -406,14 +410,14 @@ class StudentDashboard extends React.Component {
                                   </div>
                               </div>
                           </div>
-                          {/* <div className="col-md-6 grid-margin stretch-card">
+                          <div className="col-md-6 grid-margin stretch-card">
                               <div className="card">
                                   <div className="card-body">
                                       <h4 className="card-title">Bloging</h4>
                                       <div className="list-group scroll-blog">
                                         {this.state.blogs.map(blog => {
                                           return (
-                                            <Link to={`/tutor_dashboard/blogs/${blog.id}`} className="list-group-item list-group-item-action" key={blog.id}>
+                                            <Link to={`/student_dashboard/blogs/${blog.id}`} className="list-group-item list-group-item-action" key={blog.id}>
                                               <div className="d-flex w-100 justify-content-between">
                                                 <h5 className="mb-1">{blog.title}</h5>
                                               </div>
@@ -422,13 +426,13 @@ class StudentDashboard extends React.Component {
                                           )
                                         })}
                                       </div>
-                                      <button
+                                      {/* <button
                                           className="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
                                           data-toggle="modal" data-target="#blogingModal" onClick={this.toggleModalBlog}>
-                                          <i className="mdi mdi-file-document-edit-outline mr-2"></i>Create blog</button>
+                                          <i className="mdi mdi-file-document-edit-outline mr-2"></i>Create blog</button> */}
                                   </div>
                               </div>
-                          </div> */}
+                          </div>
                       </div>
                     
                 </div>
@@ -441,7 +445,7 @@ class StudentDashboard extends React.Component {
                 </footer>
             </div>
         </div>
-        {/* <BlogModal isModalOpen={this.state.modalBlogOpen} toggleModal={this.toggleModalBlog} createBlog={this.createBlog} /> */}
+        <BlogModal isModalOpen={this.state.modalBlogOpen} toggleModal={this.toggleModalBlog} createBlog={this.createBlog} />
         <RequestModal isModalOpen={this.state.modalRequestOpen} toggleModal={this.toggleModalRequest} createRequest={this.createRequest} />
         <MeetingModalDetails isModalOpen={this.state.modalMeetingDetailsOpen} toggleModal={this.toggleModalMeetingDetails} meeting={this.state.selectedMeeting}/>}
     </div>

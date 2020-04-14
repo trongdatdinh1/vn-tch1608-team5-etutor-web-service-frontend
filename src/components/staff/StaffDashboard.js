@@ -25,6 +25,7 @@ class StaffDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userName: 'Hero',
       navbarCollapsed: true,
       selectedTutor: 1,
       assignedStudents: [],
@@ -100,6 +101,8 @@ class StaffDashboard extends React.Component {
         }
         this.setState({assigners: arr});
       });
+
+      this.setState({userName: this.props.authentication.user.name})
     }
     
     
@@ -223,7 +226,7 @@ class StaffDashboard extends React.Component {
             <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" onClick={this.toggleNavbar}>
               <span className="mdi mdi-menu"></span>
             </button>
-            <div className="search-field d-none d-md-block">
+            {/* <div className="search-field d-none d-md-block">
               <form className="d-flex align-items-center h-100" action="#">
                 <div className="input-group">
                   <div className="input-group-prepend bg-transparent">
@@ -232,7 +235,7 @@ class StaffDashboard extends React.Component {
                   <input type="text" className="form-control bg-transparent border-0" placeholder="Search students" />
                 </div>
               </form>
-            </div>
+            </div> */}
             <ul className="navbar-nav navbar-nav-right">
               <li className="nav-item nav-profile dropdown">
                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
@@ -242,7 +245,7 @@ class StaffDashboard extends React.Component {
                     <span className="availability-status online"></span>
                   </div>
                   <div className="nav-profile-text">
-                    <p className="mb-1 text-black">David Greymaax</p>
+                    <p className="mb-1 text-black">{this.state.userName}</p>
                   </div>
                 </a>
                 <div className="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -275,7 +278,7 @@ class StaffDashboard extends React.Component {
                     <span className="login-status online"></span>
                   </div>
                   <div className="nav-profile-text d-flex flex-column">
-                    <span className="font-weight-bold mb-2">David Grey. H</span>
+                    <span className="font-weight-bold mb-2">{this.state.userName}</span>
                     <span className="text-secondary text-small">Staff member</span>
                   </div>
                   <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>

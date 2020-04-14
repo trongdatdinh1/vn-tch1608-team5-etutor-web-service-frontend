@@ -28,7 +28,8 @@ function login(username, password){
         let user = {
           accessToken: response.data.accessToken,
           userRole: response.data.role,
-          id: response.data.id
+          id: response.data.id,
+          name: response.data.basic_profile.name
         }
         console.log(user);
         dispatch(success(user));

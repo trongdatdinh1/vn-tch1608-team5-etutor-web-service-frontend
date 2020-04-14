@@ -33,6 +33,7 @@ class TutorDashboard extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      userName: '',
       navbarCollapsed: false,
       selectedMeeting: null,
       modalMeetingDetailsOpen: false,
@@ -115,6 +116,8 @@ class TutorDashboard extends React.Component {
         console.log(res.data);
         this.setState({notifications: res.data});
       });
+
+      this.setState({userName: this.props.authentication.user.name})
     }
     
 
@@ -180,7 +183,7 @@ class TutorDashboard extends React.Component {
             <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" onClick={this.toggleNavbar}>
               <span className="mdi mdi-menu"></span>
             </button>
-            <div className="search-field d-none d-md-block">
+            {/* <div className="search-field d-none d-md-block">
               <form className="d-flex align-items-center h-100" action="#">
                 <div className="input-group">
                   <div className="input-group-prepend bg-transparent">
@@ -189,7 +192,7 @@ class TutorDashboard extends React.Component {
                   <input type="text" className="form-control bg-transparent border-0" placeholder="Search students" />
                 </div>
               </form>
-            </div>
+            </div> */}
             <ul className="navbar-nav navbar-nav-right">
               <li  className="nav-item dropdown">
                 <Dropdown className="nav-item dropdown">
@@ -204,7 +207,7 @@ class TutorDashboard extends React.Component {
                     {this.state.notifications.map(notification => {
                       return (
                         <Dropdown.Item className="dropdown-item preview-item">
-                          <Link to={`tutor_dashboard/blogs/${notification.relatedId}`} className="nav-link">
+                          <Link to={`/tutor_dashboard/blogs/${notification.relatedId}`} className="nav-link">
                             <div className="preview-thumbnail">
                               <div className="preview-icon bg-success">
                                 <i className="mdi mdi-calendar"></i>
@@ -266,7 +269,7 @@ class TutorDashboard extends React.Component {
                     <span className="availability-status online"></span>
                   </div>
                   <div className="nav-profile-text">
-                    <p className="mb-1 text-black">David Greymaax</p>
+                    <p className="mb-1 text-black">{this.state.userName}</p>
                   </div>
                 </a>
                 <div className="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -300,8 +303,8 @@ class TutorDashboard extends React.Component {
                           <span className="login-status online"></span>
                         </div>
                         <div className="nav-profile-text d-flex flex-column">
-                          <span className="font-weight-bold mb-2">David Grey. H</span>
-                          <span className="text-secondary text-small">Staff member</span>
+                          <span className="font-weight-bold mb-2">{this.state.userName}</span>
+                          <span className="text-secondary text-small">Tutor</span>
                         </div>
                         <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                       </a>
@@ -328,7 +331,7 @@ class TutorDashboard extends React.Component {
             </nav>
             <div className="main-panel">
               <Route path='/tutor_dashboard/blogs/:id' component={BlogDetails}  />
-              <Route exac path='/tutor_dashboard'>
+              <Route exact path='/tutor_dashboard'>
                 <div className="content-wrapper">
                     <div className="page-header">
                         <h3 className="page-title">
@@ -336,7 +339,7 @@ class TutorDashboard extends React.Component {
                                 <i className="mdi mdi-home"></i>
                             </span> Tutor dashboard </h3>
                     </div>
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-md-6 stretch-card grid-margin">
                             <div className="card bg-gradient-danger card-img-holder text-white">
                                 <div className="card-body">
@@ -361,7 +364,7 @@ class TutorDashboard extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <Route path='/tutor_dashboard/logs'>
                       <div className="page-header">
                           <h3 className="page-title"> Allocate logs </h3>
@@ -417,7 +420,7 @@ class TutorDashboard extends React.Component {
                       </div>
 
                       <div className="row">
-                          <div className="col-md-6 grid-margin stretch-card">
+                          {/* <div className="col-md-6 grid-margin stretch-card">
                               <div className="card">
                                   <div className="card-body">
                                       <h4 className="card-title">Request</h4>
@@ -451,7 +454,7 @@ class TutorDashboard extends React.Component {
                                           <i className="mdi mdi-note-plus-outline mr-2"></i>Create request</button>
                                   </div>
                               </div>
-                          </div>
+                          </div> */}
                           <div className="col-md-6 grid-margin stretch-card">
                               <div className="card">
                                   <div className="card-body">
@@ -511,7 +514,7 @@ class TutorDashboard extends React.Component {
                   </Route>
                 </div>
               </Route>
-              <Route exac path='/tutor_dashboard/chat'>
+              <Route exact path='/tutor_dashboard/chat'>
                 <Chat students={this.state.students} />
               </Route>
               <footer className="footer">
