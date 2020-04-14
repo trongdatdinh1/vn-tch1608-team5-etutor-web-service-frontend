@@ -145,7 +145,6 @@ class TutorDashboard extends React.Component {
 
   toggleModalBlog = () => {
     this.setState({modalBlogOpen: !this.state.modalBlogOpen});
-    this.setState({modalMeetingDetailsOpen: true})
   }
 
   toggleModalMeetingDetails = () => {

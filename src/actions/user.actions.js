@@ -34,8 +34,10 @@ function login(username, password){
         dispatch(success(user));
         if(response.data.role == 'ROLE_TUTOR'){
           history.push('/tutor_dashboard');
-        } else {
+        } else if(response.data.role == 'ROLE_ADMIN'){
           history.push('/staff_dashboard');
+        } else {
+          history.push('/student_dashboard');
         }
       })
       .catch(error => {
