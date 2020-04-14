@@ -193,6 +193,7 @@ class StaffDashboard extends React.Component {
         items[index][tutorId] = students;
 
         this.setState({assigners: items})
+        alert('Allocate Successfull');
       });
     } else {
       let tutorId = this.state.selectedTutor;

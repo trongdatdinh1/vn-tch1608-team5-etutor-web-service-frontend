@@ -215,7 +215,7 @@ class TutorDashboard extends React.Component {
                             </div>
                             <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                               {/* <h6 className="preview-subject font-weight-normal mb-1">{notification.content}</h6> */}
-                              <p className="text-gray ellipsis mb-0"> {notification.content}</p>
+                              <p className="text-gray mb-0"> {notification.content}</p>
                             </div>
                             <div className="dropdown-divider"></div>
                           </Link>
