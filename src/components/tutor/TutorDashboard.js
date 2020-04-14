@@ -512,7 +512,7 @@ class TutorDashboard extends React.Component {
                 </div>
               </Route>
               <Route exac path='/tutor_dashboard/chat'>
-                <Chat />
+                <Chat students={this.state.students} />
               </Route>
               <footer className="footer">
                     <div className="d-sm-flex justify-content-center justify-content-sm-between">

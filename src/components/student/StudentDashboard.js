@@ -46,7 +46,10 @@ class StudentDashboard extends React.Component {
         {id: 4, name: 'Tohsaka Rin', email: 'rin@fpt.edu.vn'},
         {id: 5, name: 'Shiba Tatsuya', email: 'tatsuya@fpt.edu.vn'}
       ],
-      tutorId: 1,
+      tutor: {
+        id: 1,
+        name: 'Tuto'
+      },
       meetings: [
         {
           id: 0,
@@ -92,7 +95,7 @@ class StudentDashboard extends React.Component {
         'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
       }
       axios.get(`${BASEURL}/api/get_personal_tutor`, {headers: headers}).then(res => {
-        this.setState({tutorId: res.id})
+        this.setState({tutor: res.data})
       }).catch(error => {
         console.log(error);
       });
@@ -119,6 +122,13 @@ class StudentDashboard extends React.Component {
       }).catch(e => {
         console.log('Fetch blogs failed')
         console.log(e);
+      });
+
+      let studentId = this.props.authentication.user.id;
+      db.collection('conversations').doc(`${this.state.tutor.id}__${studentId}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
+        const data = querySnapshot.docs.map(doc=> doc.data());
+        this.setState({conversations: data});
+        console.log(data);
       });
     } else {
       let tutorId = 1;
@@ -181,6 +191,7 @@ class StudentDashboard extends React.Component {
       axios.get(`${BASEURL}/api/requests`, {headers: headers}).then(res => {
         this.setState({requests: res.data})
       });
+
     } else {
       this.setState({requests: [...this.state.requests, request]})
     }
@@ -200,7 +211,7 @@ class StudentDashboard extends React.Component {
 
     if(API_ON) {
       let studentId = this.props.authentication.user.id;
-      db.collection('conversations').doc(`${this.statetutorId}__${studentId}`).collection('messages').doc(uid(19)).set(msg);
+      db.collection('conversations').doc(`${this.state.tutor.id}__${studentId}`).collection('messages').doc(uid(19)).set(msg);
     } else {
       let tutorId = 1;
       let studentId = 1;
@@ -295,8 +306,8 @@ class StudentDashboard extends React.Component {
                 </ul>
             </nav>
             <div className="main-panel">
-              <Route path='/student_dashboard/blogs/:id' component={BlogDetails}  />
-              <Route exac path='/student_dashboard'>
+              <Route path='/student_dashboard/blogs/:id' component={BlogDetails} />
+              <Route exact path='/student_dashboard'>
                 <div className="content-wrapper">
                     <div className="page-header">
                         <h3 className="page-title">
@@ -320,6 +331,7 @@ class StudentDashboard extends React.Component {
                       <div className="row">
                       <div className="col-md-6 grid-margin stretch-card">
                           <div className="card">
+                            {this.state.tutor && (
                               <div className="card-body p-0">
                                   <div className="chat-container chat-page">
                                           <div className="chat">
@@ -332,7 +344,7 @@ class StudentDashboard extends React.Component {
                                                               <span className="online_icon"></span>
                                                           </div>
                                                           <div className="user_info">
-                                                              <span>Chat with Khalid</span>
+                                                              <span>Chat with {this.state.tutor.name}</span>
                                                               <p>1767 Messages</p>
                                                           </div>
 
@@ -361,11 +373,9 @@ class StudentDashboard extends React.Component {
                                                   </div>
                                               </div>
                                           </div>
-                                      
-
-
                                   </div>
                               </div>
+                              )}
                             </div>
                           </div>
                           <div className="col-md-6 grid-margin stretch-card">

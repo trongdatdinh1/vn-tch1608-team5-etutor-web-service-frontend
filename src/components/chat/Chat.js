@@ -172,7 +172,7 @@ class Chat extends Component {
                                 </div>
                                 <div class="card-body contacts_body">
                                     <ui class="contacts">
-                                      {this.state.students.map(student => <StudentBoxItem student={student} isSelected={this.state.selectedStudent === student.id} selectStudent={this.selectStudent} />)}
+                                      {this.props.students.map(student => <StudentBoxItem student={student} isSelected={this.state.selectedStudent === student.id} selectStudent={this.selectStudent} />)}
                                     </ui>
                                 </div>
                                 <div class="card-footer"></div>
