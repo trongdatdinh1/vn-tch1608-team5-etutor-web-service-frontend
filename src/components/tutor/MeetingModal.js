@@ -94,6 +94,7 @@ class MeetingModal extends React.Component {
         let res_meeting = {
           id: res.data.id,
           title: res.data.title,
+          content: res.data.content,
           start: moment(res.data.startDate).toDate(),
           end: moment(res.data.endDate).toDate()
         }
