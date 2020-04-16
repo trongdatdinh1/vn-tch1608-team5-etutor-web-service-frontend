@@ -54,27 +54,47 @@ class BlogModal extends React.Component {
         'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
       };
 
-      const multipart_header = {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
-      }
+      if(this.state.document) {
+        const multipart_header = {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+        }
+        
+        const formData = new FormData();
+        for(var x = 0; x < this.state.document.length; x++) {
+          formData.append('files', this.state.document[x])
+        }
 
-      const formData = new FormData();
-      // formData.append("document", this.state.document);
-      for(var x = 0; x<this.state.document.length; x++) {
-        formData.append('files', this.state.document[x])
-      }
+        axios.post(`${BASEURL}/uploadMultipleFiles`, formData, {headers: multipart_header}).then(res => {
+          let file_ids = res.data.map(file => {
+            return file.id;
+          })
 
-      axios.post(`${BASEURL}/uploadMultipleFiles`, formData, {headers: multipart_header}).then(res => {
-        let file_ids = res.data.map(file => {
-          return file.id;
+          let blog = {
+            title: this.state.title,
+            content: this.state.content,
+            student_id: this.state.selectedStudent,
+            file_ids: file_ids
+          }
+          axios.post(`${BASEURL}/api/blogs`, blog, {headers: headers}).then(res => {
+            console.log('Created Blog')
+            console.log(res.data)
+            this.props.createBlog({
+              id: res.data.id,
+              title: res.data.title,
+              content: res.data.content,
+            });
+          }).catch(error => {
+            console.log(error);
+          }).finally(() => {
+            this.closeModal();
+          });
         })
-
+      } else {
         let blog = {
           title: this.state.title,
           content: this.state.content,
           student_id: this.state.selectedStudent,
-          file_ids: file_ids
         }
         axios.post(`${BASEURL}/api/blogs`, blog, {headers: headers}).then(res => {
           console.log('Created Blog')
@@ -89,7 +109,8 @@ class BlogModal extends React.Component {
         }).finally(() => {
           this.closeModal();
         });
-      })
+      }
+      
       
     } else {
       let blog = {
