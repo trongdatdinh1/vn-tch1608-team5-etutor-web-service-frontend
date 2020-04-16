@@ -28,16 +28,18 @@ import {BASEURL} from '../../constants/baseurl';
 import {API_ON} from '../../constants/ApiOn';
 import Chat from '../chat/Chat';
 import MeetingModalDetails from './MeetingModalDetails';
-
+import StudentBlogsModal from './StudentBlogsModal';
 class TutorDashboard extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       userName: '',
+      selectedStudentId: null,
       navbarCollapsed: false,
       selectedMeeting: null,
       modalMeetingDetailsOpen: false,
       modalMeetingOpen: false,
+      modalStudentBlogsOpen: false,
       modalBlogOpen: false,
       students: [
         {id: 1, name: 'Nara Shikamaru', email: 'shika@fpt.edu.vn'},
@@ -71,7 +73,11 @@ class TutorDashboard extends React.Component {
 
         }
       ],
-      notifications: []
+      notifications: [
+        {relatedId: 1, unread: true, created_date: '2020-04-07T03:57:49.720+0000', content: 'This is a first notification. Very very very very very very very very very very very long'},
+        {relatedId: 2, unread: false, created_date: '2020-04-07T03:57:49.720+0000', content: 'This is a first notification. Very very very very very very very very very very very long'},
+        
+      ]
     }
   }
 
@@ -167,6 +173,14 @@ class TutorDashboard extends React.Component {
   //   let 
   // }
 
+  notificationClicked = () => {
+
+  }
+
+  toggleModalStudentBlogs = () => {
+    this.setState({modalStudentBlogsOpen: !this.state.modalStudentBlogsOpen});
+  }
+
   render() {
     const collapsed = this.state.navbarCollapsed;
     const classOne = collapsed ? 'sidebar-icon-only' : '';
@@ -194,7 +208,7 @@ class TutorDashboard extends React.Component {
               </form>
             </div> */}
             <ul className="navbar-nav navbar-nav-right">
-              <li  className="nav-item dropdown">
+              <li className="nav-item dropdown">
                 <Dropdown className="nav-item dropdown">
                   <Dropdown.Toggle className="nav-link count-indicator dropdown-toggle" style={{background: "white", borderColor: 'white'}}>
                     <i className="mdi mdi-bell-outline"></i>
@@ -206,19 +220,20 @@ class TutorDashboard extends React.Component {
                     <div className="dropdown-divider"></div>
                     {this.state.notifications.map(notification => {
                       return (
-                        <Dropdown.Item className="dropdown-item preview-item">
-                          <Link to={`/tutor_dashboard/blogs/${notification.relatedId}`} className="nav-link">
+                        <Dropdown.Item className="dropdown-item preview-item" href={`/tutor_dashboard/blogs/${notification.relatedId}`}>
+                          {/* <Link to={`/tutor_dashboard/blogs/${notification.relatedId}`} className="nav-link" onClick={this.notificationClicked}> */}
                             <div className="preview-thumbnail">
-                              <div className="preview-icon bg-success">
+                              <div className={`preview-icon ${notification.unread ? 'bg-warning' : 'bg-info' }`}>
                                 <i className="mdi mdi-calendar"></i>
                               </div>
                             </div>
                             <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                               {/* <h6 className="preview-subject font-weight-normal mb-1">{notification.content}</h6> */}
                               <p className="text-gray mb-0"> {notification.content}</p>
+                              <p>{notification.created_date}</p>
                             </div>
                             <div className="dropdown-divider"></div>
-                          </Link>
+                          {/* </Link> */}
                         </Dropdown.Item>
                       )
                     })}
@@ -321,12 +336,6 @@ class TutorDashboard extends React.Component {
                         <i className="mdi mdi-chat-alert menu-icon"></i>
                       </Link>
                     </li>
-                    <li className="nav-item">
-                      <Link to="/tutor_dashboard/logs" className="nav-link">
-                        <span className="menu-title">Allocation logs</span>
-                        <i className="mdi mdi-chart-bar menu-icon"></i>
-                      </Link>
-                    </li>
                 </ul>
             </nav>
             <div className="main-panel">
@@ -365,41 +374,7 @@ class TutorDashboard extends React.Component {
                             </div>
                         </div>
                     </div> */}
-                    <Route path='/tutor_dashboard/logs'>
-                      <div className="page-header">
-                          <h3 className="page-title"> Allocate logs </h3>
-                      </div>
-
-                      <div className="row">
-                          <div className="col-12 grid-margin">
-                              <div className="card">
-                                  <div className="card-body">
-                                      <div className="mdl-log">
-                                          <h4 className="card-title">Staff A</h4>
-                                          <p className="card-description"> has assigned linh_student1, linh_student2,
-                                              linh_student3, to dat_tutor
-                                              <span className="txt-time">31 Mar 8:21PM</span>
-                                          </p>
-                                      </div>
-                                      <div className="mdl-log">
-                                          <h4 className="card-title">Staff A</h4>
-                                          <p className="card-description"> has assigned linh_student1, linh_student2,
-                                              linh_student3, to dat_tutor
-                                              <span className="txt-time">31 Mar 8:21PM</span>
-                                          </p>
-                                      </div>
-                                      <div className="mdl-log">
-                                          <h4 className="card-title">Staff A</h4>
-                                          <p className="card-description"> has assigned linh_student1, linh_student2,
-                                              linh_student3, to dat_tutor
-                                              <span className="txt-time">31 Mar 8:21PM</span>
-                                          </p>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                    </Route>
+                    
                     <Route exact path='/tutor_dashboard'>
                       <div className="page-header">
                         <h3 className="page-title"> Schedule </h3>
@@ -494,14 +469,18 @@ class TutorDashboard extends React.Component {
                                           {this.state.students.map(student => {
                                               return (
                                                   <div className="col-6 col-sm-4 col-lg-2" key={student.id}>
-                                                      <a href="" className="item">
+                                                      <button className="item"
+                                                        onClick={() => {
+                                                          this.toggleModalStudentBlogs();
+                                                          this.setState({selectedStudentId: student.id})
+                                                        }}>
                                                           <div className="text-center">
                                                               <img src="../assets/images/dashboard/img_1.jpg"
                                                                   className="mb-2 mw-100 w-100 rounded" alt="image" />
                                                               <h6>{student.name}</h6>
                                                               <p>{student.email}</p>
                                                           </div>
-                                                      </a>
+                                                      </button>
                                                   </div>
                                               )
                                           })}
@@ -527,7 +506,8 @@ class TutorDashboard extends React.Component {
         </div>
         <MeetingModal isModalOpen={this.state.modalMeetingOpen} toggleModal={this.toggleModalMeeting} students={this.state.students} createMeeting={this.createMeeting}/>
         <BlogModal isModalOpen={this.state.modalBlogOpen} toggleModal={this.toggleModalBlog} students={this.state.students} createBlog={this.createBlog} />
-        <MeetingModalDetails isModalOpen={this.state.modalMeetingDetailsOpen} toggleModal={this.toggleModalMeetingDetails} meeting={this.state.selectedMeeting}/>}
+        <MeetingModalDetails isModalOpen={this.state.modalMeetingDetailsOpen} toggleModal={this.toggleModalMeetingDetails} meeting={this.state.selectedMeeting}/>} />
+        <StudentBlogsModal isModalOpen={this.state.modalStudentBlogsOpen} toggleModal={this.toggleModalStudentBlogs} studentId={this.state.selectedStudentId} />
     </div>
     )
   }

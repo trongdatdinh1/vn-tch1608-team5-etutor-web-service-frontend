@@ -13,10 +13,12 @@ class BlogModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: '',
       studentKeyName: '',
       isSelectAllChecked: false,
       content: '',
-      selectedStudents: []
+      selectedStudent: null,
+      document: null
     }
     this.baseState = this.state;
   }
@@ -26,58 +28,75 @@ class BlogModal extends React.Component {
     this.props.toggleModal();
   }
 
-  onSelectAllChanged = () => {
-    if(!this.state.isSelectAllChecked) {
-      let studentIds = this.props.students.map(student => student.id);
-      this.setState({selectedStudents: studentIds});
-    } else {
-      this.setState({selectedStudents: []})
-    }
-    this.setState({isSelectAllChecked: !this.state.isSelectAllChecked});
-  }
-
   handleStudentCheck = e => {
     let stringStudentId = e.target.value;
     let studentId = parseInt(stringStudentId);
-    if(this.state.selectedStudents.includes(studentId)) {
-      this.setState({ selectedStudents: this.state.selectedStudents.filter(id => id != studentId )});
-    } else {
-      this.setState({selectedStudents: [...this.state.selectedStudents, studentId]})
-    }
+    this.setState({selectedStudent: studentId})
   }
 
   changeHandler = e => {
     this.setState({[e.target.name]: e.target.value})
   }
 
+  fileChangeHandler = (e) => {
+    this.setState({document: e.target.files})
+  }
+
   handleSubmit = () => {
 
     console.log(this.state);
 
-    let blog = {
-      title: this.state.title,
-      content: this.state.content,
-      student_ids: this.state.selectedStudents
-    }
+   
 
     if(API_ON) {
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
       };
-      
-      axios.post(`${BASEURL}/api/blogs`, blog, {headers: headers}).then(res => {
-        this.props.createBlog({
-          id: res.data.id,
-          title: res.data.title,
-          content: res.data.content,
+
+      const multipart_header = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      }
+
+      const formData = new FormData();
+      // formData.append("document", this.state.document);
+      for(var x = 0; x<this.state.document.length; x++) {
+        formData.append('files', this.state.document[x])
+      }
+
+      axios.post(`${BASEURL}/uploadMultipleFiles`, formData, {headers: multipart_header}).then(res => {
+        let file_ids = res.data.map(file => {
+          return file.id;
+        })
+
+        let blog = {
+          title: this.state.title,
+          content: this.state.content,
+          student_id: this.state.selectedStudent,
+          file_ids: file_ids
+        }
+        axios.post(`${BASEURL}/api/blogs`, blog, {headers: headers}).then(res => {
+          console.log('Created Blog')
+          console.log(res.data)
+          this.props.createBlog({
+            id: res.data.id,
+            title: res.data.title,
+            content: res.data.content,
+          });
+        }).catch(error => {
+          console.log(error);
+        }).finally(() => {
+          this.closeModal();
         });
-      }).catch(error => {
-        console.log(error);
-      }).finally(() => {
-        this.closeModal();
-      });
+      })
+      
     } else {
+      let blog = {
+        title: this.state.title,
+        content: this.state.content,
+        student_id: this.state.selectedStudent,
+      }
       this.props.createBlog(blog);
       this.closeModal();
     }
@@ -111,12 +130,16 @@ class BlogModal extends React.Component {
                         <div className="col-12 col-sm-8 col-lg-8">
                             <form className="forms-sample">
                                 <div className="form-group">
-                                    <label for="exampleInputName1">Title</label>
+                                    <label >Title</label>
                                     <input type="text" className="form-control" id="exampleInputName1" name='title' value={this.state.title} onChange={this.changeHandler} placeholder="Title" />
                                 </div>
                                 <div className="form-group">
                                     <label>Content</label>
                                     <textarea className="form-control" id="exampleTextarea1" rows="7" name='content' value={this.state.content} onChange={this.changeHandler}></textarea>
+                                </div>
+                                <div>
+                                  <label>Documents</label>
+                                  <input type="file" name="documennt" multiple onChange={this.fileChangeHandler} />
                                 </div>
                             </form>
                         </div>
@@ -133,11 +156,6 @@ class BlogModal extends React.Component {
                                 </div>
                             </div>
                             <div className="list-wrapper">
-                                <div className="form-check point-form-check">
-                                    <label className="form-check-label">
-                                        <input type="checkbox" className="form-check-input" checked={this.state.isSelectAllChecked} onChange={this.onSelectAllChanged} /> Select all <i
-                                            className="input-helper"></i></label>
-                                </div>
                                 <div className="scroll-list">
                                     <ul className="d-flex flex-column-reverse todo-list-custom">
                                       {this.props.students.filter(student => student.name.toLowerCase().includes(this.state.studentKeyName.toLowerCase())).map(student => {

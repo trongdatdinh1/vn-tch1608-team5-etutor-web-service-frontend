@@ -297,6 +297,12 @@ class StaffDashboard extends React.Component {
                   <i className="mdi mdi-contacts menu-icon"></i>
                 </a>
               </li>
+              <li className="nav-item">
+                <Link to="/tutor_dashboard/logs" className="nav-link">
+                  <span className="menu-title">Allocation logs</span>
+                  <i className="mdi mdi-chart-bar menu-icon"></i>
+                </Link>
+              </li>
             </ul>
           </nav>
           <div className="main-panel">
@@ -416,6 +422,41 @@ class StaffDashboard extends React.Component {
                     </div>
                   </div>
                 </div>
+                <Route path='/tutor_dashboard/logs'>
+                      <div className="page-header">
+                          <h3 className="page-title"> Allocate logs </h3>
+                      </div>
+
+                      <div className="row">
+                          <div className="col-12 grid-margin">
+                              <div className="card">
+                                  <div className="card-body">
+                                      <div className="mdl-log">
+                                          <h4 className="card-title">Staff A</h4>
+                                          <p className="card-description"> has assigned linh_student1, linh_student2,
+                                              linh_student3, to dat_tutor
+                                              <span className="txt-time">31 Mar 8:21PM</span>
+                                          </p>
+                                      </div>
+                                      <div className="mdl-log">
+                                          <h4 className="card-title">Staff A</h4>
+                                          <p className="card-description"> has assigned linh_student1, linh_student2,
+                                              linh_student3, to dat_tutor
+                                              <span className="txt-time">31 Mar 8:21PM</span>
+                                          </p>
+                                      </div>
+                                      <div className="mdl-log">
+                                          <h4 className="card-title">Staff A</h4>
+                                          <p className="card-description"> has assigned linh_student1, linh_student2,
+                                              linh_student3, to dat_tutor
+                                              <span className="txt-time">31 Mar 8:21PM</span>
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </Route>
               <div className="row">
                 <div className="col-12 grid-margin stretch-card lst-content">
                   <div className="card">
