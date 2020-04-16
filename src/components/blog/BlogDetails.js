@@ -20,7 +20,20 @@ class BlogDetails extends React.Component {
       title: '',
       content: '',
       comments: [],
-      commentField: ''
+      commentField: '',
+      blog: {
+        title: '',
+        content: '',
+        owner: {
+          name: '',
+          email: ''
+        },
+        created_date: '',
+        comments: [],
+        fileModels: [
+          {id: '', fileName: '', downloadUri: ''}
+        ]
+      }
     }
   }
 
@@ -35,6 +48,7 @@ class BlogDetails extends React.Component {
 
       axios.get(`${BASEURL}/api/blogs/${this.state.id}`, {headers: headers}).then(res => {
         console.log(res.data);
+        this.setState({blog: res.data})
         this.setState({title: res.data.title});
         this.setState({content: res.data.content});
         this.setState({comments: res.data.comments});
@@ -50,7 +64,7 @@ class BlogDetails extends React.Component {
   }
   
   sendComment = () => {
-    // let comment = this.state.commentField;
+    if(this.state.commentField.length == 0) return;
     if(API_ON) {
       const headers = {
         'Content-Type': 'application/json',
@@ -67,7 +81,7 @@ class BlogDetails extends React.Component {
         console.log(res.data);
         axios.get(`${BASEURL}/api/blogs/${this.state.id}`, {headers: headers}).then(res => {
           console.log(res.data);
-          this.setState({comments: res.data.comments});
+          this.setState({blog: res.data});
         }).catch(e => {
   
         });
@@ -98,21 +112,27 @@ class BlogDetails extends React.Component {
                             <span className="login-status online"></span>
                           </div>
                           <div className="nav-profile-text d-flex flex-column">
-                            <span className="font-weight-bold mb-2">David Grey. H</span>
-                            <span className="text-secondary text-small">13/08 Feb</span>
+                            <span className="font-weight-bold mb-2">{this.state.blog.owner.name}</span>
+                            <span className="text-secondary text-small">{this.state.blog.created_date}</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <h4 className="card-title">{this.state.title}</h4>
-                  <p className="card-description">{this.state.content}</p>
-                  <p> <a href="#" className="text-muted"> <i className="mdi mdi-attachment"></i>
-                      attach file</a></p>
+                  <h4 className="card-title">{this.state.blog.title}</h4>
+                  <p className="card-description">{this.state.blog.content}</p>
+                  {this.state.blog.fileModels.map(file => {
+                    return (
+                      <div>
+                        <a className="text-muted" href={file.downloadUri} ><i className="mdi mdi-attachment"></i> {file.fileName}</a>
+                        <br/>
+                      </div>
+                    )
+                  })}
                 </div>
                 <div className="item-blog has-border">
-                  <div className="txt-1">1 blog comment</div>
-                  {this.state.comments.map(comment => {
+                  <div className="txt-1">{this.state.blog.comments.length} blog comment</div>
+                  {this.state.blog.comments.map(comment => {
                     return (
                       <Comment comment={comment} key={comment.id} />
                     )

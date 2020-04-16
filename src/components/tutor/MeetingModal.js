@@ -205,10 +205,6 @@ class MeetingModal extends React.Component {
                         </div>
                       </div>
                       <div className="list-wrapper">
-                        <div className="form-check point-form-check">
-                          <label className="form-check-label">
-                            <input type="checkbox" className="form-check-input" checked={this.state.isSelectAllChecked} onChange={this.onSelectAllChanged} /> Select all <i className="input-helper"></i></label>
-                        </div>
                         <div className="scroll-list">
                           <ul className="d-flex flex-column-reverse todo-list-custom">
                             {this.props.students.filter(student => student.name.toLowerCase().includes(this.state.studentKeyName.toLowerCase())).map(student => {

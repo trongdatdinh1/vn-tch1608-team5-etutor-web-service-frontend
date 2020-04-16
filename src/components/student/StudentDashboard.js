@@ -142,6 +142,7 @@ class StudentDashboard extends React.Component {
         this.setState({conversations: data});
         console.log(data);
       });
+      // this.setState({tutor: null})
     }
     
   }
@@ -317,7 +318,14 @@ class StudentDashboard extends React.Component {
                         <h3 className="page-title">
                             <span className="page-title-icon bg-gradient-primary text-white mr-2">
                                 <i className="mdi mdi-home"></i>
-                            </span> Student dashboard </h3>
+                            </span> Student dashboard
+                            {this.state.tutor && (
+                              <span style={{color: 'blue'}}> (Tutor: {this.state.tutor.name})</span>
+                            )}
+                            {!this.state.tutor && (
+                              <span style={{color: 'red'}}> (No personal tutor)</span>
+                            )}
+                        </h3>
                     </div>
                       <div className="page-header">
                         <h3 className="page-title"> Schedule </h3>
@@ -333,55 +341,55 @@ class StudentDashboard extends React.Component {
                       </div>
 
                       <div className="row">
-                      <div className="col-md-6 grid-margin stretch-card">
-                          <div className="card">
-                            {this.state.tutor && (
-                              <div className="card-body p-0">
-                                  <div className="chat-container chat-page">
-                                          <div className="chat">
-                                              <div className="card">
-                                                  <div className="card-header msg_head">
-                                                      <div className="d-flex bd-highlight">
-                                                          <div className="img_cont">
-                                                              <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                                                                  className="rounded-circle user_img" />
-                                                              <span className="online_icon"></span>
-                                                          </div>
-                                                          <div className="user_info">
-                                                              <span>Chat with {this.state.tutor.name}</span>
-                                                              <p>1767 Messages</p>
-                                                          </div>
+                        {this.state.tutor && (
+                          <div className="col-md-6 grid-margin stretch-card">
+                            <div className="card">
+                                <div className="card-body p-0">
+                                    <div className="chat-container chat-page">
+                                            <div className="chat">
+                                                <div className="card">
+                                                    <div className="card-header msg_head">
+                                                        <div className="d-flex bd-highlight">
+                                                            <div className="img_cont">
+                                                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                                                                    className="rounded-circle user_img" />
+                                                                <span className="online_icon"></span>
+                                                            </div>
+                                                            <div className="user_info">
+                                                                <span>Chat with {this.state.tutor.name}</span>
+                                                                <p>1767 Messages</p>
+                                                            </div>
 
-                                                      </div>
-                                                  </div>
-                                                  <div className="card-body msg_card_body">
-                                                    {this.state.conversations.map(conversation => {
-                                                      return (
-                                                        <Message conversation={conversation}/>
-                                                      )
-                                                    })}
+                                                        </div>
+                                                    </div>
+                                                    <div className="card-body msg_card_body">
+                                                      {this.state.conversations.map(conversation => {
+                                                        return (
+                                                          <Message conversation={conversation}/>
+                                                        )
+                                                      })}
 
-                                                  </div>
-                                                  <div className="card-footer">
-                                                    <div className="input-group">
-                                                      <div className="input-group-append">
-                                                          <span className="input-group-text attach_btn"><i
-                                                                  className="mdi mdi-attachment"></i></span>
-                                                      </div>
-                                                      <textarea name="" className="form-control type_msg"
-                                                          placeholder="Type your message..." name='messageField' value={this.state.messageField} onChange={this.changeHandler}></textarea>
-                                                      <div className="input-group-append" onClick={this.sendMessage}>
-                                                          <span className="input-group-text send_btn"><i className="mdi mdi-send"></i></span>
+                                                    </div>
+                                                    <div className="card-footer">
+                                                      <div className="input-group">
+                                                        <div className="input-group-append">
+                                                            <span className="input-group-text attach_btn"><i
+                                                                    className="mdi mdi-attachment"></i></span>
+                                                        </div>
+                                                        <textarea name="" className="form-control type_msg"
+                                                            placeholder="Type your message..." name='messageField' value={this.state.messageField} onChange={this.changeHandler}></textarea>
+                                                        <div className="input-group-append" onClick={this.sendMessage}>
+                                                            <span className="input-group-text send_btn"><i className="mdi mdi-send"></i></span>
+                                                        </div>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                  </div>
-                              </div>
-                              )}
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
                             </div>
                           </div>
+                        )}
                           <div className="col-md-6 grid-margin stretch-card">
                               <div className="card">
                                   <div className="card-body">
@@ -403,10 +411,12 @@ class StudentDashboard extends React.Component {
                                           )
                                         })}
                                       </div>
-                                      <button
+                                      {this.state.tutor && (
+                                        <button
                                         className="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
                                         data-toggle="modal" data-target="#requestModal" onClick={this.toggleModalRequest}>
                                         <i className="mdi mdi-file-document-edit-outline mr-2"></i>Create Request</button>
+                                      )}
                                   </div>
                               </div>
                           </div>
