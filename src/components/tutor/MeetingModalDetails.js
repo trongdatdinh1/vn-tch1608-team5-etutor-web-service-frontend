@@ -41,13 +41,13 @@ class MeetingModalDetails extends React.Component {
           }}
           className='modal-dialog modal-xl modal-dialog-centered'
           overlayClassName='modal-backdrop modal-rgba'
-          contentLabel="Create Meeting"
+          contentLabel="Meeting Details"
           ariaHideApp={false}
         >
           <div className="modal-dialog modal-xl modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Create meeting !!</h5>
+              <h5 className="modal-title" id="exampleModalLabel">Meeting Details !!</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.props.toggleModal}>
                 <span aria-hidden="true">&times;</span>
               </button>

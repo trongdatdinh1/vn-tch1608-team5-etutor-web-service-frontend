@@ -34,7 +34,7 @@ class TutorDashboard extends React.Component {
     super(props);
     this.state = {
       userName: '',
-      selectedStudentId: null,
+      selectedStudentBlogs: [],
       navbarCollapsed: false,
       selectedMeeting: null,
       modalMeetingDetailsOpen: false,
@@ -173,8 +173,57 @@ class TutorDashboard extends React.Component {
   //   let 
   // }
 
-  notificationClicked = () => {
+  notificationClicked = (notification_id, blog_id) => {
+    if(API_ON) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      }
 
+      let noti = {
+        unread: false
+      }
+
+      axios.post(`${BASEURL}/api/notifications/${notification_id}`, noti, {headers: headers}).then(res => {
+        axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
+          this.setState({notifications: res.data});
+
+          window.location.assign(`/tutor_dashboard/blogs/${blog_id}`);
+        });
+      });
+    } else {
+      window.location.assign(`/tutor_dashboard/blogs/${blog_id}`);
+    }
+    
+  }
+
+  openModalStudentBlogs = studentId => {
+    if(API_ON) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      }
+
+      axios.get(`${BASEURL}/api/blogs_with_student/${studentId}`, {headers: headers}).then(res => {
+        // this.setState({selectedStudentBlogs: res.data})
+        this.setState({
+          modalStudentBlogsOpen: true,
+          selectedStudentBlogs: res.data,
+        })
+      }).catch(error => {
+        console.log(error);
+      })
+    } else {
+      let blogs = [
+        {id: 1, title: `This is title of student ${studentId}`, content: 'This is content 1'},
+        {id: 2, title: 'This is title 2', content: 'This is content 2'},
+      ]
+      this.setState({
+        modalStudentBlogsOpen: true,
+        selectedStudentBlogs: blogs,
+      })
+    }
+    
   }
 
   toggleModalStudentBlogs = () => {
@@ -220,8 +269,7 @@ class TutorDashboard extends React.Component {
                     <div className="dropdown-divider"></div>
                     {this.state.notifications.map(notification => {
                       return (
-                        <Dropdown.Item className="dropdown-item preview-item" href={`/tutor_dashboard/blogs/${notification.relatedId}`}>
-                          {/* <Link to={`/tutor_dashboard/blogs/${notification.relatedId}`} className="nav-link" onClick={this.notificationClicked}> */}
+                        <Dropdown.Item className="dropdown-item preview-item" key={notification.id} onClick={() => {this.notificationClicked(notification.id, notification.relatedId)}} >
                             <div className="preview-thumbnail">
                               <div className={`preview-icon ${notification.unread ? 'bg-warning' : 'bg-info' }`}>
                                 <i className="mdi mdi-calendar"></i>
@@ -233,7 +281,6 @@ class TutorDashboard extends React.Component {
                               <p>{notification.created_date}</p>
                             </div>
                             <div className="dropdown-divider"></div>
-                          {/* </Link> */}
                         </Dropdown.Item>
                       )
                     })}
@@ -471,8 +518,7 @@ class TutorDashboard extends React.Component {
                                                   <div className="col-6 col-sm-4 col-lg-2" key={student.id}>
                                                       <button className="item"
                                                         onClick={() => {
-                                                          this.toggleModalStudentBlogs();
-                                                          this.setState({selectedStudentId: student.id})
+                                                          this.openModalStudentBlogs(student.id);
                                                         }}>
                                                           <div className="text-center">
                                                               <img src="../assets/images/dashboard/img_1.jpg"
@@ -507,7 +553,7 @@ class TutorDashboard extends React.Component {
         <MeetingModal isModalOpen={this.state.modalMeetingOpen} toggleModal={this.toggleModalMeeting} students={this.state.students} createMeeting={this.createMeeting}/>
         <BlogModal isModalOpen={this.state.modalBlogOpen} toggleModal={this.toggleModalBlog} students={this.state.students} createBlog={this.createBlog} />
         <MeetingModalDetails isModalOpen={this.state.modalMeetingDetailsOpen} toggleModal={this.toggleModalMeetingDetails} meeting={this.state.selectedMeeting}/>} />
-        <StudentBlogsModal isModalOpen={this.state.modalStudentBlogsOpen} toggleModal={this.toggleModalStudentBlogs} studentId={this.state.selectedStudentId} />
+        <StudentBlogsModal isModalOpen={this.state.modalStudentBlogsOpen} toggleModal={this.toggleModalStudentBlogs} studentBlogs={this.state.selectedStudentBlogs} />
     </div>
     )
   }
