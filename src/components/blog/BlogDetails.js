@@ -57,6 +57,8 @@ class BlogDetails extends React.Component {
       });
 
     }
+
+    console.log(`logs here ${this.props.match.params.id}`)
   }
 
   changeHandler = e => {

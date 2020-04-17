@@ -157,60 +157,60 @@ class Chat extends Component {
       // </div>
 
 
-                <div class="content-wrapper chat-container chat-page">
-                    <div class="row ">
-                        <div class="col-md-4 chat">
-                            <div class="card mb-sm-3 mb-md-0 contacts_card">
-                                <div class="card-header">
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Search..." name="" class="form-control search" />
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text search_btn"><i
-                                                    class="mdi mdi-magnify"></i></span>
+                <div className="content-wrapper chat-container chat-page">
+                    <div className="row ">
+                        <div className="col-md-4 chat">
+                            <div className="card mb-sm-3 mb-md-0 contacts_card">
+                                <div className="card-header">
+                                    <div className="input-group">
+                                        <input type="text" placeholder="Search..." name="" className="form-control search" />
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text search_btn"><i
+                                                    className="mdi mdi-magnify"></i></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body contacts_body">
-                                    <ui class="contacts">
+                                <div className="card-body contacts_body">
+                                    <ui className="contacts">
                                       {this.props.students.map(student => <StudentBoxItem student={student} isSelected={this.state.selectedStudent === student.id} selectStudent={this.selectStudent} />)}
                                     </ui>
                                 </div>
-                                <div class="card-footer"></div>
+                                <div className="card-footer"></div>
                             </div>
                         </div>
-                        <div class="col-md-8 chat">
-                            <div class="card">
-                                <div class="card-header msg_head">
-                                    <div class="d-flex bd-highlight">
-                                        <div class="img_cont">
+                        <div className="col-md-8 chat">
+                            <div className="card">
+                                <div className="card-header msg_head">
+                                    <div className="d-flex bd-highlight">
+                                        <div className="img_cont">
                                             <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                                                class="rounded-circle user_img" />
-                                            <span class="online_icon"></span>
+                                                className="rounded-circle user_img" />
+                                            <span className="online_icon"></span>
                                         </div>
-                                        <div class="user_info">
+                                        <div className="user_info">
                                             <span>Chat with Khalid</span>
                                             <p>1767 Messages</p>
                                         </div>
                                         
                                     </div>
                                 </div>
-                                <div class="card-body msg_card_body">
+                                <div className="card-body msg_card_body">
                                   {this.state.conversations.map(c => {
                                     return <Message conversation={c} />
                                   })}
                                   <div ref={this.messagesEndRef} />
                                 </div>
-                                <div class="card-footer">
-                                    <div class="input-group">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text attach_btn"><i
-                                                    class="mdi mdi-attachment"></i></span>
+                                <div className="card-footer">
+                                    <div className="input-group">
+                                        <div className="input-group-append">
+                                            <span className="input-group-text attach_btn"><i
+                                                    className="mdi mdi-attachment"></i></span>
                                         </div>
-                                        <textarea name="text" value={this.state.text} onChange={this.handleChange} class="form-control type_msg"
+                                        <textarea name="text" value={this.state.text} onChange={this.handleChange} className="form-control type_msg"
                                             placeholder="Type your message..."></textarea>
-                                        <div class="input-group-append" onClick={this.handleSend}>
-                                            <span class="input-group-text send_btn"><i
-                                                    class="mdi mdi-send"></i></span>
+                                        <div className="input-group-append" onClick={this.handleSend}>
+                                            <span className="input-group-text send_btn"><i
+                                                    className="mdi mdi-send"></i></span>
                                         </div>
                                     </div>
                                 </div>

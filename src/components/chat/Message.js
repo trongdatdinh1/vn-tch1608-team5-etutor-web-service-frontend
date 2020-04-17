@@ -10,14 +10,14 @@ class Message extends React.Component {
   render() {
     let owner = this.props.conversation.from === 'tutor' ? 'end' : 'start';
     return (
-      <div class={`d-flex justify-content-${owner } mb-4`}>
-        <div class="img_cont_msg">
+      <div className={`d-flex justify-content-${owner } mb-4`}>
+        <div className="img_cont_msg">
           <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-              class="rounded-circle user_img_msg" />
+              className="rounded-circle user_img_msg" />
         </div>
-        <div class="msg_cotainer">
+        <div className="msg_cotainer">
           {this.props.conversation.text}
-          <span class="msg_time">{this.props.conversation.createdAt}</span>
+          <span className="msg_time">{this.props.conversation.createdAt}</span>
         </div>
       </div>
     )

@@ -135,7 +135,7 @@ class BlogModal extends React.Component {
           onRequestClose={this.closeModal}
           className='modal-dialog modal-xl modal-dialog-centered'
           overlayClassName='modal-backdrop modal-rgba'
-          contentLabel="Create Meeting"
+          contentLabel="Create Blog"
           ariaHideApp={false}
         >
           <div className="modal-dialog modal-xl modal-dialog-centered" role="document">
