@@ -8,11 +8,6 @@ import {
 } from "react-router-dom";
 import { connect } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
-
-import '../../assets/vendors/mdi/css/materialdesignicons.min.css';
-import '../../assets/vendors/css/vendor.bundle.base.css'
-import '../../assets/css/style.css';
-import '../../assets/css/etutor.css';
 import circle_svg from '../../assets/images/dashboard/circle.svg';
 import logo_svg from '../../assets/images/logo.svg';
 import logo_mini_svg from '../../assets/images/logo-mini.svg';
@@ -258,17 +253,19 @@ class TutorDashboard extends React.Component {
             </div> */}
             <ul className="navbar-nav navbar-nav-right">
               <li className="nav-item dropdown">
-                <Dropdown className="nav-item dropdown">
-                  <Dropdown.Toggle className="nav-link count-indicator dropdown-toggle" style={{background: "white", borderColor: 'white'}}>
+                <Dropdown alignRight>
+                  <Dropdown.Toggle href="#" variant="link" className="nav-link count-indicator dropdown-toggle" >
                     <i className="mdi mdi-bell-outline"></i>
                     <span className="count-symbol bg-danger"></span>
                   </Dropdown.Toggle>
 
+
                   <Dropdown.Menu className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list">
                     <h6 className="p-3 mb-0">Notifications</h6>
-                    <div className="dropdown-divider"></div>
+                    <div className="scroll-noti">
                     {this.state.notifications.map(notification => {
                       return (
+                        
                         <Dropdown.Item className="dropdown-item preview-item" key={notification.id} onClick={() => {this.notificationClicked(notification.id, notification.relatedId)}} >
                             <div className="preview-thumbnail">
                               <div className={`preview-icon ${notification.unread ? 'bg-warning' : 'bg-info' }`}>
@@ -277,49 +274,15 @@ class TutorDashboard extends React.Component {
                             </div>
                             <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                               {/* <h6 className="preview-subject font-weight-normal mb-1">{notification.content}</h6> */}
-                              <p className="text-gray mb-0"> {notification.content}</p>
-                              <p>{notification.created_date}</p>
+                              <p className="preview-subject ellipsis font-weight-normal mb-1"> {notification.content}</p>
+                              {/* <p className="text-gray ellipsis mb-0">{notification.created_date}</p> */}
+                              <p className="text-gray ellipsis mb-0">18/04/2020</p>
                             </div>
                             <div className="dropdown-divider"></div>
                         </Dropdown.Item>
                       )
                     })}
-                    {/* <Dropdown.Item href="#/action-1" className="dropdown-item preview-item">
-                      <div className="preview-thumbnail">
-                        <div className="preview-icon bg-success">
-                          <i className="mdi mdi-calendar"></i>
-                        </div>
-                      </div>
-                      <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                        <h6 className="preview-subject font-weight-normal mb-1">Event today</h6>
-                        <p className="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
-                      </div>
-                      <div className="dropdown-divider"></div>
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-2" className="dropdown-item preview-item">
-                      <div className="preview-thumbnail">
-                        <div className="preview-icon bg-warning">
-                          <i className="mdi mdi-settings"></i>
-                        </div>
-                      </div>
-                      <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                        <h6 className="preview-subject font-weight-normal mb-1">Settings</h6>
-                        <p className="text-gray ellipsis mb-0"> Update dashboard </p>
-                      </div>
-                      <div className="dropdown-divider"></div>
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3" className="dropdown-item preview-item">
-                      <div className="preview-thumbnail">
-                        <div className="preview-icon bg-info">
-                          <i className="mdi mdi-link-variant"></i>
-                        </div>
-                      </div>
-                      <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                        <h6 className="preview-subject font-weight-normal mb-1">Launch Admin</h6>
-                        <p className="text-gray ellipsis mb-0"> New admin wow! </p>
-                      </div>
-                      <div className="dropdown-divider"></div>
-                    </Dropdown.Item> */}
+                    </div>
                   </Dropdown.Menu>
                 </Dropdown>
               </li>
@@ -552,7 +515,7 @@ class TutorDashboard extends React.Component {
         </div>
         <MeetingModal isModalOpen={this.state.modalMeetingOpen} toggleModal={this.toggleModalMeeting} students={this.state.students} createMeeting={this.createMeeting}/>
         <BlogModal isModalOpen={this.state.modalBlogOpen} toggleModal={this.toggleModalBlog} students={this.state.students} createBlog={this.createBlog} />
-        <MeetingModalDetails isModalOpen={this.state.modalMeetingDetailsOpen} toggleModal={this.toggleModalMeetingDetails} meeting={this.state.selectedMeeting}/>} />
+        <MeetingModalDetails isModalOpen={this.state.modalMeetingDetailsOpen} toggleModal={this.toggleModalMeetingDetails} meeting={this.state.selectedMeeting} />
         <StudentBlogsModal isModalOpen={this.state.modalStudentBlogsOpen} toggleModal={this.toggleModalStudentBlogs} studentBlogs={this.state.selectedStudentBlogs} />
     </div>
     )
