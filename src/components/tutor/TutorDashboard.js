@@ -275,8 +275,7 @@ class TutorDashboard extends React.Component {
                             <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                               {/* <h6 className="preview-subject font-weight-normal mb-1">{notification.content}</h6> */}
                               <p className="preview-subject ellipsis font-weight-normal mb-1"> {notification.content}</p>
-                              {/* <p className="text-gray ellipsis mb-0">{notification.created_date}</p> */}
-                              <p className="text-gray ellipsis mb-0">18/04/2020</p>
+                              <p className="text-gray ellipsis mb-0">{moment(notification.createdDate).fromNow()}</p>
                             </div>
                             <div className="dropdown-divider"></div>
                         </Dropdown.Item>

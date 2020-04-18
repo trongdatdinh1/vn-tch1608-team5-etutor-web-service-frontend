@@ -37,6 +37,8 @@ function login(username, password){
           history.push('/tutor_dashboard');
         } else if(response.data.role == 'ROLE_ADMIN'){
           history.push('/staff_dashboard');
+        } else if(response.data.role == 'ROLE_SUPER_ADMIN') {
+          history.push('/staff_dashboard');
         } else {
           history.push('/student_dashboard');
         }
