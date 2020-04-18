@@ -51,7 +51,8 @@
   padding-top: 10px;
 }
 
-.clearfix::after, .calendar ol::after {
+.clearfix::after,
+.calendar ol::after {
   content: ".";
   display: block;
   height: 0;
@@ -126,7 +127,7 @@ Calendar Styling */
   background: none;
 }
 
-.calendar .days li:nth-child(n+29) {
+.calendar .days li:nth-child(n + 29) {
   border-bottom: none;
 }
 
@@ -155,7 +156,7 @@ Calendar Styling */
   font-size: 0.875rem;
   line-height: 1;
   vertical-align: top;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .modal-footer {
@@ -223,7 +224,7 @@ Calendar Styling */
 }
 
 .list-group .nav-link:hover {
-  background-color: rgba(0, 0, 0, .05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .chat-container {
@@ -237,7 +238,8 @@ Calendar Styling */
   transition: opacity 0.3s ease;
 }
 
-.p-0 .chat-page,.p-0 .chat-container .card {
+.p-0 .chat-page,
+.p-0 .chat-container .card {
   border-radius: 0.3125rem !important;
 }
 
@@ -546,7 +548,8 @@ Calendar Styling */
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.mdl-blog {}
+.mdl-blog {
+}
 
 .mdl-blog .sidebar {
   width: 100%;
@@ -568,7 +571,7 @@ Calendar Styling */
 }
 
 .mdl-blog .card-description {
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
 .mdl-blog .has-border {
@@ -585,11 +588,25 @@ Calendar Styling */
 
 .mdl-blog .has-border .content {
   display: flex;
+  border-top: 1px solid #ebedf2;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.mdl-blog .right-content .font-weight-bold{
+  font-size: 13px;
+  margin-right: 10px;
+}
+
+
+
+.mdl-blog .has-border .content:last-child {
+  padding-bottom: 10px;
 }
 
 .mdl-blog .has-border .content .txt-2 {
   color: #76838f;
-  font-size: .9375rem;
+  font-size: 0.9375rem;
   line-height: 1.5;
   padding-top: 10px;
 }
@@ -598,7 +615,26 @@ Calendar Styling */
   background-color: #fff;
 }
 
-@media(max-width: 576px) {
+.modal-edited,
+.modal-dialog {
+  min-width: 500px;
+}
+
+.preview-list {
+  max-width: 400px;
+}
+
+.dropdown .dropdown-menu {
+  margin-top: 0;
+}
+
+.dropdown .dropdown-menu .dropdown-divider{
+  margin-top: 0;
+}
+
+
+
+@media (max-width: 576px) {
   .chat-container .contacts_card {
     margin-bottom: 15px !important;
   }
@@ -610,11 +646,36 @@ Calendar Styling */
 
   .lst-content .part-right {
     position: unset;
-    font-size:12px;
+    font-size: 12px;
   }
 
-  .lst-content .filter,.lst-content .viw-all{
+  .lst-content .filter,
+  .lst-content .viw-all {
     margin-right: 10px;
     margin-left: 10px;
   }
+
+  .modal-edited,
+  .modal-dialog {
+    min-width: 300px;
+  }
+}
+
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown {
+  top:70px !important;
+  right: 0 !important;
+  left: auto !important; 
+}
+
+.scroll-noti {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item .ellipsis {
+  max-width: 300px;
+}
+
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item {
+  border-top: 1px solid #ebedf2;
 }

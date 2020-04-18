@@ -7,10 +7,6 @@ import {
   withRouter
 } from "react-router-dom";
 import { connect } from 'react-redux';
-import '../../assets/vendors/mdi/css/materialdesignicons.min.css';
-import '../../assets/vendors/css/vendor.bundle.base.css';
-import '../../assets/css/style.css';
-import '../../assets/css/etutor.css';
 import circle_svg from '../../assets/images/dashboard/circle.svg';
 import logo_svg from '../../assets/images/logo.svg';
 import logo_mini_svg from '../../assets/images/logo-mini.svg';

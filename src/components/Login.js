@@ -1,13 +1,18 @@
 import React from 'react';
-  import { Link, withRouter } from "react-router-dom";
+
+import '../assets/vendor/bootstrap/css/bootstrap.css';
+import '../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
+import '../assets/vendors/mdi/css/materialdesignicons.min.css';
+import '../assets/vendor/animate/animate.css';
+import '../assets/css/main.css';
+import '../assets/css/util.css';
+import '../assets/css/style.css';
+import '../assets/css/etutor.css';
+
+import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
 import img01 from '../assets/images/img-01.png';
-import 'bootstrap/dist/css/bootstrap.css';
-import '../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
-import '../assets/vendor/animate/animate.css';
-import '../assets/css/util.css';
-import '../assets/css/main.css';
 import {BASEURL} from '../constants/baseurl';
 import axios from 'axios';
 
