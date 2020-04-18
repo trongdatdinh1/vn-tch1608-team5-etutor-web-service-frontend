@@ -17,7 +17,8 @@ class BlogModal extends React.Component {
       studentKeyName: '',
       isSelectAllChecked: false,
       content: '',
-      selectedStudents: []
+      selectedStudents: [],
+      document: null
     }
     this.baseState = this.state;
   }
@@ -85,7 +86,9 @@ class BlogModal extends React.Component {
     
   }
 
-  
+  fileChangeHandler = (e) => {
+    this.setState({document: e.target.files})
+  }
 
 
   render() {
@@ -119,6 +122,10 @@ class BlogModal extends React.Component {
                                     <label>Content</label>
                                     <textarea className="form-control" id="exampleTextarea1" rows="7" name='content' value={this.state.content} onChange={this.changeHandler}></textarea>
                                 </div>
+                                <div className="form-group">
+                                  <label>Documents</label>
+                                  <input type="file" name="documennt" multiple onChange={this.fileChangeHandler} />
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -126,7 +133,7 @@ class BlogModal extends React.Component {
 
                 <div className="modal-footer">
                     <button type="button" data-dismiss="modal" aria-label="Close"
-                        className="btn btn-light mr-2">Cancel</button>
+                        className="btn btn-light mr-2" onClick={this.closeModal}>Cancel</button>
                     <button type="submit" className="btn btn-gradient-primary" onClick={this.handleSubmit}>Submit</button>
                 </div>
             </div>

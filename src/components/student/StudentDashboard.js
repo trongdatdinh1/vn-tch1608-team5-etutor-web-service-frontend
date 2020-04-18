@@ -227,29 +227,29 @@ class StudentDashboard extends React.Component {
     this.setState({messageField: ''});
   }
 
-  // notificationClicked = (notification_id, blog_id) => {
-  //   if(API_ON) {
-  //     const headers = {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
-  //     }
+  notificationClicked = (notification_id, blog_id) => {
+    if(API_ON) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      }
 
-  //     let noti = {
-  //       unread: false
-  //     }
+      let noti = {
+        unread: false
+      }
 
-  //     axios.post(`${BASEURL}/api/notifications/${notification_id}`, noti, {headers: headers}).then(res => {
-  //       axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
-  //         this.setState({notifications: res.data});
+      axios.post(`${BASEURL}/api/notifications/${notification_id}`, noti, {headers: headers}).then(res => {
+        axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
+          this.setState({notifications: res.data});
 
-  //         window.location.assign(`/student_dashboard/blogs/${blog_id}`);
-  //       });
-  //     });
-  //   } else {
-  //     window.location.assign(`/student_dashboard/blogs/${blog_id}`);
-  //   }
+          window.location.assign(`/student_dashboard/blogs/${blog_id}`);
+        });
+      });
+    } else {
+      window.location.assign(`/student_dashboard/blogs/${blog_id}`);
+    }
     
-  // }
+  }
 
   render() {
     const collapsed = this.state.navbarCollapsed;
@@ -280,7 +280,7 @@ class StudentDashboard extends React.Component {
             </div> */}
             
             <ul className="navbar-nav navbar-nav-right">
-              {/* <li className="nav-item dropdown">
+              <li className="nav-item dropdown">
                 <Dropdown className="nav-item dropdown">
                   <Dropdown.Toggle className="nav-link count-indicator dropdown-toggle" style={{background: "white", borderColor: 'white'}}>
                     <i className="mdi mdi-bell-outline"></i>
@@ -308,7 +308,7 @@ class StudentDashboard extends React.Component {
                     })}
                   </Dropdown.Menu>
                 </Dropdown>
-              </li> */}
+              </li>
               <li className="nav-item nav-profile dropdown">
                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                   aria-expanded="false">
