@@ -124,6 +124,8 @@ class StudentDashboard extends React.Component {
       });
 
       axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
+        console.log('Noti')
+        console.log(res.data)
         this.setState({notifications: res.data});
       });
 
@@ -227,29 +229,29 @@ class StudentDashboard extends React.Component {
     this.setState({messageField: ''});
   }
 
-  // notificationClicked = (notification_id, blog_id) => {
-  //   if(API_ON) {
-  //     const headers = {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
-  //     }
+  notificationClicked = (notification_id, blog_id) => {
+    if(API_ON) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+      }
 
-  //     let noti = {
-  //       unread: false
-  //     }
+      let noti = {
+        unread: false
+      }
 
-  //     axios.post(`${BASEURL}/api/notifications/${notification_id}`, noti, {headers: headers}).then(res => {
-  //       axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
-  //         this.setState({notifications: res.data});
+      axios.post(`${BASEURL}/api/notifications/${notification_id}`, noti, {headers: headers}).then(res => {
+        axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
+          this.setState({notifications: res.data});
 
-  //         window.location.assign(`/student_dashboard/blogs/${blog_id}`);
-  //       });
-  //     });
-  //   } else {
-  //     window.location.assign(`/student_dashboard/blogs/${blog_id}`);
-  //   }
+          window.location.assign(`/student_dashboard/blogs/${blog_id}`);
+        });
+      });
+    } else {
+      window.location.assign(`/student_dashboard/blogs/${blog_id}`);
+    }
     
-  // }
+  }
 
   render() {
     const collapsed = this.state.navbarCollapsed;
@@ -280,18 +282,20 @@ class StudentDashboard extends React.Component {
             </div> */}
             
             <ul className="navbar-nav navbar-nav-right">
-              {/* <li className="nav-item dropdown">
-                <Dropdown className="nav-item dropdown">
-                  <Dropdown.Toggle className="nav-link count-indicator dropdown-toggle" style={{background: "white", borderColor: 'white'}}>
+              <li className="nav-item dropdown">
+                <Dropdown alignRight>
+                  <Dropdown.Toggle href="#" variant="link" className="nav-link count-indicator dropdown-toggle" >
                     <i className="mdi mdi-bell-outline"></i>
                     <span className="count-symbol bg-danger"></span>
                   </Dropdown.Toggle>
 
+
                   <Dropdown.Menu className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list">
                     <h6 className="p-3 mb-0">Notifications</h6>
-                    <div className="dropdown-divider"></div>
+                    <div className="scroll-noti">
                     {this.state.notifications.map(notification => {
                       return (
+                        
                         <Dropdown.Item className="dropdown-item preview-item" key={notification.id} onClick={() => {this.notificationClicked(notification.id, notification.relatedId)}} >
                             <div className="preview-thumbnail">
                               <div className={`preview-icon ${notification.unread ? 'bg-warning' : 'bg-info' }`}>
@@ -299,16 +303,19 @@ class StudentDashboard extends React.Component {
                               </div>
                             </div>
                             <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                              <p className="text-gray mb-0"> {notification.content}</p>
-                              <p>{notification.created_date}</p>
+                              {/* <h6 className="preview-subject font-weight-normal mb-1">{notification.content}</h6> */}
+                              <p className="preview-subject ellipsis font-weight-normal mb-1"> {notification.content}</p>
+                              <p className="text-gray ellipsis mb-0">{moment(notification.createdDate).fromNow()}</p>
+                              {/* <p className="text-gray ellipsis mb-0">18/04/2020</p> */}
                             </div>
                             <div className="dropdown-divider"></div>
                         </Dropdown.Item>
                       )
                     })}
+                    </div>
                   </Dropdown.Menu>
                 </Dropdown>
-              </li> */}
+              </li>
               <li className="nav-item nav-profile dropdown">
                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                   aria-expanded="false">

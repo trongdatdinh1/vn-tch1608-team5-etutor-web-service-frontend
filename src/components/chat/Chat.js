@@ -15,7 +15,7 @@ class Chat extends Component {
     this.state = {
 			tutorId: 1,
       text: '',
-      selectedStudent: 2,
+      selectedStudent: {id: 1, name: 'Nara Shikamaru', email: 'shika@fpt.edu.vn'},
       conversations: [
         {
           tutorId: 1,
@@ -62,7 +62,6 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    console.log('Noooooooooooooooooo');
     this.scrollToBottom();
     // db.collection('places').onSnapshot(querySnapshot => {
     //   const data = querySnapshot.docs.map(doc=> {doc.data()});
@@ -85,6 +84,7 @@ class Chat extends Component {
     //   this.setState({messages: data});
     //   console.log(data);
     // });
+
 		let chatIds = this.state.students.map(student => {
 			return `${this.state.tutorId}_${student.id}`;
 		});
@@ -96,13 +96,11 @@ class Chat extends Component {
     this.scrollToBottom()
   }
 
-  selectStudent = (id) => {
-		this.setState({selectedStudent: id})
-		db.collection('conversations').doc(`${this.state.tutorId}__${id}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
+  selectStudent = (student) => {
+    this.setState({selectedStudent: student})
+		db.collection('conversations').doc(`${this.state.tutorId}__${student.id}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
       const data = querySnapshot.docs.map(doc=> doc.data());
       this.setState({conversations: data});
-			console.log(data);
-			// console.log(querySnapshot);
     });
 
   }
@@ -123,9 +121,7 @@ class Chat extends Component {
       createdAt: (new Date()).toISOString()
 		}
 
-		console.log(`${this.state.tutorId}__${this.state.selectStudent}`);
-		db.collection('conversations').doc(`${this.state.tutorId}__${this.state.selectedStudent}`).collection('messages').doc(uid(19)).set(msg);
-    // this.setState({conversations: [...this.state.conversations, conv]})
+		db.collection('conversations').doc(`${this.state.tutorId}__${this.state.selectedStudent.id}`).collection('messages').doc(uid(19)).set(msg);
     this.setState({text: ''});
   }
 
@@ -157,60 +153,60 @@ class Chat extends Component {
       // </div>
 
 
-                <div className="content-wrapper chat-container chat-page">
-                    <div className="row ">
-                        <div className="col-md-4 chat">
-                            <div className="card mb-sm-3 mb-md-0 contacts_card">
-                                <div className="card-header">
-                                    <div className="input-group">
-                                        <input type="text" placeholder="Search..." name="" className="form-control search" />
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text search_btn"><i
-                                                    className="mdi mdi-magnify"></i></span>
+                <div class="content-wrapper chat-container chat-page">
+                    <div class="row ">
+                        <div class="col-md-4 chat">
+                            <div class="card mb-sm-3 mb-md-0 contacts_card">
+                                <div class="card-header">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Search..." name="" class="form-control search" />
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text search_btn"><i
+                                                    class="mdi mdi-magnify"></i></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card-body contacts_body">
-                                    <ui className="contacts">
-                                      {this.props.students.map(student => <StudentBoxItem student={student} isSelected={this.state.selectedStudent === student.id} selectStudent={this.selectStudent} />)}
+                                <div class="card-body contacts_body">
+                                    <ui class="contacts">
+                                      {this.props.students.map(student => <StudentBoxItem student={student} isSelected={this.state.selectedStudent.id === student.id} selectStudent={this.selectStudent} />)}
                                     </ui>
                                 </div>
-                                <div className="card-footer"></div>
+                                <div class="card-footer"></div>
                             </div>
                         </div>
-                        <div className="col-md-8 chat">
-                            <div className="card">
-                                <div className="card-header msg_head">
-                                    <div className="d-flex bd-highlight">
-                                        <div className="img_cont">
+                        <div class="col-md-8 chat">
+                            <div class="card">
+                                <div class="card-header msg_head">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
                                             <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                                                className="rounded-circle user_img" />
-                                            <span className="online_icon"></span>
+                                                class="rounded-circle user_img" />
+                                            <span class="online_icon"></span>
                                         </div>
-                                        <div className="user_info">
-                                            <span>Chat with Khalid</span>
+                                        <div class="user_info">
+                                            <span>Chat with {this.state.selectedStudent.name}</span>
                                             <p>1767 Messages</p>
                                         </div>
                                         
                                     </div>
                                 </div>
-                                <div className="card-body msg_card_body">
+                                <div class="card-body msg_card_body">
                                   {this.state.conversations.map(c => {
                                     return <Message conversation={c} />
                                   })}
                                   <div ref={this.messagesEndRef} />
                                 </div>
-                                <div className="card-footer">
-                                    <div className="input-group">
-                                        <div className="input-group-append">
-                                            <span className="input-group-text attach_btn"><i
-                                                    className="mdi mdi-attachment"></i></span>
+                                <div class="card-footer">
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text attach_btn"><i
+                                                    class="mdi mdi-attachment"></i></span>
                                         </div>
-                                        <textarea name="text" value={this.state.text} onChange={this.handleChange} className="form-control type_msg"
+                                        <textarea name="text" value={this.state.text} onChange={this.handleChange} class="form-control type_msg"
                                             placeholder="Type your message..."></textarea>
-                                        <div className="input-group-append" onClick={this.handleSend}>
-                                            <span className="input-group-text send_btn"><i
-                                                    className="mdi mdi-send"></i></span>
+                                        <div class="input-group-append" onClick={this.handleSend}>
+                                            <span class="input-group-text send_btn"><i
+                                                    class="mdi mdi-send"></i></span>
                                         </div>
                                     </div>
                                 </div>

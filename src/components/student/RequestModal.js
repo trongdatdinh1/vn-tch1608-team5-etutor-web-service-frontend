@@ -9,14 +9,16 @@ import moment from 'moment';
 import axios from 'axios';
 import {BASEURL} from '../../constants/baseurl';
 import {API_ON} from '../../constants/ApiOn';
-class BlogModal extends React.Component {
+class RequestModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: '',
       studentKeyName: '',
       isSelectAllChecked: false,
       content: '',
-      selectedStudents: []
+      selectedStudents: [],
+      document: null
     }
     this.baseState = this.state;
   }
@@ -30,6 +32,10 @@ class BlogModal extends React.Component {
 
   changeHandler = e => {
     this.setState({[e.target.name]: e.target.value})
+  }
+
+  fileChangeHandler = (e) => {
+    this.setState({document: e.target.files})
   }
 
   handleSubmit = () => {
@@ -46,18 +52,55 @@ class BlogModal extends React.Component {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
       };
-      
-      axios.post(`${BASEURL}/api/create_request`, request, {headers: headers}).then(res => {
-        this.props.createRequest({
-          id: res.data.id,
-          title: res.data.title,
-          content: res.data.content,
+
+      if(this.state.document) {
+        const multipart_header = {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
+        }
+        
+        const formData = new FormData();
+        for(var x = 0; x < this.state.document.length; x++) {
+          formData.append('files', this.state.document[x])
+        }
+
+        axios.post(`${BASEURL}/uploadMultipleFiles`, formData, {headers: multipart_header}).then(res => {
+          let file_ids = res.data.map(file => {
+            return file.id;
+          })
+
+          let request = {
+            title: this.state.title,
+            content: this.state.content,
+            file_ids: file_ids
+          }
+          axios.post(`${BASEURL}/api/create_request`, request, {headers: headers}).then(res => {
+            console.log('Created Request')
+            console.log(res.data)
+
+          }).catch(error => {
+            console.log(error);
+          }).finally(() => {
+            this.closeModal();
+          });
+        })
+
+
+      } else {
+        axios.post(`${BASEURL}/api/create_request`, request, {headers: headers}).then(res => {
+          this.props.createRequest({
+            id: res.data.id,
+            title: res.data.title,
+            content: res.data.content,
+          });
+        }).catch(error => {
+          console.log(error);
+        }).finally(() => {
+          this.closeModal();
         });
-      }).catch(error => {
-        console.log(error);
-      }).finally(() => {
-        this.closeModal();
-      });
+      }
+      
+      
     } else {
       this.props.createRequest(request);
       this.closeModal();
@@ -129,4 +172,4 @@ const actionCreators = {
 };
 
 // export default TutorDashboard;
-export default connect(mapState)(BlogModal);
+export default connect(mapState)(RequestModal);

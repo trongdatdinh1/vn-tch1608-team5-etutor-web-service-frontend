@@ -6,7 +6,7 @@ class StudentBoxItem extends React.Component {
   }
   
   studentClicked = () => {
-    this.props.selectStudent(this.props.student.id);
+    this.props.selectStudent(this.props.student);
   }
 
   render() {

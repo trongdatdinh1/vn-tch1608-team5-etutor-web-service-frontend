@@ -58,7 +58,13 @@ class StaffDashboard extends React.Component {
       ],
       studentKeyName: '',
       tutorKeyName: '',
-      isSelectAllChecked: false
+      isSelectAllChecked: false,
+      statistics: {
+        meeting_count: 0,
+        blog_count: 0,
+        request_count: 0
+      },
+      logs: []
     }
   }
 
@@ -98,6 +104,15 @@ class StaffDashboard extends React.Component {
         this.setState({assigners: arr});
       });
 
+      if( 'ROLE_SUPER_ADMIN' == this.props.authentication.user.userRole) {
+        axios.get(`${BASEURL}/api/statistics_basic`, {headers: headers}).then(res => {
+          this.setState({statistics: res.data});
+        });
+
+        axios.get(`${BASEURL}/api/allocation_logs`, {headers: headers}).then(res => {
+          this.setState({logs: res.data});
+        });
+      }
       this.setState({userName: this.props.authentication.user.name})
     }
     
@@ -282,19 +297,13 @@ class StaffDashboard extends React.Component {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="index.html">
-                  <span className="menu-title">Home page</span>
+                <Link to="/staff_dashboard" className="nav-link">
+                  <span className="menu-title">Dashboard</span>
                   <i className="mdi mdi-home menu-icon"></i>
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="register.html">
-                  <span className="menu-title">Create account</span>
-                  <i className="mdi mdi-contacts menu-icon"></i>
-                </a>
-              </li>
-              <li className="nav-item">
-                <Link to="/tutor_dashboard/logs" className="nav-link">
+                <Link to="/staff_dashboard/logs" className="nav-link">
                   <span className="menu-title">Allocation logs</span>
                   <i className="mdi mdi-chart-bar menu-icon"></i>
                 </Link>
@@ -303,6 +312,52 @@ class StaffDashboard extends React.Component {
           </nav>
           <div className="main-panel">
             <div className="content-wrapper">
+            <Route exact path='/staff_dashboard/logs'>
+                      <div className="page-header">
+                          <h3 className="page-title"> Allocate logs </h3>
+                      </div>
+
+                      <div className="row">
+                          <div className="col-12 grid-margin">
+                              <div className="card">
+                                  <div className="card-body">
+                                    {this.state.logs.map(log => {
+                                      return (
+                                        <div className="mdl-log">
+                                            <h4 className="card-title">{log.staff_name}</h4>
+                                            <p className="card-description"> {log.message}
+                                                {/* <span className="txt-time">31 Mar 8:21PM</span> */}
+                                            </p>
+                                        </div>
+                                      )
+                                    })}
+                                      {/* <div className="mdl-log">
+                                          <h4 className="card-title">Staff A</h4>
+                                          <p className="card-description"> has assigned linh_student1, linh_student2,
+                                              linh_student3, to dat_tutor
+                                              <span className="txt-time">31 Mar 8:21PM</span>
+                                          </p>
+                                      </div>
+                                      <div className="mdl-log">
+                                          <h4 className="card-title">Staff A</h4>
+                                          <p className="card-description"> has assigned linh_student1, linh_student2,
+                                              linh_student3, to dat_tutor
+                                              <span className="txt-time">31 Mar 8:21PM</span>
+                                          </p>
+                                      </div>
+                                      <div className="mdl-log">
+                                          <h4 className="card-title">Staff A</h4>
+                                          <p className="card-description"> has assigned linh_student1, linh_student2,
+                                              linh_student3, to dat_tutor
+                                              <span className="txt-time">31 Mar 8:21PM</span>
+                                          </p>
+                                      </div> */}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </Route>
+            <Route exact path='/staff_dashboard'>
               <div className="page-header">
                 <h3 className="page-title">
                   <span className="page-title-icon bg-gradient-primary text-white mr-2">
@@ -314,10 +369,10 @@ class StaffDashboard extends React.Component {
                   <div className="card bg-gradient-danger card-img-holder text-white">
                     <div className="card-body">
                       <img src={circle_svg} className="card-img-absolute" alt="circle-image" />
-                      <h4 className="font-weight-normal mb-3">Students not assigned <i
+                      <h4 className="font-weight-normal mb-3">Total Meeting Held <i
                           className="mdi mdi-chart-line mdi-24px float-right"></i>
                       </h4>
-                      <h2 className="mb-5">15,0000</h2>
+                      <h2 className="mb-5">{this.state.statistics.meeting_count}</h2>
                     </div>
                   </div>
                 </div>
@@ -325,10 +380,10 @@ class StaffDashboard extends React.Component {
                   <div className="card bg-gradient-info card-img-holder text-white">
                     <div className="card-body">
                       <img src={circle_svg} className="card-img-absolute" alt="circle-image" />
-                      <h4 className="font-weight-normal mb-3">Students inactive in 7 days <i
+                      <h4 className="font-weight-normal mb-3">Total Requests created <i
                           className="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                       </h4>
-                      <h2 className="mb-5">45,6334</h2>
+                      <h2 className="mb-5">{this.state.statistics.request_count}</h2>
                     </div>
                   </div>
                 </div>
@@ -336,10 +391,10 @@ class StaffDashboard extends React.Component {
                   <div className="card bg-gradient-success card-img-holder text-white">
                     <div className="card-body">
                       <img src={circle_svg} className="card-img-absolute" alt="circle-image" />
-                      <h4 className="font-weight-normal mb-3">Students inactive in 28 days <i
+                      <h4 className="font-weight-normal mb-3">Total Blogs created <i
                           className="mdi mdi-diamond mdi-24px float-right"></i>
                       </h4>
-                      <h2 className="mb-5">95,5741</h2>
+                      <h2 className="mb-5">{this.state.statistics.blog_count}</h2>
                     </div>
                   </div>
                 </div>
@@ -418,41 +473,6 @@ class StaffDashboard extends React.Component {
                     </div>
                   </div>
                 </div>
-                <Route path='/tutor_dashboard/logs'>
-                      <div className="page-header">
-                          <h3 className="page-title"> Allocate logs </h3>
-                      </div>
-
-                      <div className="row">
-                          <div className="col-12 grid-margin">
-                              <div className="card">
-                                  <div className="card-body">
-                                      <div className="mdl-log">
-                                          <h4 className="card-title">Staff A</h4>
-                                          <p className="card-description"> has assigned linh_student1, linh_student2,
-                                              linh_student3, to dat_tutor
-                                              <span className="txt-time">31 Mar 8:21PM</span>
-                                          </p>
-                                      </div>
-                                      <div className="mdl-log">
-                                          <h4 className="card-title">Staff A</h4>
-                                          <p className="card-description"> has assigned linh_student1, linh_student2,
-                                              linh_student3, to dat_tutor
-                                              <span className="txt-time">31 Mar 8:21PM</span>
-                                          </p>
-                                      </div>
-                                      <div className="mdl-log">
-                                          <h4 className="card-title">Staff A</h4>
-                                          <p className="card-description"> has assigned linh_student1, linh_student2,
-                                              linh_student3, to dat_tutor
-                                              <span className="txt-time">31 Mar 8:21PM</span>
-                                          </p>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                    </Route>
               <div className="row">
                 <div className="col-12 grid-margin stretch-card lst-content">
                   <div className="card">
@@ -547,7 +567,7 @@ class StaffDashboard extends React.Component {
                   </div>
                 </div>
               </div>
-
+              </Route>
             </div>
             <footer className="footer">
               <div className="d-sm-flex justify-content-center justify-content-sm-between">

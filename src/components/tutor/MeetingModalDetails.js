@@ -60,8 +60,8 @@ class MeetingModalDetails extends React.Component {
                     <div>
                       <p>Title: {this.props.meeting.title}</p>
                       <p>Content: {this.props.meeting.content}</p>
-                      {/* <p>Start Date: {this.props.meeting.start}</p> */}
-                      {/* <p>End Date: {this.props.meeting.end}</p> */}
+                      <p>Start Date: {moment(this.props.meeting.start.toString()).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                      <p>End Date: {moment(this.props.meeting.end.toString()).format('MMMM Do YYYY, h:mm:ss a')}</p>
                     </div>
                   </div>
                 )}

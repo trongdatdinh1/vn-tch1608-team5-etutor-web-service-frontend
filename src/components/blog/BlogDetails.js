@@ -116,7 +116,7 @@ class BlogDetails extends React.Component {
                           </div>
                           <div className="nav-profile-text d-flex flex-column">
                             <span className="font-weight-bold mb-2">{this.state.blog.owner.name}</span>
-                            <span className="text-secondary text-small">{moment(this.state.blog.created_date).toDate().toString()}</span>
+                            <span className="text-secondary text-small">{moment(this.state.blog.created_date).fromNow()}</span>
                           </div>
                         </div>
                       </div>
