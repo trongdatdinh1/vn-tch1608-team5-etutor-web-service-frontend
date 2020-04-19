@@ -7,13 +7,14 @@ import {
   withRouter
 } from "react-router-dom";
 import { connect } from 'react-redux';
+import { API_ON } from '../../constants/ApiOn';
 
 const db = firebase.firestore();
 class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-			tutorId: 1,
+			tutorId: null,
       text: '',
       selectedStudent: {id: 1, name: 'Nara Shikamaru', email: 'shika@fpt.edu.vn'},
       conversations: [
@@ -63,6 +64,7 @@ class Chat extends Component {
 
   componentDidMount() {
     this.scrollToBottom();
+    this.setState({tutorId: 1})
     // db.collection('places').onSnapshot(querySnapshot => {
     //   const data = querySnapshot.docs.map(doc=> {doc.data()});
     //   this.setState({places: data})
@@ -86,7 +88,7 @@ class Chat extends Component {
     // });
 
 		let chatIds = this.state.students.map(student => {
-			return `${this.state.tutorId}_${student.id}`;
+			return `${this.state.tutorId}__${student.id}`;
 		});
 
 		this.setState({chatIds: chatIds})
@@ -98,10 +100,22 @@ class Chat extends Component {
 
   selectStudent = (student) => {
     this.setState({selectedStudent: student})
-		db.collection('conversations').doc(`${this.state.tutorId}__${student.id}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
-      const data = querySnapshot.docs.map(doc=> doc.data());
-      this.setState({conversations: data});
-    });
+    if(API_ON) {
+      db.collection('conversations').doc(`${this.props.authentication.user.id}__${student.id}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
+        console.log('===============')
+        console.log(`${this.state.tutorId}__${student.id}`)
+        const data = querySnapshot.docs.map(doc=> doc.data());
+        this.setState({conversations: data});
+      });
+    } else {
+      db.collection('conversations').doc(`${this.state.tutorId}__${student.id}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
+        console.log('===============')
+        console.log(`${this.state.tutorId}__${student.id}`)
+        const data = querySnapshot.docs.map(doc=> doc.data());
+        this.setState({conversations: data});
+      });
+    }
+		
 
   }
 
@@ -120,8 +134,11 @@ class Chat extends Component {
       text: this.state.text,
       createdAt: (new Date()).toISOString()
 		}
-
-		db.collection('conversations').doc(`${this.state.tutorId}__${this.state.selectedStudent.id}`).collection('messages').doc(uid(19)).set(msg);
+    if(API_ON) {
+      db.collection('conversations').doc(`${this.props.authentication.user.id}__${this.state.selectedStudent.id}`).collection('messages').doc(uid(19)).set(msg);
+    } else {
+      db.collection('conversations').doc(`${this.state.tutorId}__${this.state.selectedStudent.id}`).collection('messages').doc(uid(19)).set(msg);
+    }
     this.setState({text: ''});
   }
 

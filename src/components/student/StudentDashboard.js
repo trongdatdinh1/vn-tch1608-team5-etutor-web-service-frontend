@@ -91,8 +91,14 @@ class StudentDashboard extends React.Component {
       console.log('Sa================================')
       console.log(this.props.authentication.user.userRole)
       if(ROLES.student == this.props.authentication.user.userRole) {
+        console.log('=========================stud')
         axios.get(`${BASEURL}/api/get_personal_tutor`, {headers: headers}).then(res => {
           this.setState({tutor: res.data})
+          db.collection('conversations').doc(`${res.data.id}__${this.props.authentication.user.id}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
+            const data = querySnapshot.docs.map(doc=> doc.data());
+            this.setState({conversations: data});
+            console.log(data);
+          });
         }).catch(error => {
           console.log(error);
         });
@@ -127,12 +133,12 @@ class StudentDashboard extends React.Component {
           this.setState({notifications: res.data});
         });
   
-        let studentId = this.props.authentication.user.id;
-        db.collection('conversations').doc(`${this.state.tutor.id}__${studentId}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
-          const data = querySnapshot.docs.map(doc=> doc.data());
-          this.setState({conversations: data});
-          console.log(data);
-        });
+        // let studentId = this.props.authentication.user.id;
+        // db.collection('conversations').doc(`${this.state.tutor.id}__${studentId}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
+        //   const data = querySnapshot.docs.map(doc=> doc.data());
+        //   this.setState({conversations: data});
+        //   console.log(data);
+        // });
       } else if(ROLES.staff == this.props.authentication.user.userRole) {
         let student_id = this.props.match.params.student_id
         if(!student_id) {
