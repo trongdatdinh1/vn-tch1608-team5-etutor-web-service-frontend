@@ -25,6 +25,7 @@ import Chat from '../chat/Chat';
 import MeetingModalDetails from './MeetingModalDetails';
 import StudentBlogsModal from './StudentBlogsModal';
 import {ROLES} from '../../constants/roles'
+import {avatarProfile, otherAvatar} from '../../components/utils/ProfileGenerator'
 class TutorDashboard extends React.Component {
   constructor(props){
     super(props);
@@ -332,7 +333,7 @@ class TutorDashboard extends React.Component {
                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                   aria-expanded="false">
                   <div className="nav-profile-img">
-                    <img src={face_1} alt="image" />
+                    <img src={avatarProfile()} alt="image" />
                     <span className="availability-status online"></span>
                   </div>
                   <div className="nav-profile-text">
@@ -367,7 +368,7 @@ class TutorDashboard extends React.Component {
                     <li className="nav-item nav-profile">
                       <a href="#" className="nav-link">
                         <div className="nav-profile-image">
-                          <img src={face_1} alt="profile" />
+                          <img src={avatarProfile()} alt="profile" />
                           <span className="login-status online"></span>
                         </div>
                         <div className="nav-profile-text d-flex flex-column">
@@ -566,7 +567,7 @@ class TutorDashboard extends React.Component {
                                                           this.openModalStudentBlogs(student.id);
                                                         }}>
                                                           <div className="text-center">
-                                                              <img src="../assets/images/dashboard/img_1.jpg"
+                                                              <img src={otherAvatar(student.name)}
                                                                   className="mb-2 mw-100 w-100 rounded" alt="image" />
                                                               <h6>{student.name}</h6>
                                                               <p>{student.email}</p>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {avatarProfile, otherAvatar} from '../../components/utils/ProfileGenerator'
 
 class StudentBoxItem extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class StudentBoxItem extends React.Component {
       <li className={`${active}`} onClick={this.studentClicked} key={this.props.student.id}>
         <div class="d-flex bd-highlight">
           <div class="img_cont">
-            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+            <img src={otherAvatar(this.props.student.name)}
               class="rounded-circle user_img" />
             <span class="online_icon"></span>
           </div>

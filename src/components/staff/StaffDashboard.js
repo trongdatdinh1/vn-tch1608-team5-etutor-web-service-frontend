@@ -18,6 +18,8 @@ import axios from 'axios';
 import {BASEURL} from '../../constants/baseurl';
 import {API_ON} from '../../constants/ApiOn';
 import {ROLES} from '../../constants/roles'
+import {avatarProfile, otherAvatar} from '../../components/utils/ProfileGenerator'
+
 class StaffDashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -263,7 +265,7 @@ class StaffDashboard extends React.Component {
                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                   aria-expanded="false">
                   <div className="nav-profile-img">
-                    <img src={face_1} alt="image" />
+                    <img src={avatarProfile()} alt="image" />
                     <span className="availability-status online"></span>
                   </div>
                   <div className="nav-profile-text">
@@ -296,7 +298,7 @@ class StaffDashboard extends React.Component {
               <li className="nav-item nav-profile">
                 <a href="#" className="nav-link">
                   <div className="nav-profile-image">
-                    <img src={face_1} alt="profile" />
+                    <img src={avatarProfile()} alt="profile" />
                     <span className="login-status online"></span>
                   </div>
                   <div className="nav-profile-text d-flex flex-column">
@@ -458,9 +460,9 @@ class StaffDashboard extends React.Component {
                             </div>
                             <div className="list-wrapper">
                               <div className="form-check point-form-check">
-                                <label className="form-check-label">
+                                {/* <label className="form-check-label">
                                   <input type="checkbox" className="form-check-input" name='checkAll' checked={this.state.isSelectAllChecked} onChange={this.onSelectAllChanged} /> Select all <i
-                                    className="input-helper"></i></label>
+                                    className="input-helper"></i></label> */}
                               </div>
                               <div className="scroll-list">
                                 <ul className="d-flex flex-column-reverse todo-list-custom">
@@ -502,7 +504,7 @@ class StaffDashboard extends React.Component {
                             <div className="col-6 col-sm-4 col-lg-2">
                               <a href="" className="item">
                                 <div className="text-center">
-                                  <img src={img_1} className="mb-2 mw-100 w-100 rounded" alt="image" />
+                                  <img src={otherAvatar(tutor.name)} className="mb-2 mw-100 w-100 rounded" alt="image" />
                                   <h6>{tutor.name}</h6>
                                   <p>{tutor.email}</p>
                                 </div>
@@ -534,7 +536,7 @@ class StaffDashboard extends React.Component {
                             <div className="col-6 col-sm-4 col-lg-2">
                               <Link to={`/staff/tutor_dashboard/${tutor.id}`} className="item">
                                 <div className="text-center">
-                                  <img src={img_1} className="mb-2 mw-100 w-100 rounded" alt="image" />
+                                  <img src={otherAvatar(tutor.name)} className="mb-2 mw-100 w-100 rounded" alt="image" />
                                   <h6>{tutor.name}</h6>
                                   <p>{tutor.email}</p>
                                 </div>
@@ -565,7 +567,7 @@ class StaffDashboard extends React.Component {
                             <div className="col-6 col-sm-4 col-lg-2">
                               <Link to={`/staff/student_dashboard/${student.id}`} className="item">
                                 <div className="text-center">
-                                  <img src={img_1} className="mb-2 mw-100 w-100 rounded" alt="image" />
+                                  <img src={otherAvatar(student.name)} className="mb-2 mw-100 w-100 rounded" alt="image" />
                                   <h6>{student.name}</h6>
                                   <p>{student.email}</p>
                                 </div>

@@ -26,6 +26,8 @@ import Message from '../chat/Message';
 import BlogModal from './BlogModal';
 import uid from 'uid'
 import {ROLES} from '../../constants/roles'
+import {avatarProfile, otherAvatar} from '../../components/utils/ProfileGenerator'
+
 const db = firebase.firestore();
 
 class StudentDashboard extends React.Component {
@@ -351,7 +353,7 @@ class StudentDashboard extends React.Component {
                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                   aria-expanded="false">
                   <div className="nav-profile-img">
-                    <img src={face_1} alt="image" />
+                    <img src={avatarProfile()} alt="image" />
                     <span className="availability-status online"></span>
                   </div>
                   <div className="nav-profile-text">
@@ -386,7 +388,7 @@ class StudentDashboard extends React.Component {
                     <li className="nav-item nav-profile">
                       <a href="#" className="nav-link">
                         <div className="nav-profile-image">
-                          <img src={face_1} alt="profile" />
+                          <img src={avatarProfile()} alt="profile" />
                           <span className="login-status online"></span>
                         </div>
                         <div className="nav-profile-text d-flex flex-column">
@@ -406,12 +408,12 @@ class StudentDashboard extends React.Component {
               )}
 
 
-              {(API_ON && ROLES.staff === this.props.authentication.user.userRole) && (
+              {(API_ON || ROLES.staff === this.props.authentication.user.userRole) && (
                 <ul className="nav">
                   <li className="nav-item nav-profile">
                     <a href="#" className="nav-link">
                       <div className="nav-profile-image">
-                        <img src={face_1} alt="profile" />
+                        <img src={avatarProfile()} alt="profile" />
                         <span className="login-status online"></span>
                       </div>
                       <div className="nav-profile-text d-flex flex-column">
@@ -469,7 +471,7 @@ class StudentDashboard extends React.Component {
                       </div>
 
                       <div className="row">
-                        {(this.state.tutor && this.props.authentication.user.userRole == ROLES.student) && (
+                        {(this.state.tutor || this.props.authentication.user.userRole == ROLES.student) && (
                           <div className="col-md-6 grid-margin stretch-card">
                             <div className="card">
                                 <div className="card-body p-0">
@@ -493,7 +495,7 @@ class StudentDashboard extends React.Component {
                                                     <div className="card-body msg_card_body">
                                                       {this.state.conversations.map(conversation => {
                                                         return (
-                                                          <Message conversation={conversation}/>
+                                                          <Message conversation={conversation} owner={'student'} tutor={this.state.tutor}/>
                                                         )
                                                       })}
 

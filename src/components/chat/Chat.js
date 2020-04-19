@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { connect } from 'react-redux';
 import { API_ON } from '../../constants/ApiOn';
+import {avatarProfile, otherAvatar} from '../../components/utils/ProfileGenerator'
 
 const db = firebase.firestore();
 class Chat extends Component {
@@ -196,20 +197,19 @@ class Chat extends Component {
                                 <div class="card-header msg_head">
                                     <div class="d-flex bd-highlight">
                                         <div class="img_cont">
-                                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                                            <img src={otherAvatar(this.state.selectedStudent.name)}
                                                 class="rounded-circle user_img" />
                                             <span class="online_icon"></span>
                                         </div>
                                         <div class="user_info">
                                             <span>Chat with {this.state.selectedStudent.name}</span>
-                                            <p>1767 Messages</p>
                                         </div>
                                         
                                     </div>
                                 </div>
                                 <div class="card-body msg_card_body">
                                   {this.state.conversations.map(c => {
-                                    return <Message conversation={c} />
+                                    return <Message conversation={c} owner={'tutor'} student={this.state.selectedStudent}/>
                                   })}
                                   <div ref={this.messagesEndRef} />
                                 </div>
