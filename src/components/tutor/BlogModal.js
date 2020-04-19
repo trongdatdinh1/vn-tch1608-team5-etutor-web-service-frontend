@@ -18,7 +18,8 @@ class BlogModal extends React.Component {
       isSelectAllChecked: false,
       content: '',
       selectedStudent: null,
-      document: null
+      document: null,
+      errorMessage: ''
     }
     this.baseState = this.state;
   }
@@ -104,10 +105,12 @@ class BlogModal extends React.Component {
             title: res.data.title,
             content: res.data.content,
           });
+          this.closeModal();
         }).catch(error => {
           console.log(error);
+          this.setState({errorMessage: error.response.data.message})
         }).finally(() => {
-          this.closeModal();
+          
         });
       }
       
@@ -196,6 +199,9 @@ class BlogModal extends React.Component {
                             </div>
                         </div>
                     </div>
+                    {this.state.errorMessage && (
+                      <p style={{color: 'red'}}>Error: {this.state.errorMessage}</p>
+                    )}
                 </div>
 
                 <div className="modal-footer">

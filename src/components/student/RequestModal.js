@@ -18,7 +18,8 @@ class RequestModal extends React.Component {
       isSelectAllChecked: false,
       content: '',
       selectedStudents: [],
-      document: null
+      document: null,
+      errorMessage: ''
     }
     this.baseState = this.state;
   }
@@ -93,10 +94,12 @@ class RequestModal extends React.Component {
             title: res.data.title,
             content: res.data.content,
           });
+          this.closeModal();
         }).catch(error => {
+          this.setState({errorMessage: error.response.data.message})
           console.log(error);
         }).finally(() => {
-          this.closeModal();
+          
         });
       }
       
@@ -153,6 +156,9 @@ class RequestModal extends React.Component {
                     <button type="submit" className="btn btn-gradient-primary" onClick={this.handleSubmit}>Submit</button>
                 </div>
             </div>
+            {this.state.errorMessage && (
+              <p style={{color: 'red'}}>Error: {this.state.errorMessage}</p>
+            )}
         </div>
 
 
