@@ -17,6 +17,7 @@ import StudentCheckbox from './StudentCheckbox';
 import axios from 'axios';
 import {BASEURL} from '../../constants/baseurl';
 import {API_ON} from '../../constants/ApiOn';
+import {ROLES} from '../../constants/roles'
 class StaffDashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -195,15 +196,24 @@ class StaffDashboard extends React.Component {
       }
 
       axios.post(`${BASEURL}/api/create_allocation`, data,{headers: headers}).then(res => {
-        let tutorId = data.tutor_id;
-        let students = data.student_ids;
-        let items = [...this.state.assigners]
-        let index = items.findIndex(el => {
-          return el.hasOwnProperty(tutorId);
-        })
-        items[index][tutorId] = students;
-
-        this.setState({assigners: items})
+        axios.get(`${BASEURL}/api/list_allocation_tutor`, {headers: headers}).then(res => {
+          this.setState({tutors: res.data.map(obj => {
+            return {
+              id: obj.tutor.id,
+              name: obj.tutor.basicProfile.name,
+              email: obj.tutor.basicProfile.email,
+              studentCount: obj.student_count
+            }
+          })});
+        });
+    
+        axios.get(`${BASEURL}/api/list_allocation_tutor_students`, {headers: headers}).then(res => {
+          let arr = [];
+          for(const obj in res.data) {
+            arr.push({[obj]: res.data[obj]})
+          }
+          this.setState({assigners: arr});
+        });
         alert('Allocate Successfull');
       });
     } else {
@@ -302,12 +312,14 @@ class StaffDashboard extends React.Component {
                   <i className="mdi mdi-home menu-icon"></i>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/staff_dashboard/logs" className="nav-link">
-                  <span className="menu-title">Allocation logs</span>
-                  <i className="mdi mdi-chart-bar menu-icon"></i>
-                </Link>
-              </li>
+              {(!API_ON || this.props.authentication.user.userRole == ROLES.super_staff ) && (
+                <li className="nav-item">
+                  <Link to="/staff_dashboard/logs" className="nav-link">
+                    <span className="menu-title">Allocation logs</span>
+                    <i className="mdi mdi-chart-bar menu-icon"></i>
+                  </Link>
+               </li>
+              )}
             </ul>
           </nav>
           <div className="main-panel">
@@ -520,13 +532,13 @@ class StaffDashboard extends React.Component {
                         {this.state.tutors.map((tutor)=>{
                           return (
                             <div className="col-6 col-sm-4 col-lg-2">
-                              <a href="" className="item">
+                              <Link to={`/staff/tutor_dashboard/${tutor.id}`} className="item">
                                 <div className="text-center">
                                   <img src={img_1} className="mb-2 mw-100 w-100 rounded" alt="image" />
                                   <h6>{tutor.name}</h6>
                                   <p>{tutor.email}</p>
                                 </div>
-                              </a>
+                              </Link>
                             </div>
                           )
                         })}
@@ -551,13 +563,13 @@ class StaffDashboard extends React.Component {
                         {this.state.students.map((student)=> {
                           return (
                             <div className="col-6 col-sm-4 col-lg-2">
-                              <a href="" className="item">
+                              <Link to={`/staff/student_dashboard/${student.id}`} className="item">
                                 <div className="text-center">
                                   <img src={img_1} className="mb-2 mw-100 w-100 rounded" alt="image" />
                                   <h6>{student.name}</h6>
                                   <p>{student.email}</p>
                                 </div>
-                              </a>
+                              </Link>
                             </div>
                           )
                         })}

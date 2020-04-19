@@ -25,6 +25,7 @@ import TutorCalendar from '../tutor/TutorCalendar';
 import Message from '../chat/Message';
 import BlogModal from './BlogModal';
 import uid from 'uid'
+import {ROLES} from '../../constants/roles'
 const db = firebase.firestore();
 
 class StudentDashboard extends React.Component {
@@ -37,13 +38,6 @@ class StudentDashboard extends React.Component {
       modalMeetingDetailsOpen: false,
       modalMeetingOpen: false,
       modalRequestOpen: false,
-      students: [
-        {id: 1, name: 'Nara Shikamaru', email: 'shika@fpt.edu.vn'},
-        {id: 2, name: 'Aomine Daiki', email: 'aomine@fpt.edu.vn'},
-        {id: 3, name: 'Eren Jeager', email: 'eren@fpt.edu.vn'},
-        {id: 4, name: 'Tohsaka Rin', email: 'rin@fpt.edu.vn'},
-        {id: 5, name: 'Shiba Tatsuya', email: 'tatsuya@fpt.edu.vn'}
-      ],
       tutor: {
         id: 1,
         name: 'Tuto'
@@ -88,53 +82,84 @@ class StudentDashboard extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.match.params);
     if(API_ON) {
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
       }
-      axios.get(`${BASEURL}/api/get_personal_tutor`, {headers: headers}).then(res => {
-        this.setState({tutor: res.data})
-      }).catch(error => {
-        console.log(error);
-      });
-
-      axios.get(`${BASEURL}/api/meetings`, {headers: headers}).then(res => {
-        let meetings = res.data.map(meeting => {
-          return {
-            id: meeting.id,
-            title: meeting.title,
-            start: moment(meeting.startDate).toDate(),
-            end: moment(meeting.endDate).toDate(),
-            content: meeting.content
-          }
+      console.log('Sa================================')
+      console.log(this.props.authentication.user.userRole)
+      if(ROLES.student == this.props.authentication.user.userRole) {
+        axios.get(`${BASEURL}/api/get_personal_tutor`, {headers: headers}).then(res => {
+          this.setState({tutor: res.data})
+        }).catch(error => {
+          console.log(error);
         });
-        this.setState({meetings: meetings});
-      });
+  
+        axios.get(`${BASEURL}/api/meetings`, {headers: headers}).then(res => {
+          let meetings = res.data.map(meeting => {
+            return {
+              id: meeting.id,
+              title: meeting.title,
+              start: moment(meeting.startDate).toDate(),
+              end: moment(meeting.endDate).toDate(),
+              content: meeting.content
+            }
+          });
+          this.setState({meetings: meetings});
+        });
+  
+        axios.get(`${BASEURL}/api/requests`, {headers: headers}).then(res => {
+          console.log('requests', res.data)
+          this.setState({requests: res.data})
+        });
+  
+        axios.get(`${BASEURL}/api/blogs`, {headers: headers}).then(res => {
+          this.setState({blogs: res.data})
+        }).catch(e => {
+          console.log(e);
+        });
+  
+        axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
+          console.log('Noti')
+          console.log(res.data)
+          this.setState({notifications: res.data});
+        });
+  
+        let studentId = this.props.authentication.user.id;
+        db.collection('conversations').doc(`${this.state.tutor.id}__${studentId}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
+          const data = querySnapshot.docs.map(doc=> doc.data());
+          this.setState({conversations: data});
+          console.log(data);
+        });
+      } else if(ROLES.staff == this.props.authentication.user.userRole) {
+        let student_id = this.props.match.params.student_id
+        if(!student_id) {
+          window.location.assign(`/staff_dashboard`);
+        } else {
+          axios.get(`${BASEURL}/api/student_statistics/${student_id}`, {headers: headers}).then(res => {
+            console.log('requests', res.data)
+            this.setState({meetings: res.data.meetings.map(meeting => {
+              return {
+                id: meeting.id,
+                title: meeting.title,
+                start: moment(meeting.start_date).toDate(),
+                end: moment(meeting.end_date).toDate(),
+                content: meeting.content
+              }
+            })})
 
-      axios.get(`${BASEURL}/api/requests`, {headers: headers}).then(res => {
-        console.log('requests', res.data)
-        this.setState({requests: res.data})
-      });
+            this.setState({requests: res.data.requests});
 
-      axios.get(`${BASEURL}/api/blogs`, {headers: headers}).then(res => {
-        this.setState({blogs: res.data})
-      }).catch(e => {
-        console.log(e);
-      });
+            this.setState({tutor: res.data.tutor})
 
-      axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
-        console.log('Noti')
-        console.log(res.data)
-        this.setState({notifications: res.data});
-      });
-
-      let studentId = this.props.authentication.user.id;
-      db.collection('conversations').doc(`${this.state.tutor.id}__${studentId}`).collection('messages').orderBy('createdAt', 'asc').onSnapshot(querySnapshot => {
-        const data = querySnapshot.docs.map(doc=> doc.data());
-        this.setState({conversations: data});
-        console.log(data);
-      });
+            this.setState({blogs: res.data.blogs})
+          });
+        }
+        
+      }
+      
 
       this.setState({userName: this.props.authentication.user.name})
     } else {
@@ -350,6 +375,7 @@ class StudentDashboard extends React.Component {
 
         <div className="container-fluid page-body-wrapper">
             <nav className={`sidebar sidebar-offcanvas ${classTwo}`} id="sidebar">
+              {(!API_ON || ROLES.student === this.props.authentication.user.userRole) && (
                 <ul className="nav">
                     <li className="nav-item nav-profile">
                       <a href="#" className="nav-link">
@@ -371,10 +397,44 @@ class StudentDashboard extends React.Component {
                       </Link>
                     </li>
                 </ul>
+              )}
+
+
+              {(API_ON && ROLES.staff === this.props.authentication.user.userRole) && (
+                <ul className="nav">
+                  <li className="nav-item nav-profile">
+                    <a href="#" className="nav-link">
+                      <div className="nav-profile-image">
+                        <img src={face_1} alt="profile" />
+                        <span className="login-status online"></span>
+                      </div>
+                      <div className="nav-profile-text d-flex flex-column">
+                        <span className="font-weight-bold mb-2">{this.state.userName}</span>
+                        <span className="text-secondary text-small">Staff member</span>
+                      </div>
+                      <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/staff_dashboard" className="nav-link">
+                      <span className="menu-title">Dashboard</span>
+                      <i className="mdi mdi-home menu-icon"></i>
+                    </Link>
+                  </li>
+                  {(!API_ON || this.props.authentication.user.userRole == ROLES.super_staff) && (
+                    <li className="nav-item">
+                      <Link to="/staff_dashboard/logs" className="nav-link">
+                        <span className="menu-title">Allocation logs</span>
+                        <i className="mdi mdi-chart-bar menu-icon"></i>
+                      </Link>
+                    </li>
+                  )}
+                </ul>
+              )}
             </nav>
             <div className="main-panel">
-              <Route path='/student_dashboard/blogs/:id' component={BlogDetails} />
-              <Route exact path='/student_dashboard'>
+              <Route exact path='/student_dashboard/blogs/:id' component={BlogDetails} />
+              <Route exact path={['/student_dashboard', '/staff/student_dashboard/:student_id']}>
                 <div className="content-wrapper">
                     <div className="page-header">
                         <h3 className="page-title">
@@ -403,7 +463,7 @@ class StudentDashboard extends React.Component {
                       </div>
 
                       <div className="row">
-                        {this.state.tutor && (
+                        {(this.state.tutor && this.props.authentication.user.userRole == ROLES.student) && (
                           <div className="col-md-6 grid-margin stretch-card">
                             <div className="card">
                                 <div className="card-body p-0">
@@ -466,14 +526,14 @@ class StudentDashboard extends React.Component {
                                               <p className="mb-1 text-muted"><i className="mdi mdi-account"></i> To: {request.tutor}</p>
                                               <p className="mb-1 text-muted">
                                                 <i className="mdi mdi-clock-outline icon-sm"></i>
-                                                {request.created_date}
+                                                {moment(request.created_date).fromNow()}
                                               </p>
                                               <p className="mb-1">{request.content}</p>
                                             </Link>
                                           )
                                         })}
                                       </div>
-                                      {this.state.tutor && (
+                                      {(!API_ON || this.state.tutor) && ROLES.student == this.props.authentication.user.userRole && (
                                         <button
                                         className="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
                                         data-toggle="modal" data-target="#requestModal" onClick={this.toggleModalRequest}>

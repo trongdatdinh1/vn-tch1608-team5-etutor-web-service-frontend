@@ -24,6 +24,7 @@ import {API_ON} from '../../constants/ApiOn';
 import Chat from '../chat/Chat';
 import MeetingModalDetails from './MeetingModalDetails';
 import StudentBlogsModal from './StudentBlogsModal';
+import {ROLES} from '../../constants/roles'
 class TutorDashboard extends React.Component {
   constructor(props){
     super(props);
@@ -74,50 +75,88 @@ class TutorDashboard extends React.Component {
         
       ]
     }
+
+    this.tutor_id = this.props.match.params.tutor_id;
   }
 
   componentDidMount() {
     console.log('Did mount');
-    console.log(this.props);
+    console.log(this.props.match);
     if(API_ON) {
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
       }
-      console.log(this.props.authentication.user.accessToken);
-  
-      axios.get(`${BASEURL}/api/get_list_assigned_students`, {headers: headers}).then(res => {
-        this.setState({students: res.data.map(student => {
-          return {
-            id: student.id,
-            name: student.basicProfile.name,
-            email: student.basicProfile.email
-          }
-        })});
-      });
-  
-      axios.get(`${BASEURL}/api/meetings`, {headers: headers}).then(res => {
-        let meetings = res.data.map(meeting => {
-          return {
-            id: meeting.id,
-            title: meeting.title,
-            start: moment(meeting.startDate).toDate(),
-            end: moment(meeting.endDate).toDate(),
-            content: meeting.content
-          }
+
+      if(ROLES.tutor === this.props.authentication.user.userRole) {
+        axios.get(`${BASEURL}/api/get_list_assigned_students`, {headers: headers}).then(res => {
+          this.setState({students: res.data.map(student => {
+            return {
+              id: student.id,
+              name: student.basicProfile.name,
+              email: student.basicProfile.email
+            }
+          })});
         });
-        this.setState({meetings: meetings});
-      });
+    
+        axios.get(`${BASEURL}/api/meetings`, {headers: headers}).then(res => {
+          let meetings = res.data.map(meeting => {
+            return {
+              id: meeting.id,
+              title: meeting.title,
+              start: moment(meeting.startDate).toDate(),
+              end: moment(meeting.endDate).toDate(),
+              content: meeting.content
+            }
+          });
+          this.setState({meetings: meetings});
+        });
+    
+        axios.get(`${BASEURL}/api/blogs`, {headers: headers}).then(res => {
+          this.setState({blogs: res.data})
+        });
   
-      axios.get(`${BASEURL}/api/blogs`, {headers: headers}).then(res => {
-        this.setState({blogs: res.data})
-      });
+        axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
+          console.log(res.data);
+          this.setState({notifications: res.data});
+        });
+      } else if(ROLES.staff == this.props.authentication.user.userRole || ROLES.staff == this.props.authentication.user.userRole) {
+        let tutor_id = this.props.match.params.tutor_id
+        console.log('Get======================================')
+        console.log(this.props.match.params)
+        console.log(this.tutor_id)
+        if(!tutor_id) {
+          window.location.assign(`/staff_dashboard`);
+        } else {
+          axios.get(`${BASEURL}/api/tutor_statistics/${tutor_id}`, {headers: headers}).then(res => {
+            this.setState({students: res.data.students.map(student => {
+              return {
+                id: student.id,
+                name: student.basicProfile.name,
+                email: student.basicProfile.email
+              }
+            })});
 
-      axios.get(`${BASEURL}/api/notifications`, {headers: headers}).then(res => {
-        console.log(res.data);
-        this.setState({notifications: res.data});
-      });
+            this.setState({meetings: res.data.meetings.map(meeting => {
+              return {
+                id: meeting.id,
+                title: meeting.title,
+                start: moment(meeting.start_date).toDate(),
+                end: moment(meeting.end_date).toDate(),
+                content: meeting.content
+              }
+            })});
 
+
+            this.setState({blogs: res.data.blogs});
+            console.log('Statis')
+            console.log(res.data)
+          });
+        }
+      } else {
+
+      }
+  
       this.setState({userName: this.props.authentication.user.name})
     }
     
@@ -199,15 +238,19 @@ class TutorDashboard extends React.Component {
         'Authorization': `Bearer ${this.props.authentication.user.accessToken}`
       }
 
-      axios.get(`${BASEURL}/api/blogs_with_student/${studentId}`, {headers: headers}).then(res => {
-        // this.setState({selectedStudentBlogs: res.data})
-        this.setState({
-          modalStudentBlogsOpen: true,
-          selectedStudentBlogs: res.data,
+      if( ROLES.tutor == this.props.authentication.user.userRole) {
+        axios.get(`${BASEURL}/api/blogs_with_student/${studentId}`, {headers: headers}).then(res => {
+          // this.setState({selectedStudentBlogs: res.data})
+          this.setState({
+            modalStudentBlogsOpen: true,
+            selectedStudentBlogs: res.data,
+          })
+        }).catch(error => {
+          console.log(error);
         })
-      }).catch(error => {
-        console.log(error);
-      })
+      }
+
+      
     } else {
       let blogs = [
         {id: 1, title: `This is title of student ${studentId}`, content: 'This is content 1'},
@@ -319,6 +362,7 @@ class TutorDashboard extends React.Component {
 
         <div className="container-fluid page-body-wrapper">
             <nav className={`sidebar sidebar-offcanvas ${classTwo}`} id="sidebar">
+              {(!API_ON || ROLES.tutor === this.props.authentication.user.userRole) && (
                 <ul className="nav">
                     <li className="nav-item nav-profile">
                       <a href="#" className="nav-link">
@@ -346,10 +390,44 @@ class TutorDashboard extends React.Component {
                       </Link>
                     </li>
                 </ul>
+              )}
+
+
+              {(API_ON && ROLES.staff === this.props.authentication.user.userRole) && (
+                <ul className="nav">
+                  <li className="nav-item nav-profile">
+                    <a href="#" className="nav-link">
+                      <div className="nav-profile-image">
+                        <img src={face_1} alt="profile" />
+                        <span className="login-status online"></span>
+                      </div>
+                      <div className="nav-profile-text d-flex flex-column">
+                        <span className="font-weight-bold mb-2">{this.state.userName}</span>
+                        <span className="text-secondary text-small">Staff member</span>
+                      </div>
+                      <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/staff_dashboard" className="nav-link">
+                      <span className="menu-title">Dashboard</span>
+                      <i className="mdi mdi-home menu-icon"></i>
+                    </Link>
+                  </li>
+                  {!API_ON || this.props.authentication.user.userRole == ROLES.super_staff && (
+                    <li className="nav-item">
+                      <Link to="/staff_dashboard/logs" className="nav-link">
+                        <span className="menu-title">Allocation logs</span>
+                        <i className="mdi mdi-chart-bar menu-icon"></i>
+                      </Link>
+                    </li>
+                  )}
+                </ul>
+              )}
             </nav>
             <div className="main-panel">
               <Route path='/tutor_dashboard/blogs/:id' component={BlogDetails}  />
-              <Route exact path='/tutor_dashboard'>
+              <Route exact path={['/tutor_dashboard', '/staff/tutor_dashboard/:tutor_id']}>
                 <div className="content-wrapper">
                     <div className="page-header">
                         <h3 className="page-title">
@@ -384,13 +462,15 @@ class TutorDashboard extends React.Component {
                         </div>
                     </div> */}
                     
-                    <Route exact path='/tutor_dashboard'>
+                    <Route exact path={['/tutor_dashboard', '/staff/tutor_dashboard/:tutor_id']}>
                       <div className="page-header">
                         <h3 className="page-title"> Schedule </h3>
-                        <button
-                          className="add btn btn-gradient-primary font-weight-bold todo-list-add-btn btn-block col-3"
-                          data-toggle="modal" data-target="#mettingModal" onClick={this.toggleModalMeeting}>
-                          <i className="mdi mdi-calendar-month mr-2"></i>Create metting</button>
+                        {(!API_ON || this.props.authentication.user.userRole == ROLES.tutor) && (
+                          <button
+                            className="add btn btn-gradient-primary font-weight-bold todo-list-add-btn btn-block col-3"
+                            data-toggle="modal" data-target="#mettingModal" onClick={this.toggleModalMeeting}>
+                            <i className="mdi mdi-calendar-month mr-2"></i>Create metting</button>
+                        )}
                         
                       </div>
                       <div className="row">
@@ -455,10 +535,13 @@ class TutorDashboard extends React.Component {
                                           )
                                         })}
                                       </div>
-                                      <button
+                                      {(!API_ON || this.props.authentication.user.userRole == ROLES.tutor) && (
+                                        <button
                                           className="add btn btn-gradient-primary mt-4 font-weight-bold todo-list-add-btn btn-block"
                                           data-toggle="modal" data-target="#blogingModal" onClick={this.toggleModalBlog}>
                                           <i className="mdi mdi-file-document-edit-outline mr-2"></i>Create blog</button>
+                                      )}
+                                      
                                   </div>
                               </div>
                           </div>
