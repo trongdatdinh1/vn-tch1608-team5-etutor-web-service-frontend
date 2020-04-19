@@ -28,7 +28,8 @@ class MeetingModal extends React.Component {
       startDate: new Date(),
       endDate: new Date(),
       content: '',
-      selectedStudent: null
+      selectedStudent: null,
+      errorMessage: ''
     }
     this.baseState = this.state;
   }
@@ -99,10 +100,12 @@ class MeetingModal extends React.Component {
           end: moment(res.data.endDate).toDate()
         }
         this.props.createMeeting(res_meeting);
-      }).catch(error => {
-        console.log(error);
-      }).finally(() => {
         this.closeModal();
+      }).catch(error => {
+        console.log(error.response)
+        this.setState({errorMessage: error.response.data.message})
+      }).finally(() => {
+        
       });
     } else {
       let meeting = {
@@ -223,6 +226,9 @@ class MeetingModal extends React.Component {
                   </div>
                 </div>
               </div>
+              {this.state.errorMessage && (
+                <p style={{color: 'red'}}>Error: {this.state.errorMessage}</p>
+              )}
             </div>
 
             <div className="modal-footer">
