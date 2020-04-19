@@ -51,8 +51,14 @@ class App extends React.Component {
             <Route path="/staff_dashboard">
               <StaffDashboard />
             </Route>
+            <Route path="/staff/tutor_dashboard/:tutor_id">
+              <TutorDashboard />
+            </Route>
             <Route path="/tutor_dashboard">
               <TutorDashboard />
+            </Route>
+            <Route path="/staff/student_dashboard/:student_id">
+              <StudentDashboard />
             </Route>
             <Route path="/student_dashboard">
               <StudentDashboard />
