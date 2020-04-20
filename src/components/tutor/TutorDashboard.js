@@ -562,17 +562,19 @@ class TutorDashboard extends React.Component {
                                           {this.state.students.map(student => {
                                               return (
                                                   <div className="col-6 col-sm-4 col-lg-2" key={student.id}>
-                                                      <button className="item"
+                                                      <div className="item"
                                                         onClick={() => {
                                                           this.openModalStudentBlogs(student.id);
                                                         }}>
                                                           <div className="text-center">
+                                                              <div className="placeholder-4x4 mb-2">
                                                               <img src={avatarProfile(student.name)}
-                                                                  className="mb-2 mw-100 w-100 rounded" alt="image" />
+                                                                  className="rounded" alt="image" />
+                                                              </div>
                                                               <h6>{student.name}</h6>
                                                               <p>{student.email}</p>
                                                           </div>
-                                                      </button>
+                                                      </div>
                                                   </div>
                                               )
                                           })}

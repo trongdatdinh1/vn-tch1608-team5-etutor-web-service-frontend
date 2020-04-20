@@ -112,7 +112,7 @@ class BlogModal extends React.Component {
                 </div>
                 <div className="modal-body">
                     <div className="row">
-                        <div className="col-12 col-sm-8 col-lg-8">
+                        <div className="col-12 col-sm-12 col-lg-12">
                             <form className="forms-sample">
                                 <div className="form-group">
                                     <label for="exampleInputName1">Title</label>

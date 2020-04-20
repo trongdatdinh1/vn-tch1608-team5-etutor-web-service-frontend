@@ -51,6 +51,11 @@
   padding-top: 10px;
 }
 
+.lst-content .item {
+  cursor: pointer;
+}
+
+
 .clearfix::after,
 .calendar ol::after {
   content: ".";
@@ -678,4 +683,26 @@ Calendar Styling */
 
 .navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item {
   border-top: 1px solid #ebedf2;
+}
+
+
+.placeholder-4x4{
+  display: block;
+  position: relative;
+  height: 0;
+  overflow: hidden;
+}
+
+.placeholder-4x4 img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: inherit;
+}
+
+.placeholder-4x4 {
+  padding-bottom: 100%;
+  /* ratio: 100% / (4 / 4) = */
 }
