@@ -26,7 +26,7 @@ import Message from '../chat/Message';
 import BlogModal from './BlogModal';
 import uid from 'uid'
 import {ROLES} from '../../constants/roles'
-import {avatarProfile, otherAvatar} from '../../components/utils/ProfileGenerator'
+import {avatarProfile} from '../../components/utils/ProfileGenerator'
 
 const db = firebase.firestore();
 
@@ -353,7 +353,7 @@ class StudentDashboard extends React.Component {
                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                   aria-expanded="false">
                   <div className="nav-profile-img">
-                    <img src={avatarProfile()} alt="image" />
+                    <img src={avatarProfile(this.props.authentication.user.name)} alt="image" />
                     <span className="availability-status online"></span>
                   </div>
                   <div className="nav-profile-text">
@@ -388,7 +388,7 @@ class StudentDashboard extends React.Component {
                     <li className="nav-item nav-profile">
                       <a href="#" className="nav-link">
                         <div className="nav-profile-image">
-                          <img src={avatarProfile()} alt="profile" />
+                          <img src={avatarProfile(this.props.authentication.user.name)} alt="profile" />
                           <span className="login-status online"></span>
                         </div>
                         <div className="nav-profile-text d-flex flex-column">
@@ -408,12 +408,12 @@ class StudentDashboard extends React.Component {
               )}
 
 
-              {(API_ON || ROLES.staff === this.props.authentication.user.userRole) && (
+              {(API_ON && ROLES.staff === this.props.authentication.user.userRole) && (
                 <ul className="nav">
                   <li className="nav-item nav-profile">
                     <a href="#" className="nav-link">
                       <div className="nav-profile-image">
-                        <img src={avatarProfile()} alt="profile" />
+                        <img src={avatarProfile(this.props.authentication.user.name)} alt="profile" />
                         <span className="login-status online"></span>
                       </div>
                       <div className="nav-profile-text d-flex flex-column">
@@ -471,7 +471,7 @@ class StudentDashboard extends React.Component {
                       </div>
 
                       <div className="row">
-                        {(this.state.tutor || this.props.authentication.user.userRole == ROLES.student) && (
+                        {(this.state.tutor && this.props.authentication.user.userRole == ROLES.student) && (
                           <div className="col-md-6 grid-margin stretch-card">
                             <div className="card">
                                 <div className="card-body p-0">
@@ -481,7 +481,7 @@ class StudentDashboard extends React.Component {
                                                     <div className="card-header msg_head">
                                                         <div className="d-flex bd-highlight">
                                                             <div className="img_cont">
-                                                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                                                                <img src={avatarProfile(this.state.tutor.name)}
                                                                     className="rounded-circle user_img" />
                                                                 <span className="online_icon"></span>
                                                             </div>

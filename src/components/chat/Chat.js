@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { connect } from 'react-redux';
 import { API_ON } from '../../constants/ApiOn';
-import {avatarProfile, otherAvatar} from '../../components/utils/ProfileGenerator'
+import {avatarProfile} from '../../components/utils/ProfileGenerator'
 
 const db = firebase.firestore();
 class Chat extends Component {
@@ -197,7 +197,7 @@ class Chat extends Component {
                                 <div class="card-header msg_head">
                                     <div class="d-flex bd-highlight">
                                         <div class="img_cont">
-                                            <img src={otherAvatar(this.state.selectedStudent.name)}
+                                            <img src={avatarProfile(this.state.selectedStudent.name || 'a')}
                                                 class="rounded-circle user_img" />
                                             <span class="online_icon"></span>
                                         </div>

@@ -13,6 +13,8 @@ import {API_ON} from '../../constants/ApiOn';
 import axios from 'axios';
 import face_1 from '../../assets/images/faces/face1.jpg';
 import moment from 'moment';
+import {avatarProfile} from '../../components/utils/ProfileGenerator'
+
 class BlogDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -111,7 +113,7 @@ class BlogDetails extends React.Component {
                       <div className="nav-item nav-profile">
                         <div className="nav-link">
                           <div className="nav-profile-image">
-                            <img src={face_1} alt="profile" />
+                            <img src={avatarProfile(this.state.blog.owner.name)} alt="profile" />
                             <span className="login-status online"></span>
                           </div>
                           <div className="nav-profile-text d-flex flex-column">
@@ -145,7 +147,7 @@ class BlogDetails extends React.Component {
                 <div className="form-group">
                   <div className="input-group">
                     <div className="input-group-prepend">
-                      <img src={face_1} className="mr-2 avatar" alt="image" />
+                      <img src={avatarProfile(this.props.authentication.user.name)} className="mr-2 avatar" alt="image" />
                     </div>
                     <textarea className="form-control" placeholder="Add blog comment ..." rows="1" name="commentField" value={this.state.commentField} onChange={this.changeHandler}></textarea>
                     <div className="input-group-append">
