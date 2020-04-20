@@ -25,7 +25,7 @@ class StaffDashboard extends React.Component {
     super(props);
     this.state = {
       userName: 'Hero',
-      navbarCollapsed: true,
+      navbarCollapsed: false,
       selectedTutor: 1,
       assignedStudents: [],
       tutors: [
@@ -487,7 +487,7 @@ class StaffDashboard extends React.Component {
                     </div>
                   </div>
                 </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-12 grid-margin stretch-card lst-content">
                   <div className="card">
                     <div className="card-body">
@@ -518,7 +518,7 @@ class StaffDashboard extends React.Component {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-12 grid-margin stretch-card lst-content">
                   <div className="card">

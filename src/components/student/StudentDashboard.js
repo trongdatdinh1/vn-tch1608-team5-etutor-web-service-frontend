@@ -487,7 +487,6 @@ class StudentDashboard extends React.Component {
                                                             </div>
                                                             <div className="user_info">
                                                                 <span>Chat with {this.state.tutor.name}</span>
-                                                                <p>1767 Messages</p>
                                                             </div>
 
                                                         </div>
