@@ -1,6 +1,8 @@
 import React from 'react';
 import face_1 from '../../assets/images/faces/face1.jpg';
 import moment from 'moment'
+import {avatarProfile} from '../../components/utils/ProfileGenerator'
+
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +13,7 @@ class Comment extends React.Component {
   render() {
     return (
       <div className="content">
-        <img src={face_1} className="mr-2 avatar" alt="image" />
+        <img src={avatarProfile(this.props.comment.user.name)} className="mr-2 avatar" alt="image" />
         <div className="right-content">
           <span className="font-weight-bold mb-2">{this.props.comment.user.name}</span>
           <span className="text-secondary text-small">{moment(this.props.comment.created_date).fromNow()}</span>
