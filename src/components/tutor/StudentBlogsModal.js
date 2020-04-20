@@ -52,7 +52,7 @@ class StudentBlogsModal extends React.Component {
                 </div>
                 <div className="modal-body">
                     <div className="row">
-                        <div className="col-12 col-sm-8 col-lg-8">
+                        <div className="col-12 col-sm-12 col-lg-12">
                           {this.props.studentBlogs.map(blog => {
                               return (
                                 <Link to={`/tutor_dashboard/blogs/${blog.id}`} className="list-group-item list-group-item-action" key={blog.id}>
