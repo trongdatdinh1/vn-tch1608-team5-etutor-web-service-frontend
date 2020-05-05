@@ -145,6 +145,10 @@ class RequestModal extends React.Component {
                                     <label>Content</label>
                                     <textarea className="form-control" id="exampleTextarea1" rows="7" name='content' value={this.state.content} onChange={this.changeHandler}></textarea>
                                 </div>
+                                <div className="form-group">
+                                  <label>Documents</label>
+                                  <input type="file" name="documennt" multiple onChange={this.fileChangeHandler} />
+                                </div>
                             </form>
                         </div>
                     </div>
