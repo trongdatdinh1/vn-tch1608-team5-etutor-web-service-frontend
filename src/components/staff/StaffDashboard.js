@@ -378,41 +378,44 @@ class StaffDashboard extends React.Component {
                     <i className="mdi mdi-home"></i>
                   </span> Staff dashboard </h3>
               </div>
-              <div className="row">
-                <div className="col-md-4 stretch-card grid-margin">
-                  <div className="card bg-gradient-danger card-img-holder text-white">
-                    <div className="card-body">
-                      <img src={circle_svg} className="card-img-absolute" alt="circle-image" />
-                      <h4 className="font-weight-normal mb-3">Total Meeting Held <i
-                          className="mdi mdi-chart-line mdi-24px float-right"></i>
-                      </h4>
-                      <h2 className="mb-5">{this.state.statistics.meeting_count}</h2>
+              {(API_ON == false || 'ROLE_SUPER_ADMIN' == this.props.authentication.user.userRole) && (
+                <div className="row">
+                  <div className="col-md-4 stretch-card grid-margin">
+                    <div className="card bg-gradient-danger card-img-holder text-white">
+                      <div className="card-body">
+                        <img src={circle_svg} className="card-img-absolute" alt="circle-image" />
+                        <h4 className="font-weight-normal mb-3">Total Meeting Held <i
+                            className="mdi mdi-chart-line mdi-24px float-right"></i>
+                        </h4>
+                        <h2 className="mb-5">{this.state.statistics.meeting_count}</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4 stretch-card grid-margin">
+                    <div className="card bg-gradient-info card-img-holder text-white">
+                      <div className="card-body">
+                        <img src={circle_svg} className="card-img-absolute" alt="circle-image" />
+                        <h4 className="font-weight-normal mb-3">Total Requests created <i
+                            className="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                        </h4>
+                        <h2 className="mb-5">{this.state.statistics.request_count}</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4 stretch-card grid-margin">
+                    <div className="card bg-gradient-success card-img-holder text-white">
+                      <div className="card-body">
+                        <img src={circle_svg} className="card-img-absolute" alt="circle-image" />
+                        <h4 className="font-weight-normal mb-3">Total Blogs created <i
+                            className="mdi mdi-diamond mdi-24px float-right"></i>
+                        </h4>
+                        <h2 className="mb-5">{this.state.statistics.blog_count}</h2>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4 stretch-card grid-margin">
-                  <div className="card bg-gradient-info card-img-holder text-white">
-                    <div className="card-body">
-                      <img src={circle_svg} className="card-img-absolute" alt="circle-image" />
-                      <h4 className="font-weight-normal mb-3">Total Requests created <i
-                          className="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                      </h4>
-                      <h2 className="mb-5">{this.state.statistics.request_count}</h2>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 stretch-card grid-margin">
-                  <div className="card bg-gradient-success card-img-holder text-white">
-                    <div className="card-body">
-                      <img src={circle_svg} className="card-img-absolute" alt="circle-image" />
-                      <h4 className="font-weight-normal mb-3">Total Blogs created <i
-                          className="mdi mdi-diamond mdi-24px float-right"></i>
-                      </h4>
-                      <h2 className="mb-5">{this.state.statistics.blog_count}</h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )}
+              
               <div className="page-header">
                 <h3 className="page-title"> Assign student </h3>
               </div>
