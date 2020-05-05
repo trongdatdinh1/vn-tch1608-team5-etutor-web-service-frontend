@@ -78,11 +78,12 @@ class RequestModal extends React.Component {
           axios.post(`${BASEURL}/api/create_request`, request, {headers: headers}).then(res => {
             console.log('Created Request')
             console.log(res.data)
+            this.closeModal();
 
           }).catch(error => {
             console.log(error);
+            this.setState({errorMessage: error.response.data.message})
           }).finally(() => {
-            this.closeModal();
           });
         })
 
@@ -152,6 +153,9 @@ class RequestModal extends React.Component {
                             </form>
                         </div>
                     </div>
+                    {this.state.errorMessage && (
+                      <p style={{color: 'red'}}>Error: {this.state.errorMessage}</p>
+                    )}
                 </div>
 
                 <div className="modal-footer">
@@ -160,9 +164,7 @@ class RequestModal extends React.Component {
                     <button type="submit" className="btn btn-gradient-primary" onClick={this.handleSubmit}>Submit</button>
                 </div>
             </div>
-            {this.state.errorMessage && (
-              <p style={{color: 'red'}}>Error: {this.state.errorMessage}</p>
-            )}
+            
         </div>
 
 
